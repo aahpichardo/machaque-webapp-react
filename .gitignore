@@ -1,0 +1,46 @@
+# Node modules
+node_modules/
+
+# Build output
+dist/
+out-tsc/
+
+# Dependency directories
+jspm_packages/
+
+# IDEs and editors
+.vscode/
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# Environment files
+*.env
+
+# Logs
+*.log
+
+# OS-specific files
+.DS_Store
+Thumbs.db
+
+# Compiled JavaScript files
+*.js
+*.map
+
+# Compiled TypeScript files
+*.tsbuildinfo
+*.d.ts
+
+# Angular specific files
+.angular/
+
+# Misc
+coverage/
+*.lock
+*.zip
+*.tar
+*.gz
