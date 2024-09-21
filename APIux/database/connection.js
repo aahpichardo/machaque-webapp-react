@@ -1,24 +1,20 @@
-import sql from "mssql";
-import { DB_DATABASE, DB_PASSWORD, DB_SERVER, DB_USER } from "../src/contig.js";
+import mysql from "mysql2/promise";
+import { DB_DATABASE, DB_PASSWORD, DB_SERVER, DB_USER } from "../src/config.js";
 
 export const dbSettings = {
+  host: DB_SERVER,
   user: DB_USER,
   password: DB_PASSWORD,
-  server: DB_SERVER,
   database: DB_DATABASE,
-  options: {
-    encrypt: true, // PARA QUE FUNCIONE CON AZURE
-    trustServerCertificate: true,
-  },
 };
 
 export const getConnection = async () => {
   try {
-    const pool = await sql.connect(dbSettings);
-    return pool;
+    const connection = await mysql.createConnection(dbSettings);
+    return connection;
   } catch (error) {
     console.error(error);
   }
 };
 
-export { sql };
+export { mysql };
