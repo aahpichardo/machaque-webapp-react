@@ -1,5 +1,4 @@
-/* RegisterCard.css */
-
+/* Estilo del contenedor principal */
 .registro {
   display: flex;
   justify-content: center;
@@ -8,75 +7,102 @@
   background-color: #f0f0f0; /* Color de fondo */
 }
 
+/* Estilo del contenedor del formulario */
 .overlap-group-wrapper {
   background: white; /* Fondo blanco para el formulario */
-  border-radius: 8px; /* Bordes redondeados */
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2); /* Sombra */
-  padding: 20px; /* Espaciado interno */
+  border-radius: 12px; /* Bordes redondeados */
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.15); /* Sombra más suave */
+  padding: 30px; /* Espaciado interno */
   width: 400px; /* Ancho del formulario */
   max-width: 90%; /* Ancho máximo */
 }
 
+/* Agrupación de elementos en columna */
 .overlap-group {
   display: flex;
   flex-direction: column; /* Alinear elementos en columna */
 }
 
+/* Estilo del título */
 .text-wrapper-4 {
-  font-size: 24px; /* Tamaño de fuente del título */
-  margin-bottom: 20px; /* Espacio inferior */
+  font-size: 28px; /* Tamaño de fuente del título */
+  margin-bottom: 25px; /* Espacio inferior */
   text-align: center; /* Centrar texto */
+  color: #333; /* Color del texto */
 }
 
+/* Estilo para grupos de entradas */
 .input-group {
-  margin-bottom: 15px; /* Espaciado entre campos */
+  margin-bottom: 20px; /* Espaciado entre campos */
 }
 
+/* Etiqueta de entrada */
 .label {
   display: block; /* Campo de bloque */
-  margin-bottom: 5px; /* Espacio inferior */
+  margin-bottom: 8px; /* Espacio inferior */
+  font-size: 16px; /* Tamaño de fuente de la etiqueta */
+  color: #555; /* Color de la etiqueta */
 }
 
+/* Estilo del campo de entrada */
 .input {
   width: 100%; /* Ancho completo */
-  padding: 10px; /* Espaciado interno */
+  padding: 12px; /* Espaciado interno */
   border: 1px solid #ccc; /* Borde */
-  border-radius: 4px; /* Bordes redondeados */
+  border-radius: 6px; /* Bordes redondeados */
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1); /* Sombra interna */
+  transition: border-color 0.3s; /* Transición suave */
 }
 
+/* Estilo al enfocar el campo de entrada */
+.input:focus {
+  border-color: #007BFF; /* Color de borde al enfocar */
+  outline: none; /* Sin contorno */
+}
+
+/* Estilo del grupo de checkbox */
 .checkbox-group {
-  margin: 10px 0; /* Espaciado vertical */
+  margin: 15px 0; /* Espaciado vertical */
 }
 
+/* Etiqueta del checkbox */
 .checkbox-label {
   margin-left: 8px; /* Espacio entre checkbox y texto */
 }
 
+/* Contenedor para el botón */
 .div-wrapper {
   display: flex;
   justify-content: center; /* Centrar botón */
 }
 
+/* Estilo del botón de enviar */
 .text-wrapper-9 {
   background-color: #007BFF; /* Color del botón */
   color: white; /* Color del texto */
-  padding: 10px 15px; /* Espaciado interno */
+  padding: 12px 20px; /* Espaciado interno */
   border: none; /* Sin borde */
-  border-radius: 4px; /* Bordes redondeados */
+  border-radius: 6px; /* Bordes redondeados */
   cursor: pointer; /* Cursor de puntero */
   transition: background-color 0.3s; /* Transición suave */
+  font-size: 16px; /* Tamaño de fuente del botón */
 }
 
+/* Estilo del botón deshabilitado */
 .text-wrapper-9:disabled {
   background-color: #ccc; /* Color cuando está deshabilitado */
   cursor: not-allowed; /* Cursor de no permitido */
 }
 
+/* Efecto al pasar el ratón sobre el botón */
 .text-wrapper-9:hover:not(:disabled) {
   background-color: #0056b3; /* Color más oscuro al pasar el ratón */
 }
 
+/* Estilo del texto adicional */
 .p {
-  font-size: 12px; /* Tamaño de fuente para texto adicional */
+  font-size: 14px; /* Tamaño de fuente para texto adicional */
   color: #666; /* Color del texto */
+  text-align: center; /* Centrar texto */
+  margin-top: 10px; /* Espacio superior */
 }

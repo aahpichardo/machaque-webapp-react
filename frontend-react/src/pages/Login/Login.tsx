@@ -89,6 +89,9 @@ const Login = () => {
             onChange={handleInputChange} 
           />
         </div>
+        <span>
+        <Link to="/password-recovery">¿Olvidaste tu contraseña?</Link>
+          </span>
         <button type="submit" className="submit-button">Ingresar</button>
       </form>
       <p className="footer-text">

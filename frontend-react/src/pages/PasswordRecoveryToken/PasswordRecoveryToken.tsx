@@ -1,31 +1,45 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import './PasswordRecoveryToken.css'; // Asegúrate de tener el archivo CSS para estilos
 
-const LoginRecuperar: React.FC = () => {
+const TokenRecovery: React.FC = () => {
+  const [token, setToken] = useState('');
+
+  const navigate = useNavigate(); // Hook para redirigir
+
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    // Aquí puedes agregar la lógica para verificar el token
+    console.log("Token ingresado:", token);
+    // Lógica para enviar el token
+    alert("Token correcto");
+    navigate('/new-password');
+  };
+
   return (
-    <div className="login-recuperar">
-      <div className="overlap-group-wrapper">
-        <div className="overlap-group">
-          <div className="rectangle"></div>
-          <div className="div"></div>
-          <div className="rectangle-2"></div>
-          <div className="text-wrapper">Iniciar sesión</div>
-          <div className="text-wrapper-2">Correo</div>
-          <div className="text-wrapper-3">Contraseña</div>
-          <div className="text-wrapper-4">Ingresar</div>
-          <div className="text-wrapper-5">Bienvenido a nuestra app</div>
-          <div className="text-wrapper-6">Olvidé mi contraseña</div>
-          <div className="text-wrapper-7">Aviso de privacidad</div>
-          <div className="rectangle-3"></div>
-          <div className="rectangle-4"></div>
-          <div className="rectangle-2"></div>
-          <div className="text-wrapper-8">Recuperar contraseña</div>
-          <p className="p">Ingresa el código de recuperación</p>
-          <div className="text-wrapper-9">Recuperar contraseña</div>
-        </div>
+    <div className="token-recovery-container">
+      <div className="form-wrapper">
+        <h2 className="form-title">Token de Recuperación</h2>
+        <form onSubmit={handleSubmit}>
+          <div className="input-group">
+            <label htmlFor="token" className="input-label">Ingresa tu Token</label>
+            <input 
+              type="text" 
+              id="token" 
+              value={token} 
+              onChange={(e) => setToken(e.target.value)} 
+              required 
+              className="input-field"
+            />
+          </div>
+          <div className="button-wrapper">
+            <button type="submit" className="submit-button">Enviar</button>
+          </div>
+        </form>
       </div>
     </div>
   );
 };
 
-export default LoginRecuperar;
+export default TokenRecovery;
+
