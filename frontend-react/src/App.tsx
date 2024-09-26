@@ -7,8 +7,12 @@ import PasswordRecoveryToken from './pages/PasswordRecoveryToken/PasswordRecover
 import Register from './pages/Register/Register';
 import UserProfile from './pages/UserProfile/UserProfile';
 import Home from './pages/Home/Home';
+import PrivateRoute from './components/PrivateRouter'
+import { useAuth } from './contexts/AuthContext'
+import Unauthorized from './components/Unauthorized/Unauthorized'
 
 const App = () => {
+  const { isAuthenticated } = useAuth();
   return (
     <Router>
       <Routes>
@@ -19,7 +23,24 @@ const App = () => {
         <Route path="/password-recovery-token" element={<PasswordRecoveryToken />} />
         <Route path="/register" element={<Register />} />
         <Route path="/user-profile" element={<UserProfile />} />
-        <Route path="/home" element={<Home />} />
+        {/*<Route path="/home" element={<Home />} />*/}
+        {/* Protegiendo las rutas */}
+        <Route 
+          path="/user-profile" 
+          element={
+            <PrivateRoute isAuthenticated={isAuthenticated}>
+              <UserProfile />
+            </PrivateRoute>
+          } 
+        />
+        <Route 
+          path="/home" 
+          element={
+            <PrivateRoute isAuthenticated={isAuthenticated}>
+              <Home />
+            </PrivateRoute>
+          } 
+        />
         {/* Agrega una ruta por defecto o un 404 aquí si es necesario */}
       </Routes>
     </Router>

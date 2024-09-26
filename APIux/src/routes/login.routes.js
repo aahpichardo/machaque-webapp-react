@@ -18,7 +18,7 @@ router.post('/login', async (req, res) => {
   const token = generateToken(result.user);
 
   // ENVÍO DEL TOKEN COMO RESPUESTA
-  res.status(200).json({ message: 'Inicio de sesión exitoso', token });
+  res.status(200).json({token, user: result.user});
 });
 
 export default router;

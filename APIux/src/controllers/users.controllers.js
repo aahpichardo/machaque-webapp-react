@@ -7,13 +7,13 @@ export const checkUserInDatabase = async (email, password) => {
     const connection = await getConnection();
 
     const [rows] = await connection.execute(
-      'SELECT PASSWORD_HASH FROM USERS WHERE EMAIL = ?',
+      'SELECT * FROM USERS WHERE EMAIL = ?',
       [email]
     );
 
     if (rows.length > 0) {
       const user = rows[0];
-      const passwordMatch = await bcrypt.compare(password, user.PASSWORD_HASH);
+      const passwordMatch = await bcrypt.compare(password, user.password_hash);
 
       if (passwordMatch) {
         return {
@@ -70,12 +70,29 @@ export const postNewUser = async (req, res) => {
 };
 
 // POST CERRAR SESION
+export const postLogout = async (req, res) => {
+  try {
+    const { user_id} = req.body;
+
+    const connection = await getConnection();
+
+    const [rows] = await connection.execute(
+      'UPDATE USERS SET user_status = 0 WHERE ID_USER = ?',
+      [user_id]
+    );
+
+    return res.status(200).json({ message: 'Sesión cerrada exitosamente.' });
+  } catch (error) {
+    res.status(500);
+    res.send(error.message);
+  }
+};
 
 // POST RECUPEAR CONTRASEÑA
 // Y cuando vaya a ser lo de recuperar contraseña, que busque el email sea válido, si es, que genere un código aleatorio con un random como de 6 carácteres, luego que diga que se lo mandaron al correo, lo introduzca, lo vuelva a validar y ya dejé cambiar la contraseña
 
-// GET DATOS DEL USUARIO POR ID DE USUARIO
-export const postDataUser = async (req, res) => {
+// GET DATOS DEL USUARIO POR ID DE USUARIO ---- ejemplo
+/*export const postDataUser = async (req, res) => {
   try {
     const connection = await getConnection();
 
@@ -89,4 +106,4 @@ export const postDataUser = async (req, res) => {
     res.status(500);
     res.send(error.message);
   }
-};
+}; */

@@ -1,15 +1,16 @@
 import React from 'react';
 import { Link, useNavigate } from 'react-router-dom'; // Importa useNavigate
+import { useAuth } from '../../contexts/AuthContext'; // Asegúrate de ajustar la ruta
 import './NavBar.css';
 import logo from '../../assets/logo.jpeg';
 
 const Navbar: React.FC = () => {
   const navigate = useNavigate(); // Hook para redirigir
+  const { logout } = useAuth(); // Accede a la función logout del contexto
 
   const handleLogout = () => {
     console.log("Cerrando sesión..."); // Mensaje en consola
-    // Aquí podrías agregar lógica adicional, como limpiar el estado de autenticación
-
+    logout(); // Establece isAuthenticated en false
     navigate('/login'); // Redirige a la página de login
   };
 
@@ -30,4 +31,5 @@ const Navbar: React.FC = () => {
 };
 
 export default Navbar;
+
 
