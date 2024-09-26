@@ -1,5 +1,6 @@
 import React, { useState, ChangeEvent, FormEvent } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import { useAuth } from '../../contexts/AuthContext'; // Asegúrate de importar el hook
 import Modal from '../../components/ModalAvisos/ModalAvisos'; // Asegúrate de importar el modal
 import './Login.css';
 import axios from 'axios';
@@ -20,6 +21,8 @@ const Login = () => {
     password: ""
   });
 
+  const { login, isAuthenticated } = useAuth(); // Usar el hook de autenticación
+
   const [error, setError] = useState<string | null>(null); // Para manejar errores si es necesario
   const navigate = useNavigate(); // Hook para redirigir
 
@@ -34,6 +37,7 @@ const Login = () => {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     console.log("iniciando sesion...")
+    login();
     navigate('/home');
 
     /*
@@ -98,8 +102,9 @@ const Login = () => {
         ¿Nuevo por aquí? <Link to="/register">Regístrate</Link>
       </p>
       <p className="footer-text">
-        <a href="#" onClick={openModal}>Aviso de privacidad</a>
-      </p>
+        <button onClick={openModal} style={{ background: 'none', border: 'none', color: 'blue', textDecoration: 'underline', cursor: 'pointer' }}>
+          Aviso de privacidad
+        </button>      </p>
       <Modal 
         title="Aviso de Privacidad" 
         content="Aviso de Privacidad y Confidencialidad de la Información

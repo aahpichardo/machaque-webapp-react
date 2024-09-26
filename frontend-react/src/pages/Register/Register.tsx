@@ -99,7 +99,7 @@ const Register: React.FC = () => {
                 onChange={() => setAcceptedPrivacy(!acceptedPrivacy)}
               />
               <label htmlFor="privacy" className="checkbox-label">
-                He leído y acepto el <a href="#" onClick={openModalPrivacy}>aviso de privacidad</a>
+                He leído y acepto el <button onClick={openModalPrivacy} style={{ background: 'none', border: 'none', color: 'blue', textDecoration: 'underline', cursor: 'pointer' }}>aviso de privacidad</button>
               </label>
             </div>
             <div className="checkbox-group">
@@ -110,7 +110,7 @@ const Register: React.FC = () => {
                 onChange={() => setAcceptedTerms(!acceptedTerms)}
               />
               <label htmlFor="terms" className="checkbox-label">
-                He leído y acepto los <a href="#" onClick={openModalTerms}>términos y condiciones</a>
+                He leído y acepto los <button onClick={openModalTerms} style={{ background: 'none', border: 'none', color: 'blue', textDecoration: 'underline', cursor: 'pointer' }}>términos y condiciones</button>
               </label>
             </div>
             <div className="div-wrapper">
@@ -120,7 +120,7 @@ const Register: React.FC = () => {
             </div>
           </form>
           <span>
-            ¿Ya tienes una cuenta? <Link to="/login">Inicia sesión aquí</Link>
+          ¿Ya tienes una cuenta? <Link to="/login">Inicia sesión aquí</Link>
           </span>
           <Modal 
             title="Aviso de Privacidad" 

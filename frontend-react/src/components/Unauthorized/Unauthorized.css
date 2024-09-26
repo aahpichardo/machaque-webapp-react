@@ -1,0 +1,39 @@
+.no-permission-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh; /* Ocupa toda la altura de la ventana */
+    background-color: #f8d7da; /* Color de fondo suave para un mensaje de advertencia */
+    color: #721c24; /* Color del texto para hacer resaltar el mensaje */
+    text-align: center;
+    padding: 20px;
+    border: 1px solid #f5c6cb; /* Borde para definir el área del mensaje */
+    border-radius: 8px; /* Bordes redondeados */
+  }
+  
+  .no-permission-container h1 {
+    font-size: 2rem; /* Tamaño del encabezado */
+    margin-bottom: 10px; /* Espacio entre el título y el párrafo */
+  }
+  
+  .no-permission-container p {
+    font-size: 1rem; /* Tamaño del párrafo */
+  }
+
+  .no-permission-container {
+    text-align: center;
+    padding: 20px;
+  }
+  
+  .link-button {
+    background: none;
+    border: none;
+    color: blue;
+    text-decoration: underline;
+    cursor: pointer;
+    font-size: inherit;
+    font-family: inherit;
+    padding: 0;
+  }
+  
