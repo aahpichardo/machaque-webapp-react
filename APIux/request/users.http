@@ -7,4 +7,4 @@ POST http://localhost:3000/api/login
 #{ "email": "brandon.chacon@gmail.com", "password": "hola#123" }
 
 ### POST USUARIO
-POST http://localhost:3000/api/data/user
+# POST http://localhost:3000/api/data/user

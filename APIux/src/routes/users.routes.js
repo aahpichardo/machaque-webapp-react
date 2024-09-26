@@ -1,8 +1,8 @@
 import { Router } from "express";
 import { authMiddleware } from '../middlewares/authMiddleware.js';
 import { 
-    postDataUser,
     postNewUser
+    // postDataUser,
 } from "../controllers/users.controllers.js";
 
 const router = Router();
@@ -11,6 +11,6 @@ const router = Router();
 router.post("/user/new", postNewUser);
 
 // GET DATA USER POR ID DE USUARIO
-router.post("/data/user", authMiddleware, postDataUser);
+// router.post("/data/user", authMiddleware, postDataUser);
 
 export default router;
