@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import Modal from '../../components/ModalAvisos/ModalAvisos'; // Asegúrate de importar el modal
 import './Register.css'; // Importa el archivo de estilos
 
@@ -9,15 +9,59 @@ const Register: React.FC = () => {
   const [acceptedPrivacy, setAcceptedPrivacy] = useState(false);
   const [acceptedTerms, setAcceptedTerms] = useState(false);
 
+  // Estado para almacenar los datos del usuario
+  const [userData, setUserData] = useState({
+    user_name: '',
+    user_last_name: '',
+    email: '',
+    password: '',
+    created_at: new Date().toISOString().split('T')[0], // Fecha actual en formato YYYY-MM-DD
+    last_login: new Date().toISOString().split('T')[0], // Fecha actual en formato YYYY-MM-DD
+    fk_user_role: 1, // Asigna el rol correspondiente
+    fk_endorsement_id: 1, // Asigna el endorsement correspondiente
+    user_status: 1 // Estado del usuario (activo/inactivo)
+  });
+
+  const navigate = useNavigate(); // Hook para redirigir
+
   const openModalPrivacy = () => setModalOpenPrivacy(true);
   const closeModalPrivacy = () => setModalOpenPrivacy(false);
 
   const openModalTerms = () => setModalOpenTerms(true);
   const closeModalTerms = () => setModalOpenTerms(false);
 
+  // Maneja los cambios en los campos de entrada
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { id, value } = e.target;
+    setUserData((prevState) => ({
+      ...prevState,
+      [id]: value
+    }));
+  };
+
+  // Maneja el envío del formulario
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    // Aquí puedes agregar la lógica para manejar el registro
+    console.log(userData); // Aquí puedes manejar el envío de datos, como hacer una llamada a la API
+    alert('Registro exitoso');
+    navigate('/login');
+
+        /*try {
+      const response = await axios.post<LoginResponse>("http://localhost:3000/api/login", loginData);
+
+      // Si la respuesta es exitosa y contiene el mensaje esperado
+      if (response.data.message === "inicio de sesion exitoso") {
+        console.log("Sesión iniciada con éxito");
+        // Redirige a la página de inicio
+        navigate('/home');
+      } else {
+        setError("Error al iniciar sesión. Verifique sus credenciales.");
+      }
+    } catch (error) {
+      console.error("Error al iniciar sesión:", error);
+      alert("Ocurrió un error. Por favor, intente de nuevo.");
+      setError("Ocurrió un error. Por favor, intente de nuevo.");
+    }*/
   };
 
   return (
@@ -27,20 +71,20 @@ const Register: React.FC = () => {
           <div className="text-wrapper-4">Registro</div>
           <form onSubmit={handleSubmit}>
             <div className="input-group">
-              <label className="label" htmlFor="name">Nombre</label>
-              <input type="text" id="name" className="input" required />
+              <label className="label" htmlFor="user_name">Nombre</label>
+              <input type="text" id="user_name" className="input" required onChange={handleChange} />
             </div>
             <div className="input-group">
-              <label className="label" htmlFor="surname">Apellido</label>
-              <input type="text" id="surname" className="input" required />
+              <label className="label" htmlFor="user_last_name">Apellido</label>
+              <input type="text" id="user_last_name" className="input" required onChange={handleChange} />
             </div>
             <div className="input-group">
               <label className="label" htmlFor="email">Correo</label>
-              <input type="email" id="email" className="input" required />
+              <input type="email" id="email" className="input" required onChange={handleChange} />
             </div>
             <div className="input-group">
               <label className="label" htmlFor="password">Contraseña</label>
-              <input type="password" id="password" className="input" required />
+              <input type="password" id="password" className="input" required onChange={handleChange} />
             </div>
             <div className="input-group">
               <label className="label" htmlFor="confirm-password">Confirmar contraseña</label>
@@ -75,9 +119,12 @@ const Register: React.FC = () => {
               </button>
             </div>
           </form>
-                <Modal 
-        title="Aviso de Privacidad" 
-        content="Aviso de Privacidad y Confidencialidad de la Información
+          <span>
+            ¿Ya tienes una cuenta? <Link to="/login">Inicia sesión aquí</Link>
+          </span>
+          <Modal 
+            title="Aviso de Privacidad" 
+            content="Aviso de Privacidad y Confidencialidad de la Información
 En Machaque, estamos comprometidos con la protección de la privacidad y la confidencialidad de la información de nuestros usuarios. Este aviso describe cómo recopilamos, usamos, almacenamos y protegemos los datos personales que usted proporciona al utilizar nuestra plataforma.
 1. Recopilación de DatosRecopilamos información personal que incluye, pero no se limita a: nombre, dirección de correo electrónico, número de teléfono, y cualquier otro dato que usted ingrese al registrarse o utilizar nuestros servicios.
 2. Uso de la InformaciónLa información personal proporcionada será utilizada únicamente para los fines establecidos en nuestra plataforma, tales como la gestión de su cuenta, la mejora de la experiencia del usuario, y la seguridad de la plataforma.
@@ -85,9 +132,9 @@ En Machaque, estamos comprometidos con la protección de la privacidad y la conf
 4. Derechos del UsuarioUsted tiene el derecho de acceder, rectificar, cancelar u oponerse al uso de sus datos personales. Para ejercer estos derechos, por favor comuníquese con nuestro equipo a través del correo electrónico [correo de contacto].
 5. Modificaciones al Aviso de PrivacidadNos reservamos el derecho de actualizar este aviso en cualquier momento. Cualquier modificación será publicada en nuestra plataforma.
 Fecha de última actualización: 25/septiembre/2024" 
-isOpen={isModalOpenPrivacy} 
-onClose={closeModalPrivacy} 
-      />
+            isOpen={isModalOpenPrivacy} 
+            onClose={closeModalPrivacy} 
+          />
           <Modal 
             title="Términos y Condiciones" 
             content="Términos y Condiciones de Uso
@@ -107,3 +154,10 @@ El uso de la plataforma Machaque está sujeto a los siguientes términos y condi
 };
 
 export default Register;
+
+
+
+
+
+
+

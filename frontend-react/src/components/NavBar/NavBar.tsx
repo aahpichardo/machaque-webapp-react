@@ -20,9 +20,9 @@ const Navbar: React.FC = () => {
       </div>
       <ul className="navbar-links">
         <li><Link to="/home">Inicio</Link></li>
-        <li><Link to="/about">Acerca de</Link></li>
+        {/*<li><Link to="/about">Acerca de</Link></li>
         <li><Link to="/services">Servicios</Link></li>
-        <li><Link to="/contact">Contacto</Link></li>
+        <li><Link to="/contact">Contacto</Link></li>*/}
       </ul>
       <button className="logout-button" onClick={handleLogout}>Cerrar sesión</button>
     </nav>

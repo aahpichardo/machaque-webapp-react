@@ -1,76 +1,97 @@
 /* Modal.css */
 
 .modal-overlay {
-    position: fixed; /* Fijo para cubrir toda la pantalla */
-    top: 0; /* Alineado a la parte superior */
-    left: 0; /* Alineado a la izquierda */
-    right: 0; /* Alineado a la derecha */
-    bottom: 0; /* Alineado a la parte inferior */
-    background-color: rgba(0, 0, 0, 0.5); /* Fondo oscuro con transparencia */
-    display: flex; /* Flexbox para centrar el contenido */
-    align-items: center; /* Centrar verticalmente */
-    justify-content: center; /* Centrar horizontalmente */
-    z-index: 1000; /* Mantener por encima de otros elementos */
-  }
-  
+  position: fixed; /* Fijo para cubrir toda la pantalla */
+  top: 0; /* Alineado a la parte superior */
+  left: 0; /* Alineado a la izquierda */
+  right: 0; /* Alineado a la derecha */
+  bottom: 0; /* Alineado a la parte inferior */
+  background-color: rgba(0, 0, 0, 0.5); /* Fondo oscuro con transparencia */
+  display: flex; /* Flexbox para centrar el contenido */
+  align-items: center; /* Centrar verticalmente */
+  justify-content: center; /* Centrar horizontalmente */
+  z-index: 1000; /* Mantener por encima de otros elementos */
+}
+
+.modal {
+  background: white; /* Fondo blanco para el modal */
+  padding: 20px; /* Espaciado interno */
+  border-radius: 8px; /* Bordes redondeados */
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2); /* Sombra */
+  width: 100%; /* Ancho del modal */
+  max-width: 600px; /* Ancho máximo */
+  overflow-y: auto; /* Desplazamiento vertical si el contenido es extenso */
+  max-height: 80vh; /* Altura máxima del modal */
+}
+
+.modal-header {
+  display: flex; /* Flexbox para el encabezado */
+  justify-content: space-between; /* Espaciado entre título y botón */
+  align-items: center; /* Centrar verticalmente */
+}
+
+.modal-title {
+  margin: 0; /* Sin margen */
+  font-size: 20px; /* Tamaño de fuente */
+}
+
+.close-button {
+  background: none; /* Sin fondo */
+  border: none; /* Sin borde */
+  font-size: 20px; /* Tamaño de fuente */
+  cursor: pointer; /* Cursor de puntero */
+}
+
+.modal-body {
+  margin: 15px 0; /* Espaciado superior e inferior */
+  text-align: center; /* Alinear al centro */
+}
+
+.modal-text {
+  font-size: 14px; /* Tamaño de fuente */
+  color: #333; /* Color del texto */
+  line-height: 1.5; /* Altura de línea */
+  margin: 10px 0; /* Margen superior e inferior */
+  font-family: Arial, sans-serif; /* Familia de fuentes */
+  text-align: justify; /* Justificar texto */
+}
+
+.modal-footer {
+  display: flex; /* Flexbox para el pie */
+  justify-content: flex-end; /* Alinear a la derecha */
+}
+
+.modal-button {
+  background-color: #007BFF; /* Color del botón */
+  color: white; /* Color del texto */
+  padding: 10px 15px; /* Espaciado interno */
+  border: none; /* Sin borde */
+  border-radius: 4px; /* Bordes redondeados */
+  cursor: pointer; /* Cursor de puntero */
+  transition: background-color 0.3s; /* Transición suave */
+}
+
+.modal-button:hover {
+  background-color: #0056b3; /* Color más oscuro al pasar el ratón */
+}
+
+/* Estilos para pantallas pequeñas */
+@media (max-width: 480px) {
   .modal {
-    background: white; /* Fondo blanco para el modal */
-    padding: 20px; /* Espaciado interno */
-    border-radius: 8px; /* Bordes redondeados */
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2); /* Sombra */
-    width: 400px; /* Ancho del modal */
-    max-width: 90%; /* Ancho máximo */
+      padding: 15px; /* Espaciado interno más pequeño */
   }
-  
-  .modal-header {
-    display: flex; /* Flexbox para el encabezado */
-    justify-content: space-between; /* Espaciado entre título y botón */
-    align-items: center; /* Centrar verticalmente */
-  }
-  
+
   .modal-title {
-    margin: 0; /* Sin margen */
-    font-size: 20px; /* Tamaño de fuente */
-  }
-  
-  .close-button {
-    background: none; /* Sin fondo */
-    border: none; /* Sin borde */
-    font-size: 20px; /* Tamaño de fuente */
-    cursor: pointer; /* Cursor de puntero */
-  }
-  
-  .modal-body {
-    margin: 15px 0; /* Espaciado superior e inferior */
-    text-align: center; /* Alinear al centro */
-    align-items: justified; /* Justificar texto */
+      font-size: 18px; /* Tamaño de fuente más pequeño */
   }
 
   .modal-text {
-    font-size: 14px; /* Tamaño de fuente */
-    color: #333; /* Color del texto */
-    line-height: 1.5; /* Altura de línea */
-    margin: 10px 0; /* Margen superior e inferior */
-    font-family: Arial, sans-serif; /* Familia de fuentes */
-    text-align: justify;
-}
-  
-  .modal-footer {
-    display: flex; /* Flexbox para el pie */
-    justify-content: flex-end; /* Alinear a la derecha */
+      font-size: 12px; /* Tamaño de fuente más pequeño */
   }
-  
+
   .modal-button {
-    background-color: #007BFF; /* Color del botón */
-    color: white; /* Color del texto */
-    padding: 10px 15px; /* Espaciado interno */
-    border: none; /* Sin borde */
-    border-radius: 4px; /* Bordes redondeados */
-    cursor: pointer; /* Cursor de puntero */
-    transition: background-color 0.3s; /* Transición suave */
+      padding: 8px 10px; /* Espaciado interno más pequeño */
   }
-  
-  .modal-button:hover {
-    background-color: #0056b3; /* Color más oscuro al pasar el ratón */
-  }
+}
+
   

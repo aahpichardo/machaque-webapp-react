@@ -36,22 +36,25 @@ const Login = () => {
     console.log("iniciando sesion...")
     navigate('/home');
 
+    /*
     try {
-      const response = await axios.post<LoginResponse>("http://localhost:3000/api/login", loginData);
+      const response = await axios.post("http://localhost:3000/api/user/new", userData);
 
       // Si la respuesta es exitosa y contiene el mensaje esperado
-      if (response.data.message === "inicio de sesion exitoso") {
-        console.log("Sesión iniciada con éxito");
-        // Redirige a la página de inicio
+      if (response.data.message === "registro exitoso") {
+        console.log("Usuario registrado con éxito");
+        // Redirige a la página de inicio o a donde desees
         navigate('/home');
       } else {
-        setError("Error al iniciar sesión. Verifique sus credenciales.");
+        setError("Error al registrar. Verifique los datos.");
       }
     } catch (error) {
-      console.error("Error al iniciar sesión:", error);
+      console.error("Error al registrar usuario:", error);
       alert("Ocurrió un error. Por favor, intente de nuevo.");
       setError("Ocurrió un error. Por favor, intente de nuevo.");
     }
+  };
+    }*/
   };
 
   // Lógica modal
