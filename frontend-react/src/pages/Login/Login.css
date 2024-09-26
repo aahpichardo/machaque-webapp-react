@@ -1,0 +1,90 @@
+/* LoginCard.css */
+
+body {
+    margin: 0; /* Sin márgenes */
+    padding: 0; /* Sin relleno */
+    font-family: Arial, sans-serif; /* Fuente general */
+    background-color: #f4f4f4; /* Color de fondo */
+  }
+  
+  .login-card {
+    display: flex;
+    flex-direction: column; /* Disposición en columna */
+    align-items: center; /* Centrar elementos horizontalmente */
+    justify-content: center; /* Centrar elementos verticalmente */
+    width: 400px; /* Ancho de la tarjeta */
+    padding: 20px; /* Espaciado interno */
+    border-radius: 8px; /* Bordes redondeados */
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2); /* Sombra de la tarjeta */
+    background-color: white; /* Color de fondo de la tarjeta */
+    margin: auto; /* Centrar en la página */
+    margin-top: 100px; /* Espacio superior para centrar en la página */
+  }
+  
+  .title {
+    font-size: 24px; /* Tamaño de fuente del título */
+    margin-bottom: 20px; /* Espacio debajo del título */
+    text-align: center; /* Centrar título */
+  }
+  
+  .form {
+    width: 100%; /* Ancho completo */
+  }
+  
+  .input-group {
+    margin-bottom: 15px; /* Espacio entre campos de entrada */
+  }
+  
+  .label {
+    display: block; /* Bloque para que la etiqueta ocupe toda la línea */
+    margin-bottom: 5px; /* Espacio debajo de la etiqueta */
+    font-size: 16px; /* Tamaño de fuente de la etiqueta */
+  }
+  
+  .input {
+    width: 100%; /* Ancho completo */
+    padding: 10px; /* Espaciado interno */
+    border: 1px solid #ccc; /* Borde */
+    border-radius: 4px; /* Bordes redondeados */
+    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1); /* Sombra interna */
+    transition: border-color 0.3s; /* Transición suave para el enfoque */
+  }
+  
+  .input:focus {
+    border-color: #007BFF; /* Color de borde al enfocar */
+    outline: none; /* Sin contorno */
+  }
+  
+  .submit-button {
+    background-color: #007BFF; /* Color de fondo del botón */
+    color: white; /* Color del texto del botón */
+    padding: 10px; /* Espaciado interno */
+    border: none; /* Sin borde */
+    border-radius: 4px; /* Bordes redondeados */
+    cursor: pointer; /* Cambia el cursor al pasar el ratón */
+    width: 100%; /* Ancho completo */
+    font-weight: bold; /* Negrita */
+    transition: background-color 0.3s; /* Transición para el color de fondo */
+  }
+  
+  .submit-button:hover {
+    background-color: #0056b3; /* Color más oscuro al pasar el ratón */
+  }
+  
+  .footer-text {
+    text-align: center; /* Centrar texto */
+    margin: 10px 0; /* Espaciado vertical */
+    color: #555; /* Color del texto */
+  }
+  
+  .footer-text a {
+    color: #007BFF; /* Color de enlaces */
+    text-decoration: none; /* Sin subrayado */
+  }
+  
+  .footer-text a:hover {
+    text-decoration: underline; /* Subrayar al pasar el ratón */
+  }
+  
+  
+  

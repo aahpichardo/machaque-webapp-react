@@ -1,25 +1,22 @@
-import { Component } from '@angular/core';
-import { OnInit, HostListener } from '@angular/core';
-
+import { Component, OnInit, HostListener } from '@angular/core';
+import { ModalService } from './modal/modal.service'; // Asegúrate de la ruta correcta
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
-  styleUrl: './login.component.css'
+  styleUrls: ['./login.component.css']
 })
-export class LoginComponent {
-  
-}
-
-
-export class ModalComponent implements OnInit {
+export class LoginComponent implements OnInit {
   isModalOpen = false;
 
-  constructor() {}
+  constructor(private modalService: ModalService) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.isModalOpen = this.modalService.isModalOpen();
+  }
 
   openModal(): void {
+    this.modalService.open();
     this.isModalOpen = true;
     document.body.style.overflow = 'hidden';
     setTimeout(() => {
@@ -28,6 +25,7 @@ export class ModalComponent implements OnInit {
   }
 
   closeModal(): void {
+    this.modalService.close();
     this.isModalOpen = false;
     document.body.style.overflow = 'auto';
   }
@@ -77,3 +75,4 @@ export class ModalComponent implements OnInit {
     }
   }
 }
+

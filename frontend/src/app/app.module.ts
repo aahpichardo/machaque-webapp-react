@@ -9,6 +9,7 @@ import { PasswordRecoveryComponent } from './pages/password-recovery/password-re
 import { PasswordRecoveryTokenComponent } from './pages/password-recovery-token/password-recovery-token.component';
 import { RegisterComponent } from './pages/register/register.component';
 import { UserProfileComponent } from './pages/user-profile/user-profile.component';
+import { ModalService} from './pages/login/modal/modal.service'
 
 @NgModule({
   declarations: [
@@ -24,7 +25,7 @@ import { UserProfileComponent } from './pages/user-profile/user-profile.componen
     BrowserModule,
     AppRoutingModule
   ],
-  providers: [],
+  providers: [ModalService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
