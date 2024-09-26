@@ -1,35 +1,67 @@
+import bcrypt from 'bcrypt';
 import { getConnection } from "../../database/connection.js";
 
 // CONSULTA DE USUARIOS PARA GENERAR EL TOKEN DE ACCESO
-export const checkUserInDatabase = async (id_usuario, correo) => {
+export const checkUserInDatabase = async (email, password) => {
   try {
     const connection = await getConnection();
 
     const [rows] = await connection.execute(
-      'SELECT * FROM USUARIOS WHERE ID_USUARIO = ? AND CORREO = ?',
-      [id_usuario, correo]
+      'SELECT PASSWORD_HASH FROM USERS WHERE EMAIL = ?',
+      [email]
     );
 
     if (rows.length > 0) {
-      return rows[0]; // Devuelve el primer usuario que coincida
+      const user = rows[0];
+      const passwordMatch = await bcrypt.compare(password, user.PASSWORD_HASH);
+
+      if (passwordMatch) {
+        return {
+          status: 200,
+          message: 'Usuario autenticado exitosamente',
+          user: user
+        };
+      } else {
+        return {
+          status: 401,
+          message: 'Contraseña incorrecta'
+        };
+      }
     } else {
-      return null; // No se encontró ningún usuario que coincida
+      return {
+        status: 404,
+        message: 'Usuario no encontrado'
+      };
     }
   } catch (err) {
     console.error(err);
-    return null;
+    return {
+      status: 500,
+      message: 'Error en la base de datos'
+    };
   }
 };
 
-// POST REGISTRO DE USUARIO
+// POST REGISTRO DE UN NUEVO USUARIO
 export const postNewUser = async (req, res) => {
+  const { user_name, user_last_name, email, password, created_at, last_login, fk_user_role, fk_endorsement_id, user_status } = req.body;
+
+  if (!user_name || !email || !password) {
+    return res.status(400).json({ message: "Nombre de usuario, correo electrónico y contraseña son requeridos" });
+  }
+
   try {
+    // Hashear la contraseña
+    const saltRounds = 10;
+    const password_hash = await bcrypt.hash(password, saltRounds);
+
     const connection = await getConnection();
 
     const [rows] = await connection.execute(
-      'INSERT INTO USERS (user_name, user_last_name, email, password_hash, created_at, last_login, user_role, user_status, privacy_notice) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)',
-      [user_name, user_last_name, email, password_hash, created_at, last_login, user_role, user_status, privacy_notice]
+      'INSERT INTO USERS (user_name, user_last_name, email, password_hash, created_at, last_login, fk_user_role, fk_endorsement_id, user_status) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)',
+      [user_name, user_last_name, email, password_hash, created_at, last_login, fk_user_role, fk_endorsement_id, user_status]
     );
+
     return res.status(200).json({ message: 'Usuario creado exitosamente.' });
   } catch (error) {
     res.status(500);
