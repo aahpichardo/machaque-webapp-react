@@ -1,0 +1,269 @@
+.registro {
+    background-color: #f3f4f6;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    width: 100%;
+  }
+  
+  .registro .overlap-group-wrapper {
+    background-color: #f3f4f6;
+    width: 1920px;
+    height: 1080px;
+  }
+  
+  .registro .overlap-group {
+    position: relative;
+    width: 900px;
+    height: 900px;
+    top: 67px;
+    left: 509px;
+    background-color: #ffffff;
+    border-radius: 25px;
+  }
+  
+  .registro .overlap {
+    position: absolute;
+    width: 681px;
+    height: 104px;
+    top: 372px;
+    left: 108px;
+  }
+  
+  .registro .rectangle {
+    width: 681px;
+    height: 63px;
+    top: 0;
+    left: 0;
+    border-radius: 15px;
+    position: absolute;
+    border: 3px solid;
+    border-color: #d9d9d9;
+  }
+  
+  .registro .text-wrapper {
+    position: absolute;
+    width: 230px;
+    top: 62px;
+    left: 0;
+    font-family: "Inter", Helvetica;
+    font-weight: 400;
+    color: #000000;
+    font-size: 36px;
+    letter-spacing: 0;
+    line-height: normal;
+    white-space: nowrap;
+  }
+  
+  .registro .div {
+    position: absolute;
+    width: 340px;
+    height: 104px;
+    top: 267px;
+    left: 109px;
+  }
+  
+  .registro .rectangle-2 {
+    width: 340px;
+    height: 63px;
+    top: 0;
+    left: 0;
+    border-radius: 15px;
+    position: absolute;
+    border: 3px solid;
+    border-color: #d9d9d9;
+  }
+  
+  .registro .text-wrapper-2 {
+    position: absolute;
+    width: 230px;
+    top: 62px;
+    left: 1px;
+    font-family: "Inter", Helvetica;
+    font-weight: 400;
+    color: #000000;
+    font-size: 36px;
+    letter-spacing: 0;
+    line-height: normal;
+    white-space: nowrap;
+  }
+  
+  .registro .rectangle-3 {
+    width: 340px;
+    height: 63px;
+    top: 267px;
+    left: 452px;
+    border-radius: 15px;
+    position: absolute;
+    border: 3px solid;
+    border-color: #d9d9d9;
+  }
+  
+  .registro .rectangle-4 {
+    width: 681px;
+    height: 63px;
+    top: 582px;
+    left: 108px;
+    border-radius: 15px;
+    position: absolute;
+    border: 3px solid;
+    border-color: #d9d9d9;
+  }
+  
+  .registro .rectangle-5 {
+    width: 30px;
+    height: 30px;
+    top: 667px;
+    left: 107px;
+    border-radius: 5px;
+    position: absolute;
+    border: 3px solid;
+    border-color: #d9d9d9;
+  }
+  
+  .registro .rectangle-6 {
+    width: 30px;
+    height: 30px;
+    top: 719px;
+    left: 107px;
+    border-radius: 5px;
+    position: absolute;
+    border: 3px solid;
+    border-color: #d9d9d9;
+  }
+  
+  .registro .overlap-2 {
+    position: absolute;
+    width: 681px;
+    height: 104px;
+    top: 477px;
+    left: 108px;
+  }
+  
+  .registro .text-wrapper-3 {
+    position: absolute;
+    width: 506px;
+    top: 62px;
+    left: 0;
+    font-family: "Inter", Helvetica;
+    font-weight: 400;
+    color: #000000;
+    font-size: 36px;
+    letter-spacing: 0;
+    line-height: normal;
+    white-space: nowrap;
+  }
+  
+  .registro .p {
+    position: absolute;
+    width: 652px;
+    top: 21px;
+    left: 15px;
+    font-family: "Inter", Helvetica;
+    font-weight: 400;
+    color: #999999;
+    font-size: 16px;
+    letter-spacing: 0;
+    line-height: normal;
+    white-space: nowrap;
+  }
+  
+  .registro .text-wrapper-4 {
+    position: absolute;
+    width: 141px;
+    top: 71px;
+    left: 381px;
+    font-family: "Inter", Helvetica;
+    font-weight: 400;
+    color: #000000;
+    font-size: 36px;
+    letter-spacing: 0;
+    line-height: normal;
+  }
+  
+  .registro .text-wrapper-5 {
+    position: absolute;
+    width: 230px;
+    top: 224px;
+    left: 107px;
+    font-family: "Inter", Helvetica;
+    font-weight: 400;
+    color: #000000;
+    font-size: 36px;
+    letter-spacing: 0;
+    line-height: normal;
+    white-space: nowrap;
+  }
+  
+  .registro .text-wrapper-6 {
+    position: absolute;
+    width: 230px;
+    top: 217px;
+    left: 452px;
+    font-family: "Inter", Helvetica;
+    font-weight: 400;
+    color: #000000;
+    font-size: 36px;
+    letter-spacing: 0;
+    line-height: normal;
+    white-space: nowrap;
+  }
+  
+  .registro .text-wrapper-7 {
+    position: absolute;
+    width: 452px;
+    top: 666px;
+    left: 162px;
+    font-family: "Inter", Helvetica;
+    font-weight: 400;
+    color: #000000;
+    font-size: 24px;
+    letter-spacing: 0;
+    line-height: normal;
+  }
+  
+  .registro .overlap-3 {
+    position: absolute;
+    width: 554px;
+    height: 29px;
+    top: 719px;
+    left: 162px;
+  }
+  
+  .registro .text-wrapper-8 {
+    position: absolute;
+    width: 554px;
+    top: 0;
+    left: 0;
+    font-family: "Inter", Helvetica;
+    font-weight: 400;
+    color: #000000;
+    font-size: 24px;
+    letter-spacing: 0;
+    line-height: normal;
+  }
+  
+  .registro .div-wrapper {
+    position: absolute;
+    width: 681px;
+    height: 78px;
+    top: 773px;
+    left: 94px;
+    background-color: #000000;
+    border-radius: 25px;
+  }
+  
+  .registro .text-wrapper-9 {
+    position: absolute;
+    width: 208px;
+    top: 17px;
+    left: 253px;
+    font-family: "Inter", Helvetica;
+    font-weight: 400;
+    color: #ffffff;
+    font-size: 36px;
+    letter-spacing: 0;
+    line-height: normal;
+    white-space: nowrap;
+  }
+  
