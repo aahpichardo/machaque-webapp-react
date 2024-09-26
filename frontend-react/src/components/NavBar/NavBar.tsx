@@ -1,9 +1,33 @@
-import React from 'react'
+import React from 'react';
+import { Link, useNavigate } from 'react-router-dom'; // Importa useNavigate
+import './NavBar.css';
+import logo from '../../assets/logo.jpeg';
 
-function NavBar() {
+const Navbar: React.FC = () => {
+  const navigate = useNavigate(); // Hook para redirigir
+
+  const handleLogout = () => {
+    console.log("Cerrando sesión..."); // Mensaje en consola
+    // Aquí podrías agregar lógica adicional, como limpiar el estado de autenticación
+
+    navigate('/login'); // Redirige a la página de login
+  };
+
   return (
-    <div>NavBar</div>
-  )
-}
+    <nav className="navbar">
+      <div className="navbar-logo">
+        <img src={logo} alt="Logo" className="logo"/>
+      </div>
+      <ul className="navbar-links">
+        <li><Link to="/home">Inicio</Link></li>
+        <li><Link to="/about">Acerca de</Link></li>
+        <li><Link to="/services">Servicios</Link></li>
+        <li><Link to="/contact">Contacto</Link></li>
+      </ul>
+      <button className="logout-button" onClick={handleLogout}>Cerrar sesión</button>
+    </nav>
+  );
+};
 
-export default NavBar
+export default Navbar;
+
