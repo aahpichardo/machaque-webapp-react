@@ -1,9 +1,63 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState, ChangeEvent, FormEvent } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import Modal from '../../components/ModalAvisos/ModalAvisos'; // Asegúrate de importar el modal
 import './Login.css';
+import axios from 'axios';
 
-const Login: React.FC = () => {
+interface LoginData {
+  email: string;
+  password: string;
+}
+
+interface LoginResponse{
+  message: string;
+  token?: string;
+}
+
+const Login = () => {
+  const [loginData, setLoginData] = useState<LoginData>({
+    email: "",
+    password: ""
+  });
+
+  const [error, setError] = useState<string | null>(null); // Para manejar errores si es necesario
+  const navigate = useNavigate(); // Hook para redirigir
+
+  const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const { id, value } = e.target;
+    setLoginData({
+      ...loginData,
+      [id]: value,
+    });
+  };
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    console.log("iniciando sesion...")
+    navigate('/home');
+
+    /*
+    try {
+      const response = await axios.post("http://localhost:3000/api/user/new", userData);
+
+      // Si la respuesta es exitosa y contiene el mensaje esperado
+      if (response.data.message === "registro exitoso") {
+        console.log("Usuario registrado con éxito");
+        // Redirige a la página de inicio o a donde desees
+        navigate('/home');
+      } else {
+        setError("Error al registrar. Verifique los datos.");
+      }
+    } catch (error) {
+      console.error("Error al registrar usuario:", error);
+      alert("Ocurrió un error. Por favor, intente de nuevo.");
+      setError("Ocurrió un error. Por favor, intente de nuevo.");
+    }
+  };
+    }*/
+  };
+
+  // Lógica modal
   const [isModalOpen, setModalOpen] = useState(false);
 
   const openModal = () => setModalOpen(true);
@@ -12,14 +66,28 @@ const Login: React.FC = () => {
   return (
     <div className="login-card">
       <h2 className="title">Iniciar sesión</h2>
-      <form className="form">
+      <form className="form" onSubmit={handleSubmit}>
         <div className="input-group">
           <label className="label" htmlFor="email">Correo</label>
-          <input type="email" id="email" className="input" required />
+          <input 
+            type="email" 
+            id="email" 
+            className="input" 
+            required
+            value={loginData.email}
+            onChange={handleInputChange} 
+          />
         </div>
         <div className="input-group">
           <label className="label" htmlFor="password">Contraseña</label>
-          <input type="password" id="password" className="input" required />
+          <input 
+            type="password" 
+            id="password" 
+            className="input" 
+            required
+            value={loginData.password}
+            onChange={handleInputChange} 
+          />
         </div>
         <button type="submit" className="submit-button">Ingresar</button>
       </form>
@@ -47,3 +115,4 @@ Fecha de última actualización: 25/septiembre/2024"
 };
 
 export default Login;
+
