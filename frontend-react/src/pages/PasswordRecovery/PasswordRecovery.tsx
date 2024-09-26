@@ -1,23 +1,46 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import './PasswordRecovery.css'; // Asegúrate de tener el archivo CSS para estilos
 
-const LoginRecuperar: React.FC = () => {
+const EmailRecovery: React.FC = () => {
+  const [email, setEmail] = useState('');
+
+  const navigate = useNavigate(); // Hook para redirigir
+
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    // Aquí puedes agregar la lógica para enviar el correo
+    console.log("Correo:", email);
+    alert("Se envio un correo electronico a tu cuenta");
+    navigate('/password-recovery-token');
+
+  };
+
   return (
-    <div className="login-recuperar">
-      <div className="overlap-group-wrapper">
-        <div className="overlap-group">
-          <div className="rectangle"></div>
-          <div className="div"></div>
-          <div className="overlap">
-            <div className="text-wrapper">Ingresar</div>
+    <div className="email-recovery-container">
+      <div className="form-wrapper">
+        <h2 className="form-title">Recuperar Correo</h2>
+        <form onSubmit={handleSubmit}>
+          <div className="input-group">
+            <label htmlFor="email" className="input-label">Ingresa tu Correo Electrónico</label>
+            <input 
+              type="email" 
+              id="email" 
+              value={email} 
+              onChange={(e) => setEmail(e.target.value)} 
+              required 
+              className="input-field"
+            />
           </div>
-          <div className="text-wrapper-2">Nueva contraseña</div>
-          <p className="p">Vuelve a ingresar la contraseña</p>
-          <div className="text-wrapper-3">Recuperar contraseña</div>
-        </div>
+          <div className="button-wrapper">
+            <button type="submit" className="submit-button">Enviar</button>
+          </div>
+        </form>
       </div>
     </div>
   );
 };
 
-export default LoginRecuperar;
+export default EmailRecovery;
+
+
