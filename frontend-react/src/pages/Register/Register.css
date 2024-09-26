@@ -1,0 +1,82 @@
+/* RegisterCard.css */
+
+.registro {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh; /* Altura mínima para centrar verticalmente */
+  background-color: #f0f0f0; /* Color de fondo */
+}
+
+.overlap-group-wrapper {
+  background: white; /* Fondo blanco para el formulario */
+  border-radius: 8px; /* Bordes redondeados */
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2); /* Sombra */
+  padding: 20px; /* Espaciado interno */
+  width: 400px; /* Ancho del formulario */
+  max-width: 90%; /* Ancho máximo */
+}
+
+.overlap-group {
+  display: flex;
+  flex-direction: column; /* Alinear elementos en columna */
+}
+
+.text-wrapper-4 {
+  font-size: 24px; /* Tamaño de fuente del título */
+  margin-bottom: 20px; /* Espacio inferior */
+  text-align: center; /* Centrar texto */
+}
+
+.input-group {
+  margin-bottom: 15px; /* Espaciado entre campos */
+}
+
+.label {
+  display: block; /* Campo de bloque */
+  margin-bottom: 5px; /* Espacio inferior */
+}
+
+.input {
+  width: 100%; /* Ancho completo */
+  padding: 10px; /* Espaciado interno */
+  border: 1px solid #ccc; /* Borde */
+  border-radius: 4px; /* Bordes redondeados */
+}
+
+.checkbox-group {
+  margin: 10px 0; /* Espaciado vertical */
+}
+
+.checkbox-label {
+  margin-left: 8px; /* Espacio entre checkbox y texto */
+}
+
+.div-wrapper {
+  display: flex;
+  justify-content: center; /* Centrar botón */
+}
+
+.text-wrapper-9 {
+  background-color: #007BFF; /* Color del botón */
+  color: white; /* Color del texto */
+  padding: 10px 15px; /* Espaciado interno */
+  border: none; /* Sin borde */
+  border-radius: 4px; /* Bordes redondeados */
+  cursor: pointer; /* Cursor de puntero */
+  transition: background-color 0.3s; /* Transición suave */
+}
+
+.text-wrapper-9:disabled {
+  background-color: #ccc; /* Color cuando está deshabilitado */
+  cursor: not-allowed; /* Cursor de no permitido */
+}
+
+.text-wrapper-9:hover:not(:disabled) {
+  background-color: #0056b3; /* Color más oscuro al pasar el ratón */
+}
+
+.p {
+  font-size: 12px; /* Tamaño de fuente para texto adicional */
+  color: #666; /* Color del texto */
+}
