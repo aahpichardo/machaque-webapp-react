@@ -1,19 +1,33 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios'; // Importamos axios
 import './PasswordRecovery.css'; // Asegúrate de tener el archivo CSS para estilos
 
 const EmailRecovery: React.FC = () => {
   const [email, setEmail] = useState('');
-
   const navigate = useNavigate(); // Hook para redirigir
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    // Aquí puedes agregar la lógica para enviar el correo
-    console.log("Correo:", email);
-    alert("Se envio un correo electronico a tu cuenta");
-    navigate('/password-recovery-token');
+    
+    try {
+      // Hacer la petición POST con axios
+      const response = await axios.post('http://localhost:3000/api/user/recover', { email });
+      
+      if (response.status === 200) {
+        const { code } = response.data; // Extraer el código de la respuesta
+        alert(`Correcto, el código enviado es: ${code}`);
 
+        // Guardar el email en localStorage
+        localStorage.setItem('recoveryEmail', email);
+
+        // Redirigir a la siguiente página
+        navigate('/password-recovery-token');
+      }
+    } catch (error) {
+      console.error("Hubo un error al enviar la solicitud", error);
+      alert("Hubo un error al intentar enviar el correo. Por favor, inténtalo de nuevo.");
+    }
   };
 
   return (
@@ -42,5 +56,7 @@ const EmailRecovery: React.FC = () => {
 };
 
 export default EmailRecovery;
+
+
 
 
