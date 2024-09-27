@@ -1,96 +1,98 @@
 /* Modal.css */
 
 .modal-overlay {
-  position: fixed; /* Fijo para cubrir toda la pantalla */
-  top: 0; /* Alineado a la parte superior */
-  left: 0; /* Alineado a la izquierda */
-  right: 0; /* Alineado a la derecha */
-  bottom: 0; /* Alineado a la parte inferior */
-  background-color: rgba(0, 0, 0, 0.5); /* Fondo oscuro con transparencia */
-  display: flex; /* Flexbox para centrar el contenido */
-  align-items: center; /* Centrar verticalmente */
-  justify-content: center; /* Centrar horizontalmente */
-  z-index: 1000; /* Mantener por encima de otros elementos */
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
 }
 
 .modal {
-  background: white; /* Fondo blanco para el modal */
-  padding: 20px; /* Espaciado interno */
-  border-radius: 8px; /* Bordes redondeados */
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2); /* Sombra */
-  width: 100%; /* Ancho del modal */
-  max-width: 600px; /* Ancho máximo */
-  overflow-y: auto; /* Desplazamiento vertical si el contenido es extenso */
-  max-height: 80vh; /* Altura máxima del modal */
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+  width: 100%;
+  max-width: 600px;
+  overflow-y: auto;
+  max-height: 80vh;
 }
 
 .modal-header {
-  display: flex; /* Flexbox para el encabezado */
-  justify-content: space-between; /* Espaciado entre título y botón */
-  align-items: center; /* Centrar verticalmente */
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .modal-title {
-  margin: 0; /* Sin margen */
-  font-size: 20px; /* Tamaño de fuente */
+  margin: 0;
+  font-size: 20px;
+  font-weight: bold; /* Negrita para el título */
 }
 
 .close-button {
-  background: none; /* Sin fondo */
-  border: none; /* Sin borde */
-  font-size: 20px; /* Tamaño de fuente */
-  cursor: pointer; /* Cursor de puntero */
+  background: none;
+  border: none;
+  font-size: 20px;
+  cursor: pointer;
 }
 
 .modal-body {
-  margin: 15px 0; /* Espaciado superior e inferior */
-  text-align: center; /* Alinear al centro */
+  margin: 15px 0;
+  text-align: left; /* Alinear a la izquierda */
 }
 
 .modal-text {
-  font-size: 14px; /* Tamaño de fuente */
-  color: #333; /* Color del texto */
-  line-height: 1.5; /* Altura de línea */
-  margin: 10px 0; /* Margen superior e inferior */
-  font-family: Arial, sans-serif; /* Familia de fuentes */
-  text-align: justify; /* Justificar texto */
+  font-size: 14px;
+  color: #333;
+  line-height: 1.6; /* Altura de línea mejorada */
+  margin: 10px 0;
+  font-family: Arial, sans-serif;
+  text-align: justify;
+  white-space: pre-line; /* Mantener saltos de línea */
 }
 
 .modal-footer {
-  display: flex; /* Flexbox para el pie */
-  justify-content: flex-end; /* Alinear a la derecha */
+  display: flex;
+  justify-content: flex-end;
 }
 
 .modal-button {
-  background-color: #007BFF; /* Color del botón */
-  color: white; /* Color del texto */
-  padding: 10px 15px; /* Espaciado interno */
-  border: none; /* Sin borde */
-  border-radius: 4px; /* Bordes redondeados */
-  cursor: pointer; /* Cursor de puntero */
-  transition: background-color 0.3s; /* Transición suave */
+  background-color: #007BFF;
+  color: white;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s;
 }
 
 .modal-button:hover {
-  background-color: #0056b3; /* Color más oscuro al pasar el ratón */
+  background-color: #0056b3;
 }
 
 /* Estilos para pantallas pequeñas */
 @media (max-width: 480px) {
   .modal {
-      padding: 15px; /* Espaciado interno más pequeño */
+      padding: 15px;
   }
 
   .modal-title {
-      font-size: 18px; /* Tamaño de fuente más pequeño */
+      font-size: 18px;
   }
 
   .modal-text {
-      font-size: 12px; /* Tamaño de fuente más pequeño */
+      font-size: 12px;
   }
 
   .modal-button {
-      padding: 8px 10px; /* Espaciado interno más pequeño */
+      padding: 8px 10px;
   }
 }
 

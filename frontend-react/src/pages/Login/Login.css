@@ -12,7 +12,7 @@ body {
   flex-direction: column; /* Disposición en columna */
   align-items: center; /* Centrar elementos horizontalmente */
   justify-content: center; /* Centrar elementos verticalmente */
-  width: 400px; /* Ancho de la tarjeta */
+  width: 500px; /* Ancho de la tarjeta */
   padding: 30px; /* Espaciado interno */
   border-radius: 12px; /* Bordes redondeados */
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1); /* Sombra de la tarjeta */
@@ -31,7 +31,7 @@ body {
 
 /* Estilo del formulario */
 .form {
-  width: 100%; /* Ancho completo */
+  width: 80%; /* Ancho completo */
 }
 
 /* Grupo de entradas */
@@ -65,14 +65,15 @@ body {
 }
 
 /* Estilo del botón de enviar */
-.submit-button {
+.login-submit-button {
   background-color: #007BFF; /* Color de fondo del botón */
   color: white; /* Color del texto del botón */
   padding: 12px; /* Espaciado interno */
+  margin-top:10px;
   border: none; /* Sin borde */
   border-radius: 6px; /* Bordes redondeados */
   cursor: pointer; /* Cambia el cursor al pasar el ratón */
-  width: 100%; /* Ancho completo */
+  width: 430px; /* Ancho completo */
   font-weight: bold; /* Negrita */
   font-size: 16px; /* Tamaño de fuente del botón */
   transition: background-color 0.3s; /* Transición para el color de fondo */
@@ -81,6 +82,10 @@ body {
 /* Efecto al pasar el ratón sobre el botón */
 .submit-button:hover {
   background-color: #0056b3; /* Color más oscuro al pasar el ratón */
+}
+
+.login-forgot-password{
+  padding-bottom: 20px;
 }
 
 /* Estilo del texto en el pie de página */

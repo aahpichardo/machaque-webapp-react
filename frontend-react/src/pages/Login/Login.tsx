@@ -92,10 +92,10 @@ const Login = () => {
             onChange={handleInputChange} 
           />
         </div>
-        <span>
-        <Link to="/password-recovery">¿Olvidaste tu contraseña?</Link>
-          </span>
-        <button type="submit" className="submit-button">Ingresar</button>
+        <span className="login-forgot-password">
+          <Link to="/password-recovery">¿Olvidaste tu contraseña?</Link>
+        </span>
+        <button type="submit" className="login-submit-button">Ingresar</button>
       </form>
       <p className="footer-text">
         ¿Nuevo por aquí? <Link to="/register">Regístrate</Link>
@@ -106,13 +106,12 @@ const Login = () => {
         </button>      </p>
       <Modal 
         title="Aviso de Privacidad" 
-        content="Aviso de Privacidad y Confidencialidad de la Información
-En Machaque, estamos comprometidos con la protección de la privacidad y la confidencialidad de la información de nuestros usuarios. Este aviso describe cómo recopilamos, usamos, almacenamos y protegemos los datos personales que usted proporciona al utilizar nuestra plataforma.
-1. Recopilación de DatosRecopilamos información personal que incluye, pero no se limita a: nombre, dirección de correo electrónico, número de teléfono, y cualquier otro dato que usted ingrese al registrarse o utilizar nuestros servicios.
-2. Uso de la InformaciónLa información personal proporcionada será utilizada únicamente para los fines establecidos en nuestra plataforma, tales como la gestión de su cuenta, la mejora de la experiencia del usuario, y la seguridad de la plataforma.
-3. Confidencialidad y SeguridadNos comprometemos a no compartir, vender o alquilar su información personal a terceros sin su consentimiento, salvo en los casos necesarios para cumplir con obligaciones legales o proteger los derechos de la plataforma. Hemos implementado medidas de seguridad para proteger sus datos contra accesos no autorizados, pérdida o modificación.
-4. Derechos del UsuarioUsted tiene el derecho de acceder, rectificar, cancelar u oponerse al uso de sus datos personales. Para ejercer estos derechos, por favor comuníquese con nuestro equipo a través del correo electrónico [correo de contacto].
-5. Modificaciones al Aviso de PrivacidadNos reservamos el derecho de actualizar este aviso en cualquier momento. Cualquier modificación será publicada en nuestra plataforma.
+        content="En Machaque, estamos comprometidos con la protección de la privacidad y la confidencialidad de la información de nuestros usuarios. Este aviso describe cómo recopilamos, usamos, almacenamos y protegemos los datos personales que usted proporciona al utilizar nuestra plataforma.
+1. Recopilación de Datos. Recopilamos información personal que incluye, pero no se limita a: nombre, dirección de correo electrónico, número de teléfono, y cualquier otro dato que usted ingrese al registrarse o utilizar nuestros servicios.
+2. Uso de la Información. La información personal proporcionada será utilizada únicamente para los fines establecidos en nuestra plataforma, tales como la gestión de su cuenta, la mejora de la experiencia del usuario, y la seguridad de la plataforma.
+3. Confidencialidad y Seguridad. Nos comprometemos a no compartir, vender o alquilar su información personal a terceros sin su consentimiento, salvo en los casos necesarios para cumplir con obligaciones legales o proteger los derechos de la plataforma. Hemos implementado medidas de seguridad para proteger sus datos contra accesos no autorizados, pérdida o modificación.
+4. Derechos del Usuario. Usted tiene el derecho de acceder, rectificar, cancelar u oponerse al uso de sus datos personales. Para ejercer estos derechos, por favor comuníquese con nuestro equipo a través del correo electrónico machaque@app.com.
+5. Modificaciones al Aviso de Privacidad Nos reservamos el derecho de actualizar este aviso en cualquier momento. Cualquier modificación será publicada en nuestra plataforma.
 Fecha de última actualización: 25/septiembre/2024" 
         isOpen={isModalOpen} 
         onClose={closeModal} 
