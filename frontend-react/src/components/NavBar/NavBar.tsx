@@ -1,37 +1,44 @@
 import React from 'react';
-import { Link, useNavigate } from 'react-router-dom'; // Importa useNavigate
-import { useAuth } from '../../contexts/AuthContext'; // Asegúrate de ajustar la ruta
+import { Link, useNavigate } from 'react-router-dom';
+import { useAuth } from '../../contexts/AuthContext';
 import './NavBar.css';
 import logo from '../../assets/logo.jpeg';
 
 const Navbar: React.FC = () => {
-  const navigate = useNavigate(); // Hook para redirigir
-  const { logout } = useAuth(); // Accede a la función logout del contexto
+  const navigate = useNavigate();
+  const { logout } = useAuth();
 
   const handleLogout = () => {
-    console.log("Cerrando sesión..."); // Mensaje en consola
-    logout(); // Establece isAuthenticated en false
-    localStorage.removeItem('token'); // Elimina el token del local storage
-    navigate('/login'); // Redirige a la página de login
-    alert("Sesión cerrada exitosamente"); // Muestra un mensaje de alerta
+    console.log("Cerrando sesión...");
+    logout();
+    localStorage.removeItem('token');
+    navigate('/login');
+    alert("Sesión cerrada exitosamente");
   };
 
   return (
     <nav className="navbar">
       <div className="navbar-logo">
-        <img src={logo} alt="Logo" className="logo"/>
+        <img src={logo} alt="Logo" className="logo" />
       </div>
       <ul className="navbar-links">
         <li><Link to="/home">Inicio</Link></li>
-        {/*<li><Link to="/about">Acerca de</Link></li>
-        <li><Link to="/services">Servicios</Link></li>
-        <li><Link to="/contact">Contacto</Link></li>*/}
+        <li><Link to="/user-profile">Perfil</Link></li>
       </ul>
-      <button className="logout-button" onClick={handleLogout}>Cerrar sesión</button>
+      <div className="search-container">
+        <input type="text" className="search-input" placeholder="Buscar..." />
+      </div>
+      <button className="logout-button" onClick={handleLogout}>
+        <svg className="logout-logo" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24">
+          <path fill="currentColor" d="M5 21q-.825 0-1.412-.587T3 19V5q0-.825.588-1.412T5 3h7v2H5v14h7v2zm11-4l-1.375-1.45l2.55-2.55H9v-2h8.175l-2.55-2.55L16 7l5 5z" />
+        </svg>
+        Salir
+      </button>
     </nav>
   );
 };
 
 export default Navbar;
+
 
 
