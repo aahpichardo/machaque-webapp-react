@@ -6,13 +6,12 @@ import './Login.css';
 import axios from 'axios';
 import { jwtDecode } from "jwt-decode"
 
-
 interface LoginData {
   email: string;
   password: string;
 }
 
-interface LoginResponse{
+interface LoginResponse {
   message: string;
   token?: string;
 }
@@ -23,10 +22,10 @@ const Login = () => {
     password: ""
   });
 
-  const { login, isAuthenticated } = useAuth(); // Usar el hook de autenticación
+  const { login } = useAuth(); // Usar el hook de autenticación
+  const navigate = useNavigate(); // Hook para redirigir
 
   const [error, setError] = useState<string | null>(null); // Para manejar errores si es necesario
-  const navigate = useNavigate(); // Hook para redirigir
 
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { id, value } = e.target;
@@ -36,27 +35,28 @@ const Login = () => {
     });
   };
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log("iniciando sesion...")
-    //para simular el inicio de sesión
-    //login();
-    //navigate('/home');
+    console.log("Iniciando sesión...");
 
     try {
       const response = await axios.post("http://localhost:3000/api/login", loginData);
       const token = response.data.token;
-  
+
       // Decodifica y guarda el token
       const decoded = jwtDecode(token);
       localStorage.setItem('token', token);
-  
+
       // Lógica de inicio de sesión
       login(); // Actualiza el estado de autenticación
       navigate('/home');
-    } catch (error) {
-      console.error("Error al iniciar sesión:", error);
-      setError("Error al iniciar sesión. Verifique sus credenciales.");
+    } catch (error: any) {
+      if (error.response && error.response.status === 401) {
+        alert("El correo o la contraseña son incorrectos."); // Alert para error 401
+      } else {
+        console.error("Error al iniciar sesión:", error);
+        setError("Error al iniciar sesión. Verifique sus credenciales.");
+      }
     }
   };
 
@@ -103,7 +103,8 @@ const Login = () => {
       <p className="footer-text">
         <button onClick={openModal} style={{ background: 'none', border: 'none', color: 'blue', textDecoration: 'underline', cursor: 'pointer' }}>
           Aviso de privacidad
-        </button>      </p>
+        </button>
+      </p>
       <Modal 
         title="Aviso de Privacidad" 
         content="En Machaque, estamos comprometidos con la protección de la privacidad y la confidencialidad de la información de nuestros usuarios. Este aviso describe cómo recopilamos, usamos, almacenamos y protegemos los datos personales que usted proporciona al utilizar nuestra plataforma.
@@ -121,4 +122,5 @@ Fecha de última actualización: 25/septiembre/2024"
 };
 
 export default Login;
+
 

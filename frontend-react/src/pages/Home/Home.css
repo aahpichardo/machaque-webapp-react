@@ -1,0 +1,129 @@
+.dashboard {
+    background-color: #f8f8f8;
+    padding: 20px;
+    display: flex; /* Mantiene el layout flexible */
+    flex-direction: column; /* Coloca el contenido en columnas */
+  }
+  
+  .dashboard-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    background-color: white; /* Fondo blanco para el header */
+    padding: 15px;
+    border-radius: 8px; /* Bordes redondeados */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  .user-info {
+    flex: 1;
+  }
+  
+  .user-info h2 {
+    margin: 0;
+    font-size: 24px;
+  }
+  
+  .user-info p {
+    margin: 0;
+    color: gray;
+  }
+  
+  .add-restaurant-button {
+    padding: 10px 20px;
+    background-color: #4caf50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold; /* Texto en negrita */
+    transition: background-color 0.3s; /* Transición suave */
+  }
+  
+  .add-restaurant-button:hover {
+    background-color: #45a049;
+  }
+  
+  .container {
+    display: flex; /* Mantiene el layout en dos columnas */
+    margin-top: 20px; /* Espacio entre el header y el contenido */
+  }
+  
+  .left-section {
+    flex: 3; /* Ocupa más espacio a la izquierda */
+    display: flex;
+    flex-direction: column; /* Coloca featured y recent uno debajo del otro */
+    gap: 20px; /* Espacio entre las secciones */
+  }
+  
+  .featured-restaurants, .recent-uploads {
+    background-color: white; /* Fondo blanco */
+    border-radius: 8px; /* Bordes redondeados */
+    padding: 20px; /* Padding interno */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Sombra para el efecto de tarjeta */
+  }
+  
+  .trending-restaurants {
+    flex: 1; /* Menor espacio a la derecha */
+    background-color: white; /* Fondo blanco */
+    border-radius: 8px; /* Bordes redondeados */
+    padding: 20px; /* Padding interno */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Sombra para el efecto de tarjeta */
+  }
+  
+  .restaurant-grid, .upload-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 20px;
+  }
+  
+  .restaurant-card, .upload-card {
+    background-color: white;
+    border: none; /* Sin borde */
+    border-radius: 8px; /* Bordes redondeados */
+    padding: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s; /* Transición suave para hover */
+  }
+  
+  .restaurant-card:hover, .upload-card:hover {
+    transform: translateY(-5px); /* Levantar tarjeta al pasar el ratón */
+  }
+  
+  .restaurant-image, .upload-image {
+    width: 100%;
+    height: 150px;
+    object-fit: cover;
+    border-radius: 5px;
+  }
+  
+  .restaurant-actions {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 10px;
+  }
+  
+  .upload-stats {
+    display: flex;
+    justify-content: space-between;
+  }
+  
+  /* Estilo para los botones dentro de las tarjetas */
+  .restaurant-actions button {
+    background-color: #2196f3; /* Color del botón */
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 5px 10px;
+    cursor: pointer;
+    font-size: 12px;
+    transition: background-color 0.3s;
+  }
+  
+  .restaurant-actions button:hover {
+    background-color: #1976d2; /* Color al pasar el ratón */
+  }
+  
+  
+  
