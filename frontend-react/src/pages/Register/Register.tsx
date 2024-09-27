@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import axios from 'axios'; // Asegúrate de tener axios instalado
 import Modal from '../../components/ModalAvisos/ModalAvisos'; // Asegúrate de importar el modal
 import './Register.css'; // Importa el archivo de estilos
 
@@ -9,17 +10,16 @@ const Register: React.FC = () => {
   const [acceptedPrivacy, setAcceptedPrivacy] = useState(false);
   const [acceptedTerms, setAcceptedTerms] = useState(false);
 
-  // Estado para almacenar los datos del usuario
   const [userData, setUserData] = useState({
     user_name: '',
     user_last_name: '',
     email: '',
     password: '',
-    created_at: new Date().toISOString().split('T')[0], // Fecha actual en formato YYYY-MM-DD
-    last_login: new Date().toISOString().split('T')[0], // Fecha actual en formato YYYY-MM-DD
-    fk_user_role: 1, // Asigna el rol correspondiente
-    fk_endorsement_id: 1, // Asigna el endorsement correspondiente
-    user_status: 1 // Estado del usuario (activo/inactivo)
+    created_at: new Date().toISOString().split('T')[0],
+    last_login: new Date().toISOString().split('T')[0],
+    fk_user_role: 1,
+    fk_endorsement_id: 1,
+    user_status: 1
   });
 
   const navigate = useNavigate(); // Hook para redirigir
@@ -30,7 +30,6 @@ const Register: React.FC = () => {
   const openModalTerms = () => setModalOpenTerms(true);
   const closeModalTerms = () => setModalOpenTerms(false);
 
-  // Maneja los cambios en los campos de entrada
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { id, value } = e.target;
     setUserData((prevState) => ({
@@ -39,29 +38,31 @@ const Register: React.FC = () => {
     }));
   };
 
-  // Maneja el envío del formulario
-  const handleSubmit = (e: React.FormEvent) => {
+  // Verifica la validez de la contraseña
+  const validatePassword = (password: string) => {
+    const regex = /^(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+    return regex.test(password);
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log(userData); // Aquí puedes manejar el envío de datos, como hacer una llamada a la API
-    alert('Registro exitoso');
-    navigate('/login');
 
-        /*try {
-      const response = await axios.post<LoginResponse>("http://localhost:3000/api/login", loginData);
+    // Verifica si la contraseña es válida
+    if (!validatePassword(userData.password)) {
+      alert("La contraseña debe tener al menos 8 caracteres, incluir un número, una letra mayúscula y un carácter especial.");
+      return;
+    }
 
-      // Si la respuesta es exitosa y contiene el mensaje esperado
-      if (response.data.message === "inicio de sesion exitoso") {
-        console.log("Sesión iniciada con éxito");
-        // Redirige a la página de inicio
-        navigate('/home');
-      } else {
-        setError("Error al iniciar sesión. Verifique sus credenciales.");
+    try {
+      const response = await axios.post("http://localhost:3000/api/user/new", userData);
+      if (response.status === 200) {
+        alert('Usuario creado exitosamente');
+        navigate('/login'); // Redirige a la página de inicio de sesión
       }
     } catch (error) {
-      console.error("Error al iniciar sesión:", error);
+      console.error("Error al crear el usuario:", error);
       alert("Ocurrió un error. Por favor, intente de nuevo.");
-      setError("Ocurrió un error. Por favor, intente de nuevo.");
-    }*/
+    }
   };
 
   return (
@@ -120,30 +121,19 @@ const Register: React.FC = () => {
             </div>
           </form>
           <span>
-          ¿Ya tienes una cuenta? <Link to="/login">Inicia sesión aquí</Link>
+            ¿Ya tienes una cuenta? <Link to="/login">Inicia sesión aquí</Link>
           </span>
           <Modal 
             title="Aviso de Privacidad" 
             content="Aviso de Privacidad y Confidencialidad de la Información
-En Machaque, estamos comprometidos con la protección de la privacidad y la confidencialidad de la información de nuestros usuarios. Este aviso describe cómo recopilamos, usamos, almacenamos y protegemos los datos personales que usted proporciona al utilizar nuestra plataforma.
-1. Recopilación de DatosRecopilamos información personal que incluye, pero no se limita a: nombre, dirección de correo electrónico, número de teléfono, y cualquier otro dato que usted ingrese al registrarse o utilizar nuestros servicios.
-2. Uso de la InformaciónLa información personal proporcionada será utilizada únicamente para los fines establecidos en nuestra plataforma, tales como la gestión de su cuenta, la mejora de la experiencia del usuario, y la seguridad de la plataforma.
-3. Confidencialidad y SeguridadNos comprometemos a no compartir, vender o alquilar su información personal a terceros sin su consentimiento, salvo en los casos necesarios para cumplir con obligaciones legales o proteger los derechos de la plataforma. Hemos implementado medidas de seguridad para proteger sus datos contra accesos no autorizados, pérdida o modificación.
-4. Derechos del UsuarioUsted tiene el derecho de acceder, rectificar, cancelar u oponerse al uso de sus datos personales. Para ejercer estos derechos, por favor comuníquese con nuestro equipo a través del correo electrónico [correo de contacto].
-5. Modificaciones al Aviso de PrivacidadNos reservamos el derecho de actualizar este aviso en cualquier momento. Cualquier modificación será publicada en nuestra plataforma.
-Fecha de última actualización: 25/septiembre/2024" 
+            En Machaque, estamos comprometidos con la protección de la privacidad y la confidencialidad de la información de nuestros usuarios. Este aviso describe cómo recopilamos, usamos, almacenamos y protegemos los datos personales que usted proporciona al utilizar nuestra plataforma." 
             isOpen={isModalOpenPrivacy} 
             onClose={closeModalPrivacy} 
           />
           <Modal 
             title="Términos y Condiciones" 
             content="Términos y Condiciones de Uso
-El uso de la plataforma Machaque está sujeto a los siguientes términos y condiciones. Al acceder y utilizar nuestro sitio web o aplicación, usted acepta estos términos. Si no está de acuerdo, por favor no utilice la plataforma. 
-1. Uso del Software. Los usuarios aceptan que el uso de la plataforma es bajo su propio riesgo. La plataforma se proporciona 'tal cual', sin ninguna garantía explícita o implícita. Nos esforzamos por ofrecer un servicio continuo y seguro, pero no garantizamos que la plataforma esté libre de errores, interrupciones o fallos de seguridad. 
-2. Exención de Responsabilidad. Machaque  no se hace responsable por cualquier daño, pérdida de datos, o cualquier perjuicio derivado del uso de la plataforma o la imposibilidad de acceder a ella, incluso si hemos sido advertidos de la posibilidad de dichos daños. 
-3. Limitación de Responsabilidad. En ningún caso Machaque será responsable por daños indirectos, incidentales, especiales o consecuentes, incluyendo pero no limitado a la pérdida de ganancias o datos, que resulten del uso o la imposibilidad de uso de los servicios. 
-4. Modificaciones a los Términos. Nos reservamos el derecho de modificar los presentes términos en cualquier momento. Las modificaciones entrarán en vigor desde el momento en que sean publicadas en nuestra plataforma. Su uso continuado de la plataforma después de los cambios implica su aceptación de los nuevos términos. 
-5. Ley Aplicable y Jurisdicción. El uso de este sitio web se regirá e interpretará de acuerdo con las leyes aplicables de México. Cualquier disputa que surja en relación con estos términos será sometida a los tribunales competentes de Chihuahua, México."
+            El uso de la plataforma Machaque está sujeto a los siguientes términos y condiciones." 
             isOpen={isModalOpenTerms} 
             onClose={closeModalTerms} 
           />
@@ -154,6 +144,7 @@ El uso de la plataforma Machaque está sujeto a los siguientes términos y condi
 };
 
 export default Register;
+
 
 
 
