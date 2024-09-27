@@ -11,7 +11,9 @@ const Navbar: React.FC = () => {
   const handleLogout = () => {
     console.log("Cerrando sesión..."); // Mensaje en consola
     logout(); // Establece isAuthenticated en false
+    localStorage.removeItem('token'); // Elimina el token del local storage
     navigate('/login'); // Redirige a la página de login
+    alert("Sesión cerrada exitosamente"); // Muestra un mensaje de alerta
   };
 
   return (
