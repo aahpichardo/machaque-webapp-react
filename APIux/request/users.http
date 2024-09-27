@@ -6,5 +6,18 @@ POST http://localhost:3000/api/user/new
 POST http://localhost:3000/api/login
 #{ "email": "brandon.chacon@gmail.com", "password": "hola#123" }
 
+### POST RECUPERAR CONTRASEÑA
+POST http://localhost:3000/api/user/recover
+# { "email": "javier.solis@gmail.com" }
+
+### POST VALIDAR CODIGO
+POST http://localhost:3000/api/user/validate
+# { "email": "javier.solis@gmail.com", "code": "160359" }
+
+### PUT CAMBIAR CONTRASEÑA
+PUT http://localhost:3000/api/user/change
+# { "email": "javier.solis@gmail.com", "password": "Solis#123" }
+# NOTA: Se debe enviar el token en el header como por ejemplo "Authorization: Bearer tncoenrfnerivneijnv" para poder consumir este endpoint.
+
 ### POST USUARIO
 # POST http://localhost:3000/api/data/user

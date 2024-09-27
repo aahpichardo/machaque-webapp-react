@@ -1,4 +1,5 @@
 import bcrypt from 'bcrypt';
+import { generateToken } from '../middlewares/generateToken.js';
 import { getConnection } from "../../database/connection.js";
 
 // CONSULTA DE USUARIOS PARA GENERAR EL TOKEN DE ACCESO
@@ -69,41 +70,140 @@ export const postNewUser = async (req, res) => {
   }
 };
 
-// POST CERRAR SESION
-export const postLogout = async (req, res) => {
+// POST RECUPERAR CONTRASEÑA
+export const postRecoverPassword = async (req, res) => {
   try {
-    const { user_id} = req.body;
+    const { email } = req.body;
+
+    if (!email) {
+      return res.status(400).json({ message: 'El correo electrónico es requerido.' });
+    }
 
     const connection = await getConnection();
 
-    const [rows] = await connection.execute(
-      'UPDATE users SET user_status = 0 WHERE id_user = ?',
-      [user_id]
+    const [userRows] = await connection.execute(
+      'SELECT user_id FROM users WHERE email = ?',
+      [email]
     );
 
-    return res.status(200).json({ message: 'Sesión cerrada exitosamente.' });
+    if (userRows.length > 0) {
+      const user = userRows[0];
+
+      // Generar código aleatorio
+      const randomCode = Math.floor(100000 + Math.random() * 900000);
+
+      // Hashear el código de recuperación
+      const saltRounds = 10;
+      const hashedCode = await bcrypt.hash(randomCode.toString(), saltRounds);
+
+      // Tiempo de expiración del código de recuperación 5 minutos
+      const expireDate = new Date();
+      expireDate.setMinutes(expireDate.getMinutes() + 5);
+
+      // Verificar si ya existe un código de recuperación para el usuario
+      const [recoveryRows] = await connection.execute(
+        'SELECT * FROM recovery_code WHERE fk_user_id = ?',
+        [user.user_id]
+      );
+
+      if (recoveryRows.length > 0) {
+        // Actualizar el código de recuperación existente
+        await connection.execute(
+          'UPDATE recovery_code SET code_number = ?, expire_date = ? WHERE fk_user_id = ?',
+          [hashedCode, expireDate, user.user_id]
+        );
+      } else {
+        // Insertar un nuevo código de recuperación
+        await connection.execute(
+          'INSERT INTO recovery_code (code_number, fk_user_id, expire_date) VALUES (?, ?, ?)',
+          [hashedCode, user.user_id, expireDate]
+        );
+      }
+
+      return res.status(200).json({ message: 'Código enviado al correo ' + email + '. Expira en: ' + expireDate, code: randomCode });
+    } else {
+      return res.status(404).json({ message: 'No existe una cuenta con el correo que ingresaste.' });
+    }
   } catch (error) {
-    res.status(500);
-    res.send(error.message);
+    console.error(error);
+    return res.status(500).json({ message: 'Error en el servidor.' });
   }
 };
 
-// POST RECUPEAR CONTRASEÑA
-// Y cuando vaya a ser lo de recuperar contraseña, que busque el email sea válido, si es, que genere un código aleatorio con un random como de 6 carácteres, luego que diga que se lo mandaron al correo, lo introduzca, lo vuelva a validar y ya dejé cambiar la contraseña
-
-// GET DATOS DEL USUARIO POR ID DE USUARIO ---- ejemplo
-/*export const postDataUser = async (req, res) => {
+// POST VALIDAR CÓDIGO DE RECUPERACIÓN
+export const postValidateCode = async (req, res) => {
   try {
+    const { email, code } = req.body;
+
+    if (!email || !code) {
+      return res.status(400).json({ message: 'El correo electrónico y el código son requeridos.' });
+    }
+
     const connection = await getConnection();
 
-    const [rows] = await connection.execute(
-      'SELECT * FROM USUARIOS WHERE ID_USUARIO = ?',
-      [1]
+    const [recoveryRows] = await connection.execute(
+      'SELECT code_number, expire_date, users.user_id FROM recovery_code INNER JOIN users ON recovery_code.fk_user_id = users.user_id WHERE email = ?',
+      [email]
     );
 
-    return res.json(rows);
+    if (recoveryRows.length > 0) {
+      const recoveryCode = recoveryRows[0];
+
+      const codeMatch = await bcrypt.compare(code, recoveryCode.code_number);
+
+      if (codeMatch) {
+        const currentDate = new Date();
+
+        if (currentDate < recoveryCode.expire_date) {
+          const token = generateToken({ user_id: recoveryCode.user_id });
+          return res.status(200).json({ message: 'Código de recuperación válido.', code: true, token });
+        } else {
+          return res.status(401).json({ message: 'El código de recuperación ha expirado.', code: false });
+        }
+      } else {
+        return res.status(401).json({ message: 'Código de recuperación incorrecto.', code: false });
+      }
+    } else {
+      return res.status(404).json({ message: 'No existe un código de recuperación para el correo que ingresaste.', code: false });
+    }
   } catch (error) {
-    res.status(500);
-    res.send(error.message);
+    console.error(error);
+    return res.status(500).json({ message: 'Error en el servidor.' });
   }
-}; */
+};
+
+// PUT CAMBIAR CONTRASEÑA
+export const putChangePassword = async (req, res) => {
+  try {
+    const { email, password } = req.body;
+
+    if (!email || !password) {
+      return res.status(400).json({ message: 'Correo electrónico y contraseña son requeridos.' });
+    }
+
+    const connection = await getConnection();
+
+    // Verificar si el correo electrónico existe
+    const [rows] = await connection.execute(
+      'SELECT user_id FROM users WHERE email = ?',
+      [email]
+    );
+
+    if (rows.length === 0) {
+      return res.status(404).json({ message: 'No existe una cuenta con el correo que ingresaste.' });
+    }
+
+    const saltRounds = 10;
+    const password_hash = await bcrypt.hash(password, saltRounds);
+
+    await connection.execute(
+      'UPDATE users SET password_hash = ? WHERE email = ?',
+      [password_hash, email]
+    );
+
+    return res.status(200).json({ message: 'Contraseña actualizada exitosamente.' });
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({ message: 'Error en el servidor.' });
+  }
+};
