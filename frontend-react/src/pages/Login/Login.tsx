@@ -4,6 +4,8 @@ import { useAuth } from '../../contexts/AuthContext'; // Asegúrate de importar 
 import Modal from '../../components/ModalAvisos/ModalAvisos'; // Asegúrate de importar el modal
 import './Login.css';
 import axios from 'axios';
+import { jwtDecode } from "jwt-decode"
+
 
 interface LoginData {
   email: string;
@@ -37,28 +39,25 @@ const Login = () => {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     console.log("iniciando sesion...")
-    login();
-    navigate('/home');
+    //para simular el inicio de sesión
+    //login();
+    //navigate('/home');
 
-    /*
     try {
-      const response = await axios.post("http://localhost:3000/api/user/new", userData);
-
-      // Si la respuesta es exitosa y contiene el mensaje esperado
-      if (response.data.message === "registro exitoso") {
-        console.log("Usuario registrado con éxito");
-        // Redirige a la página de inicio o a donde desees
-        navigate('/home');
-      } else {
-        setError("Error al registrar. Verifique los datos.");
-      }
+      const response = await axios.post("http://localhost:3000/api/login", loginData);
+      const token = response.data.token;
+  
+      // Decodifica y guarda el token
+      const decoded = jwtDecode(token);
+      localStorage.setItem('token', token);
+  
+      // Lógica de inicio de sesión
+      login(); // Actualiza el estado de autenticación
+      navigate('/home');
     } catch (error) {
-      console.error("Error al registrar usuario:", error);
-      alert("Ocurrió un error. Por favor, intente de nuevo.");
-      setError("Ocurrió un error. Por favor, intente de nuevo.");
+      console.error("Error al iniciar sesión:", error);
+      setError("Error al iniciar sesión. Verifique sus credenciales.");
     }
-  };
-    }*/
   };
 
   // Lógica modal
