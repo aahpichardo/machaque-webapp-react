@@ -5,8 +5,7 @@ dotenv.config();
 // FUNCION PARA GENERAR EL TOKEN DE AUTENTICACIÓN CON ID Y EMAIL DEL USUARIO
 export const generateToken = (user) => {
   const payload = {
-    email: user.email,
-    password : user.password_hash };
+    id: user.id };
 
   const secret = process.env.JWT_SECRET;
   const options = {
