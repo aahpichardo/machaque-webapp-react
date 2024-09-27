@@ -52,21 +52,31 @@ export const postNewUser = async (req, res) => {
   }
 
   try {
+    const connection = await getConnection();
+
+    // Verificar si el correo electrónico ya existe
+    const [existingUser] = await connection.execute(
+      'SELECT user_id FROM users WHERE email = ?',
+      [email]
+    );
+
+    if (existingUser.length > 0) {
+      return res.status(400).json({ message: 'El correo electrónico ya está en uso.' });
+    }
+
     // Hashear la contraseña
     const saltRounds = 10;
     const password_hash = await bcrypt.hash(password, saltRounds);
 
-    const connection = await getConnection();
-
-    const [rows] = await connection.execute(
+    await connection.execute(
       'INSERT INTO users (user_name, user_last_name, email, password_hash, created_at, last_login, fk_user_role, fk_endorsement_id, user_status) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)',
       [user_name, user_last_name, email, password_hash, created_at, last_login, fk_user_role, fk_endorsement_id, user_status]
     );
 
     return res.status(200).json({ message: 'Usuario creado exitosamente.' });
   } catch (error) {
-    res.status(500);
-    res.send(error.message);
+    console.error(error);
+    res.status(500).json({ message: 'Error en el servidor.' });
   }
 };
 
