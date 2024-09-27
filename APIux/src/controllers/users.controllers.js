@@ -7,7 +7,7 @@ export const checkUserInDatabase = async (email, password) => {
     const connection = await getConnection();
 
     const [rows] = await connection.execute(
-      'SELECT * FROM USERS WHERE EMAIL = ?',
+      'SELECT * FROM users WHERE email = ?',
       [email]
     );
 
@@ -58,7 +58,7 @@ export const postNewUser = async (req, res) => {
     const connection = await getConnection();
 
     const [rows] = await connection.execute(
-      'INSERT INTO USERS (user_name, user_last_name, email, password_hash, created_at, last_login, fk_user_role, fk_endorsement_id, user_status) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)',
+      'INSERT INTO users (user_name, user_last_name, email, password_hash, created_at, last_login, fk_user_role, fk_endorsement_id, user_status) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)',
       [user_name, user_last_name, email, password_hash, created_at, last_login, fk_user_role, fk_endorsement_id, user_status]
     );
 
@@ -77,7 +77,7 @@ export const postLogout = async (req, res) => {
     const connection = await getConnection();
 
     const [rows] = await connection.execute(
-      'UPDATE USERS SET user_status = 0 WHERE ID_USER = ?',
+      'UPDATE users SET user_status = 0 WHERE id_user = ?',
       [user_id]
     );
 
