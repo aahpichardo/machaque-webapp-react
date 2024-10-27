@@ -1,5 +1,6 @@
 import React from 'react';
-import './ModalAvisos.css'; // Importa el archivo de estilos
+import { Dialog, DialogTitle, DialogContent, DialogActions, Typography, Button, IconButton } from '@mui/material';
+import CloseIcon from '@mui/icons-material/Close';
 
 interface ModalProps {
   title: string;
@@ -9,24 +10,39 @@ interface ModalProps {
 }
 
 const Modal: React.FC<ModalProps> = ({ title, content, isOpen, onClose }) => {
-  if (!isOpen) return null; // No renderiza nada si el modal no está abierto
-
   return (
-    <div className="modal-overlay" onClick={onClose}>
-      <div className="modal">
-        <div className="modal-header">
-          <h2 className="modal-title">{title}</h2>
-          <button className="close-button" onClick={onClose} aria-label="Cerrar modal">&times;</button>
-        </div>
-        <div className="modal-body">
-          <p className="modal-text">{content}</p>
-        </div>
-        <div className="modal-footer">
-          <button className="modal-button" onClick={onClose}>Cerrar</button>
-        </div>
-      </div>
-    </div>
+    <Dialog
+      open={isOpen}
+      onClose={onClose}
+      aria-labelledby="modal-title"
+      maxWidth="sm"
+      fullWidth
+    >
+      <DialogTitle id="modal-title">
+        <Typography variant="h6" component="span">
+          {title}
+        </Typography>
+        <IconButton
+          aria-label="Cerrar modal"
+          onClick={onClose}
+          sx={{ position: 'absolute', right: 8, top: 8, color: 'grey.500' }}
+        >
+          <CloseIcon />
+        </IconButton>
+      </DialogTitle>
+      <DialogContent dividers>
+        <Typography variant="body2" sx={{ color: '#333', textAlign: 'justify', whiteSpace: 'pre-line' }}>
+          {content}
+        </Typography>
+      </DialogContent>
+      <DialogActions>
+        <Button onClick={onClose} variant="contained" color="primary">
+          Cerrar
+        </Button>
+      </DialogActions>
+    </Dialog>
   );
 };
 
 export default Modal;
+

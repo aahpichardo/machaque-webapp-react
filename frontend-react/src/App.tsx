@@ -10,13 +10,14 @@ import Home from './pages/Home/Home';
 import PrivateRoute from './components/PrivateRouter'
 import { useAuth } from './contexts/AuthContext'
 import Unauthorized from './components/Unauthorized/Unauthorized'
+import Informative from './pages/Informative/Informative'
 
 const App = () => {
   const { isAuthenticated } = useAuth();
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<Login />} />
+        <Route path="/" element={<Informative/>} />
         <Route path="/login" element={<Login />} />
         <Route path="/new-password" element={<NewPassword />} />
         <Route path="/password-recovery" element={<PasswordRecovery />} />
