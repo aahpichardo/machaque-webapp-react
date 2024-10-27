@@ -32,7 +32,7 @@ const NavBarInformative: React.FC = () => {
                 },
               }}
             >
-              Login
+              Iniciar Sesión
             </Button>
   
             <Button
@@ -48,7 +48,7 @@ const NavBarInformative: React.FC = () => {
                 },
               }}
             >
-              Register
+              Registrarme
             </Button>
           </Box>
         </Toolbar>
