@@ -3,7 +3,6 @@ import { AppBar, Toolbar, Typography, Button, Box } from '@mui/material';
 import { Link } from 'react-router-dom';
 import Logo from '../assets/logo.jpeg'; // Cambia esta ruta a tu logo
 
-
 const NavBarInformative: React.FC = () => {
     return (
         <AppBar position="static" sx={{ backgroundColor: '#2294F2', color: '#F9F9F9' }}>
