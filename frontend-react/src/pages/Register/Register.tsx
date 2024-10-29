@@ -14,6 +14,7 @@ const Register: React.FC = () => {
     user_name: '',
     user_last_name: '',
     email: '',
+    phone_number:'',
     password: '',
     created_at: new Date().toISOString().split('T')[0],
     last_login: new Date().toISOString().split('T')[0],
@@ -83,6 +84,10 @@ const Register: React.FC = () => {
               <label className="label" htmlFor="email">Correo</label>
               <input type="email" id="email" className="input" required onChange={handleChange} />
             </div>
+            <div className="input-group">
+        <label className="label" htmlFor="phone_number">Número Telefónico</label>
+        <input type="tel" id="phone_number" className="input" pattern="[0-9]{10}" required onChange={handleChange} />
+      </div>
             <div className="input-group">
               <label className="label" htmlFor="password">Contraseña</label>
               <input type="password" id="password" className="input" required onChange={handleChange} />
