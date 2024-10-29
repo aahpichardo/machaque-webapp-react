@@ -34,7 +34,7 @@ CREATE TABLE users (
     email VARCHAR(255),
     password_hash VARCHAR(255),
     salt VARCHAR(255), -- Agregar columna para almacenar el salt
-    phone_number VARCHAR(255), -- Agregar columna para el número de celular
+    phone_number VARCHAR(510), -- Agregar columna para el número de celular
     created_at DATETIME,
     last_login DATETIME,
     fk_user_role INT, -- Aquí se hace referencia a roles.role_id
@@ -59,7 +59,7 @@ CREATE TABLE messages (
     message_id INT PRIMARY KEY AUTO_INCREMENT,
     sender_id INT,
     receiver_id INT,
-    message TEXT,
+    message LONGTEXT,
     created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (sender_id) REFERENCES users(user_id),
     FOREIGN KEY (receiver_id) REFERENCES users(user_id)

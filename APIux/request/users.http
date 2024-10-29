@@ -1,7 +1,6 @@
 ### POST NEW USER
 POST http://localhost:3000/api/user/new
-#{  "user_name": "Javier", "user_last_name": "Solis", "email": "javier.soliis@gmail.com", "password": "Javier$12345", "phone_number": "6144773331", "created_at": "2023-10-01", "last_login": "2023-10-01", "fk_user_role": 1, "fk_endorsement_id": 1, "user_status": 1 }
-
+# {  "user_name": "Javier", "user_last_name": "Solis", "email": "javier.solis@gmail.com", "password": "Javier$12345", "phone_number": "6144773331", "created_at": "2023-10-01", "last_login": "2023-10-01", "fk_user_role": 1, "fk_endorsement_id": 1, "user_status": 1 }
 ### POST TOKEN
 POST http://localhost:3000/api/login
 # { "email": "javier.solis@gmail.com", "password": "Javier$12345" }
@@ -18,3 +17,11 @@ POST http://localhost:3000/api/user/validate
 PUT http://localhost:3000/api/user/change
 # { "email": "javier.solis@gmail.com", "password": "Solis#123" }
 # NOTA: Se debe enviar el token en el header como por ejemplo "Authorization: Bearer tncoenrfnerivneijnv" para poder consumir este endpoint.
+
+### POST ENVIAR MENSAJE
+POST http://localhost:3000/api/user/send/messages
+#{ "sender_id": 2, "receiver_id": 3, "message": "Hola, ¿cómo estás?" }
+
+### GET MENSAJES
+POST http://localhost:3000/api/user/get/messages
+# {"user_id": 3}

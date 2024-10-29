@@ -18,7 +18,6 @@ export const checkUserInDatabase = async (email, password) => {
       const passwordMatch = await verifyPassword(password, user.password_hash, user.salt);
 
       if (passwordMatch) {
-        // Decrypt the phone number
         let decryptedPhoneNumber;
         try {
           decryptedPhoneNumber = decryptPhoneNumber(user.phone_number);
@@ -29,14 +28,22 @@ export const checkUserInDatabase = async (email, password) => {
           };
         }
 
+        const userResponse = {
+          user_name: user.user_name,
+          user_last_name: user.user_last_name,
+          email: user.email,
+          phone_number: decryptedPhoneNumber,
+          created_at: user.created_at,
+          last_login: user.last_login,
+          fk_user_role: user.fk_user_role,
+          fk_endorsement_id: user.fk_endorsement_id,
+          user_status7: user.user_status7
+        };
+
         return {
           status: 200,
           message: 'Usuario autenticado exitosamente',
-          user: {
-            ...user,
-            email: email, // Include the original email
-            phone_number: decryptedPhoneNumber // Include the decrypted phone number
-          }
+          user: userResponse
         };
       } else {
         return {
@@ -60,7 +67,6 @@ export const checkUserInDatabase = async (email, password) => {
 };
 
 // POST REGISTRO DE UN NUEVO USUARIO
-// Helper functions
 const validateEmail = (email) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
 const validatePhoneNumber = (phone) => /^\d{10}$/.test(phone);
 const validatePassword = (password) => /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{10,}$/.test(password);
@@ -87,7 +93,6 @@ export const postNewUser = async (req, res) => {
   try {
     const connection = await getConnection();
 
-    // Verificar si el correo electrónico ya existe
     const [existingUser] = await connection.execute(
       'SELECT user_id FROM users WHERE email = ?',
       [email]
@@ -97,11 +102,9 @@ export const postNewUser = async (req, res) => {
       return res.status(400).json({ message: 'El correo electrónico ya está en uso.' });
     }
 
-    // Generar salt y hashear la contraseña
     const salt = crypto.randomBytes(16).toString('hex');
     const password_hash = await hashPassword(password, salt);
 
-    // Encrypt sensitive data using RSA
     const encryptedPhoneNumber = encryptPhoneNumber(phone_number);
 
     await connection.execute(
@@ -135,31 +138,25 @@ export const postRecoverPassword = async (req, res) => {
     if (userRows.length > 0) {
       const user = userRows[0];
 
-      // Generar código aleatorio
       const randomCode = Math.floor(100000 + Math.random() * 900000);
 
-      // Hashear el código de recuperación
       const salt = crypto.randomBytes(16).toString('hex');
       const hashedCode = await hashPassword(randomCode.toString(), salt);
 
-      // Tiempo de expiración del código de recuperación 5 minutos
       const expireDate = new Date();
       expireDate.setMinutes(expireDate.getMinutes() + 5);
 
-      // Verificar si ya existe un código de recuperación para el usuario
       const [recoveryRows] = await connection.execute(
         'SELECT * FROM recovery_code WHERE fk_user_id = ?',
         [user.user_id]
       );
 
       if (recoveryRows.length > 0) {
-        // Actualizar el código de recuperación existente
         await connection.execute(
           'UPDATE recovery_code SET code_number = ?, salt = ?, expire_date = ? WHERE fk_user_id = ?',
           [hashedCode, salt, expireDate, user.user_id]
         );
       } else {
-        // Insertar un nuevo código de recuperación
         await connection.execute(
           'INSERT INTO recovery_code (code_number, salt, fk_user_id, expire_date) VALUES (?, ?, ?, ?)',
           [hashedCode, salt, user.user_id, expireDate]
@@ -229,7 +226,6 @@ export const putChangePassword = async (req, res) => {
 
     const connection = await getConnection();
 
-    // Verificar si el correo electrónico existe
     const [rows] = await connection.execute(
       'SELECT user_id FROM users WHERE email = ?',
       [email]
@@ -265,7 +261,24 @@ export const postSendMessage = async (req, res) => {
 
     const connection = await getConnection();
 
-    // Encrypt message using Blowfish
+    const [senderRows] = await connection.execute(
+      'SELECT user_id FROM users WHERE user_id = ?',
+      [sender_id]
+    );
+
+    if (senderRows.length === 0) {
+      return res.status(404).json({ message: 'El remitente no existe.' });
+    }
+
+    const [receiverRows] = await connection.execute(
+      'SELECT user_id FROM users WHERE user_id = ?',
+      [receiver_id]
+    );
+
+    if (receiverRows.length === 0) {
+      return res.status(404).json({ message: 'El destinatario no existe.' });
+    }
+
     const encryptedMessage = encryptMessage(message);
 
     await connection.execute(
@@ -280,10 +293,10 @@ export const postSendMessage = async (req, res) => {
   }
 };
 
-// GET RECIBIR MENSAJES
-export const getMessages = async (req, res) => {
+// POST RECIBIR MENSAJES
+export const postGetMessages = async (req, res) => {
   try {
-    const { user_id } = req.params;
+    const { user_id } = req.body;
 
     if (!user_id) {
       return res.status(400).json({ message: 'El ID del usuario es requerido.' });
@@ -291,12 +304,25 @@ export const getMessages = async (req, res) => {
 
     const connection = await getConnection();
 
+    const [userRows] = await connection.execute(
+      'SELECT user_id FROM users WHERE user_id = ?',
+      [user_id]
+    );
+
+    if (userRows.length === 0) {
+      return res.status(404).json({ message: 'El usuario no existe.' });
+    }
+
     const [messages] = await connection.execute(
       'SELECT * FROM messages WHERE receiver_id = ?',
       [user_id]
     );
 
-    // Decrypt messages using Blowfish
+    if (messages.length === 0) {
+      return res.status(200).json({ message: 'Sin mensajes.' });
+    }
+
+
     const decryptedMessages = messages.map(msg => {
       const decryptedMessage = decryptMessage(msg.message);
       return { ...msg, message: decryptedMessage };

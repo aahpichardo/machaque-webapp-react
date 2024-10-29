@@ -4,7 +4,9 @@ import {
     postNewUser,
     postRecoverPassword, 
     postValidateCode,
-    putChangePassword
+    putChangePassword,
+    postSendMessage,
+    postGetMessages
 } from "../controllers/users.controllers.js";
 
 const router = Router();
@@ -20,5 +22,11 @@ router.post("/user/validate", postValidateCode);
 
 // PUT CAMBIAR CONTRASEÑA
 router.put("/user/change", authMiddleware, putChangePassword);
+
+// POST ENVIAR MENSAJE
+router.post("/user/send/messages", authMiddleware, postSendMessage);
+
+// GET MENSAJES
+router.post("/user/get/messages", authMiddleware, postGetMessages);
 
 export default router;

@@ -3,6 +3,7 @@ import path from 'path';
 import crypto, { publicEncrypt, privateDecrypt } from 'crypto';
 import { RSA_PRIVATE_KEY, RSA_PUBLIC_KEY, SECRET_KEY } from '../config.js';
 import { fileURLToPath } from 'url';
+import CryptoJS from 'crypto-js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -60,15 +61,17 @@ export const verifyPassword = (password, hash, salt) => {
 };
 
 export const encryptMessage = (message) => {
-  const cipher = crypto.createCipher('bf', SECRET_KEY);
-  let encryptedMessage = cipher.update(message, 'utf8', 'hex');
-  encryptedMessage += cipher.final('hex');
-  return encryptedMessage;
+  const key = CryptoJS.enc.Hex.parse(SECRET_KEY);
+  const iv = CryptoJS.lib.WordArray.random(8); // Blowfish uses an 8-byte IV
+  const encrypted = CryptoJS.Blowfish.encrypt(message, key, { iv: iv });
+  return iv.toString() + ':' + encrypted.toString();
 };
 
 export const decryptMessage = (encryptedMessage) => {
-  const decipher = crypto.createDecipher('bf', SECRET_KEY);
-  let decryptedMessage = decipher.update(encryptedMessage, 'hex', 'utf8');
-  decryptedMessage += decipher.final('utf8');
-  return decryptedMessage;
+  const textParts = encryptedMessage.split(':');
+  const iv = CryptoJS.enc.Hex.parse(textParts.shift());
+  const encryptedText = textParts.join(':');
+  const key = CryptoJS.enc.Hex.parse(SECRET_KEY);
+  const decrypted = CryptoJS.Blowfish.decrypt(encryptedText, key, { iv: iv });
+  return decrypted.toString(CryptoJS.enc.Utf8);
 };
