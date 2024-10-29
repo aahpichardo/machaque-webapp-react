@@ -14,6 +14,7 @@ INSERT INTO roles (role_id, role_name, description)
 VALUES 
     (1, 'Comensal', 'Usuario que no pertenece a ningún restaurante.'),
     (2, 'Vendedor', 'Usuario o empresa que vende.');
+
 -- Aviso de privacidad
 CREATE TABLE endorsement_privacy_notice (
     endorsement_id INT PRIMARY KEY,
@@ -32,6 +33,8 @@ CREATE TABLE users (
     user_last_name VARCHAR(255),
     email VARCHAR(255),
     password_hash VARCHAR(255),
+    salt VARCHAR(255), -- Agregar columna para almacenar el salt
+    phone_number VARCHAR(255), -- Agregar columna para el número de celular
     created_at DATETIME,
     last_login DATETIME,
     fk_user_role INT, -- Aquí se hace referencia a roles.role_id
@@ -46,6 +49,18 @@ CREATE TABLE recovery_code (
     id INT PRIMARY KEY AUTO_INCREMENT,
     fk_user_id INT,
     code_number VARCHAR(255),
+    salt VARCHAR(255), -- Agregar columna para almacenar el salt del código de recuperación
     expire_date DATETIME,
     FOREIGN KEY (fk_user_id) REFERENCES users(user_id)
+);
+
+-- Tabla de mensajes
+CREATE TABLE messages (
+    message_id INT PRIMARY KEY AUTO_INCREMENT,
+    sender_id INT,
+    receiver_id INT,
+    message TEXT,
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (sender_id) REFERENCES users(user_id),
+    FOREIGN KEY (receiver_id) REFERENCES users(user_id)
 );

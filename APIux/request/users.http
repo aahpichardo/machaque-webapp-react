@@ -1,10 +1,10 @@
 ### POST NEW USER
 POST http://localhost:3000/api/user/new
-# {  "user_name": "Javier", "user_last_name": "Solis", "email": "javier.solis@gmail.com", "password": "Javier#123", "created_at": "2023-10-01", "last_login": "2023-10-01", "fk_user_role": 1, "fk_endorsement_id": 1, "user_status": 1 }
+#{  "user_name": "Javier", "user_last_name": "Solis", "email": "javier.soliis@gmail.com", "password": "Javier$12345", "phone_number": "6144773331", "created_at": "2023-10-01", "last_login": "2023-10-01", "fk_user_role": 1, "fk_endorsement_id": 1, "user_status": 1 }
 
 ### POST TOKEN
 POST http://localhost:3000/api/login
-#{ "email": "javier.solis@gmail.com", "password": "Javier#123" }
+# { "email": "javier.solis@gmail.com", "password": "Javier$12345" }
 
 ### POST RECUPERAR CONTRASEÑA
 POST http://localhost:3000/api/user/recover

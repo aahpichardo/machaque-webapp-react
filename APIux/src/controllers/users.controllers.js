@@ -1,6 +1,7 @@
-import bcrypt from 'bcrypt';
 import { generateToken } from '../middlewares/generateToken.js';
 import { getConnection } from "../../database/connection.js";
+import crypto from 'crypto';
+import { encryptPhoneNumber, decryptPhoneNumber, hashPassword, verifyPassword, encryptMessage, decryptMessage } from '../middlewares/encryption.js';
 
 // CONSULTA DE USUARIOS PARA GENERAR EL TOKEN DE ACCESO
 export const checkUserInDatabase = async (email, password) => {
@@ -14,13 +15,28 @@ export const checkUserInDatabase = async (email, password) => {
 
     if (rows.length > 0) {
       const user = rows[0];
-      const passwordMatch = await bcrypt.compare(password, user.password_hash);
+      const passwordMatch = await verifyPassword(password, user.password_hash, user.salt);
 
       if (passwordMatch) {
+        // Decrypt the phone number
+        let decryptedPhoneNumber;
+        try {
+          decryptedPhoneNumber = decryptPhoneNumber(user.phone_number);
+        } catch (error) {
+          return {
+            status: 500,
+            message: 'Error decrypting phone number'
+          };
+        }
+
         return {
           status: 200,
           message: 'Usuario autenticado exitosamente',
-          user: user
+          user: {
+            ...user,
+            email: email, // Include the original email
+            phone_number: decryptedPhoneNumber // Include the decrypted phone number
+          }
         };
       } else {
         return {
@@ -44,11 +60,28 @@ export const checkUserInDatabase = async (email, password) => {
 };
 
 // POST REGISTRO DE UN NUEVO USUARIO
-export const postNewUser = async (req, res) => {
-  const { user_name, user_last_name, email, password, created_at, last_login, fk_user_role, fk_endorsement_id, user_status } = req.body;
+// Helper functions
+const validateEmail = (email) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+const validatePhoneNumber = (phone) => /^\d{10}$/.test(phone);
+const validatePassword = (password) => /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{10,}$/.test(password);
 
-  if (!user_name || !email || !password) {
-    return res.status(400).json({ message: "Nombre de usuario, correo electrónico y contraseña son requeridos" });
+export const postNewUser = async (req, res) => {
+  const { user_name, user_last_name, email, password, phone_number, created_at, last_login, fk_user_role, fk_endorsement_id, user_status } = req.body;
+
+  if (!user_name || !email || !password || !phone_number) {
+    return res.status(400).json({ message: "Nombre de usuario, correo electrónico, contraseña y número de celular son requeridos" });
+  }
+
+  if (!validateEmail(email)) {
+    return res.status(400).json({ message: "Correo electrónico no válido" });
+  }
+
+  if (!validatePhoneNumber(phone_number)) {
+    return res.status(400).json({ message: "Número de celular no válido" });
+  }
+
+  if (!validatePassword(password)) {
+    return res.status(400).json({ message: "La contraseña debe tener mínimo 10 caracteres, contener al menos un número, caracteres especial y letras" });
   }
 
   try {
@@ -64,13 +97,16 @@ export const postNewUser = async (req, res) => {
       return res.status(400).json({ message: 'El correo electrónico ya está en uso.' });
     }
 
-    // Hashear la contraseña
-    const saltRounds = 10;
-    const password_hash = await bcrypt.hash(password, saltRounds);
+    // Generar salt y hashear la contraseña
+    const salt = crypto.randomBytes(16).toString('hex');
+    const password_hash = await hashPassword(password, salt);
+
+    // Encrypt sensitive data using RSA
+    const encryptedPhoneNumber = encryptPhoneNumber(phone_number);
 
     await connection.execute(
-      'INSERT INTO users (user_name, user_last_name, email, password_hash, created_at, last_login, fk_user_role, fk_endorsement_id, user_status) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)',
-      [user_name, user_last_name, email, password_hash, created_at, last_login, fk_user_role, fk_endorsement_id, user_status]
+      'INSERT INTO users (user_name, user_last_name, email, password_hash, salt, phone_number, created_at, last_login, fk_user_role, fk_endorsement_id, user_status) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
+      [user_name, user_last_name, email, password_hash, salt, encryptedPhoneNumber, created_at, last_login, fk_user_role, fk_endorsement_id, user_status]
     );
 
     return res.status(200).json({ message: 'Usuario creado exitosamente.' });
@@ -103,8 +139,8 @@ export const postRecoverPassword = async (req, res) => {
       const randomCode = Math.floor(100000 + Math.random() * 900000);
 
       // Hashear el código de recuperación
-      const saltRounds = 10;
-      const hashedCode = await bcrypt.hash(randomCode.toString(), saltRounds);
+      const salt = crypto.randomBytes(16).toString('hex');
+      const hashedCode = await hashPassword(randomCode.toString(), salt);
 
       // Tiempo de expiración del código de recuperación 5 minutos
       const expireDate = new Date();
@@ -119,14 +155,14 @@ export const postRecoverPassword = async (req, res) => {
       if (recoveryRows.length > 0) {
         // Actualizar el código de recuperación existente
         await connection.execute(
-          'UPDATE recovery_code SET code_number = ?, expire_date = ? WHERE fk_user_id = ?',
-          [hashedCode, expireDate, user.user_id]
+          'UPDATE recovery_code SET code_number = ?, salt = ?, expire_date = ? WHERE fk_user_id = ?',
+          [hashedCode, salt, expireDate, user.user_id]
         );
       } else {
         // Insertar un nuevo código de recuperación
         await connection.execute(
-          'INSERT INTO recovery_code (code_number, fk_user_id, expire_date) VALUES (?, ?, ?)',
-          [hashedCode, user.user_id, expireDate]
+          'INSERT INTO recovery_code (code_number, salt, fk_user_id, expire_date) VALUES (?, ?, ?, ?)',
+          [hashedCode, salt, user.user_id, expireDate]
         );
       }
 
@@ -152,14 +188,14 @@ export const postValidateCode = async (req, res) => {
     const connection = await getConnection();
 
     const [recoveryRows] = await connection.execute(
-      'SELECT code_number, expire_date, users.user_id FROM recovery_code INNER JOIN users ON recovery_code.fk_user_id = users.user_id WHERE email = ?',
+      'SELECT code_number, salt, expire_date, users.user_id FROM recovery_code INNER JOIN users ON recovery_code.fk_user_id = users.user_id WHERE email = ?',
       [email]
     );
 
     if (recoveryRows.length > 0) {
       const recoveryCode = recoveryRows[0];
 
-      const codeMatch = await bcrypt.compare(code, recoveryCode.code_number);
+      const codeMatch = await verifyPassword(code, recoveryCode.code_number, recoveryCode.salt);
 
       if (codeMatch) {
         const currentDate = new Date();
@@ -203,15 +239,70 @@ export const putChangePassword = async (req, res) => {
       return res.status(404).json({ message: 'No existe una cuenta con el correo que ingresaste.' });
     }
 
-    const saltRounds = 10;
-    const password_hash = await bcrypt.hash(password, saltRounds);
+    const salt = crypto.randomBytes(16).toString('hex');
+    const password_hash = await hashPassword(password, salt);
 
     await connection.execute(
-      'UPDATE users SET password_hash = ? WHERE email = ?',
-      [password_hash, email]
+      'UPDATE users SET password_hash = ?, salt = ? WHERE email = ?',
+      [password_hash, salt, email]
     );
 
     return res.status(200).json({ message: 'Contraseña actualizada exitosamente.' });
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({ message: 'Error en el servidor.' });
+  }
+};
+
+// POST ENVIAR MENSAJE
+export const postSendMessage = async (req, res) => {
+  try {
+    const { sender_id, receiver_id, message } = req.body;
+
+    if (!sender_id || !receiver_id || !message) {
+      return res.status(400).json({ message: 'El remitente, el destinatario y el mensaje son requeridos.' });
+    }
+
+    const connection = await getConnection();
+
+    // Encrypt message using Blowfish
+    const encryptedMessage = encryptMessage(message);
+
+    await connection.execute(
+      'INSERT INTO messages (sender_id, receiver_id, message) VALUES (?, ?, ?)',
+      [sender_id, receiver_id, encryptedMessage]
+    );
+
+    return res.status(200).json({ message: 'Mensaje enviado exitosamente.' });
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({ message: 'Error en el servidor.' });
+  }
+};
+
+// GET RECIBIR MENSAJES
+export const getMessages = async (req, res) => {
+  try {
+    const { user_id } = req.params;
+
+    if (!user_id) {
+      return res.status(400).json({ message: 'El ID del usuario es requerido.' });
+    }
+
+    const connection = await getConnection();
+
+    const [messages] = await connection.execute(
+      'SELECT * FROM messages WHERE receiver_id = ?',
+      [user_id]
+    );
+
+    // Decrypt messages using Blowfish
+    const decryptedMessages = messages.map(msg => {
+      const decryptedMessage = decryptMessage(msg.message);
+      return { ...msg, message: decryptedMessage };
+    });
+
+    return res.status(200).json(decryptedMessages);
   } catch (error) {
     console.error(error);
     return res.status(500).json({ message: 'Error en el servidor.' });
