@@ -29,6 +29,7 @@ export const checkUserInDatabase = async (email, password) => {
         }
 
         const userResponse = {
+          user_id: user.user_id,
           user_name: user.user_name,
           user_last_name: user.user_last_name,
           email: user.email,
