@@ -1,15 +1,32 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import Navbar from '../../components/NavBar/NavBar'; // Asegúrate de que la ruta sea correcta
 import './Home.css'; // Si tienes estilos específicos para el componente Home
 
 const Home: React.FC = () => {
+  const [user, setUser] = useState<any>(null);
+
+  useEffect(() => {
+      // Recupera y parsea el objeto desde localStorage
+      const storedUser = localStorage.getItem("user");
+      if (storedUser) {
+          setUser(JSON.parse(storedUser));
+      }
+  }, []);
+
+
+  if (!user) {
+    return <p>Loading...</p>;
+}
+
   return (
     <>
     <Navbar/>
     <div className="dashboard">
       <div className="dashboard-header">
         <div className="user-info">
-          <h2>¡Bienvenido Usuario!</h2>
+          <h2>¡Bienvenido {user.user_name} {user.user_last_name}!</h2>
+          <p>Correo Electrónico: {user.email}</p>
+          <p>Número de teléfono: {user.phone_number}</p>
           <p>Entusiasta de la Comida</p>
         </div>
         <button className="add-restaurant-button">Añadir nuevo restaurante</button>

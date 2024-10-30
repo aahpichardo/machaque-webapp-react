@@ -22,7 +22,7 @@ const App = () => {
         <Route path="/password-recovery" element={<PasswordRecovery />} />
         <Route path="/password-recovery-token" element={<PasswordRecoveryToken />} />
         <Route path="/register" element={<Register />} />
-        <Route path="/user-profile" element={<UserProfile />} />
+        <Route path="/mensajes" element={<UserProfile />} />
         {/*<Route path="/home" element={<Home />} />*/}
         {/* Protegiendo las rutas */}
         <Route 

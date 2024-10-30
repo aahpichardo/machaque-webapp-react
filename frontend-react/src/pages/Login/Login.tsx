@@ -12,8 +12,10 @@ interface LoginData {
 }
 
 interface LoginResponse {
-  message: string;
-  token?: string;
+  user_id: string
+  name: string;
+  email: string;
+  phone_number: string;
 }
 
 const Login = () => {
@@ -42,10 +44,14 @@ const Login = () => {
     try {
       const response = await axios.post("http://localhost:3000/api/login", loginData);
       const token = response.data.token;
+      const user = response.data.user;
 
       // Decodifica y guarda el token
       const decoded = jwtDecode(token);
       localStorage.setItem('token', token);
+      // Guarda la información del usuario en localStorage
+      localStorage.setItem('user', JSON.stringify(user));
+      
 
       // Lógica de inicio de sesión
       login(); // Actualiza el estado de autenticación
