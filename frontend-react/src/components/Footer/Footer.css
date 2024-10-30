@@ -1,0 +1,32 @@
+.footer {
+    background-color: #282c34; /* Color de fondo oscuro */
+    color: white; /* Color de texto blanco */
+    padding: 20px; /* Espaciado interno */
+    text-align: center; /* Centrar el contenido */
+}
+
+.footer-content {
+    max-width: 800px; /* Ancho máximo del contenido */
+    margin: 0 auto; /* Centrar el contenido en la página */
+}
+
+.footer-text {
+    margin: 0; /* Sin margen */
+    font-size: 14px; /* Tamaño de fuente más pequeño */
+}
+
+.social-icons {
+    margin-top: 10px; /* Espacio entre el texto y los íconos sociales */
+}
+
+.social-icon {
+    color: white; /* Color blanco para los enlaces */
+    margin: 0 10px; /* Espacio entre los íconos */
+    text-decoration: none; /* Sin subrayado en los enlaces */
+    font-size: 14px; /* Tamaño de fuente */
+    transition: color 0.3s; /* Transición suave para el color */
+}
+
+.social-icon:hover {
+    color: #61dafb; /* Color al pasar el ratón (puedes cambiarlo) */
+}

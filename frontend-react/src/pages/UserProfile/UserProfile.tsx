@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import './UserProfile.css';
 import Navbar from '../../components/NavBar/NavBar';
@@ -13,17 +13,24 @@ interface Message {
 
 const UserProfile: React.FC = () => {
   const [message, setMessage] = useState('');
-  const [response, setResponse] = useState<Message[] | { message: string } | null>(null);
+  const [response, setResponse] = useState<Message[]>([]);
+  const [user, setUser] = useState<any>(null);
+  const token = localStorage.getItem('token');
 
   const handleSendMessage = async (e: React.FormEvent) => {
     e.preventDefault();
-    const token = localStorage.getItem('token');
+
+    if (!user) return;
+
+    const user_id = user.user_id;
+    const receiver_id = user_id === 1 ? 2 : 1;
+
     try {
       await axios.post(
         'http://localhost:3000/api/user/send/messages',
         {
-          sender_id: 1,
-          receiver_id: 2,
+          sender_id: user_id,
+          receiver_id,
           message: message,
         },
         {
@@ -32,21 +39,25 @@ const UserProfile: React.FC = () => {
           },
         }
       );
-      alert('Mensaje enviado exitosamente');
       setMessage('');
+      handleGetMessages(); 
     } catch (error) {
       console.error('Error sending message:', error);
       alert('Error al enviar el mensaje');
     }
   };
 
-  const handleGetMessages = async (userId: number) => {
-    const token = localStorage.getItem('token');
+  const handleGetMessages = async () => {
+    if (!user) return;
+
+    const user_id = user.user_id;
+    const receiver_id = user_id === 1 ? 2 : 1;
+
     try {
-      const res = await axios.post(
+      const res1 = await axios.post(
         'http://localhost:3000/api/user/get/messages',
         {
-          user_id: userId,
+          user_id: user_id,
         },
         {
           headers: {
@@ -54,17 +65,72 @@ const UserProfile: React.FC = () => {
           },
         }
       );
-      setResponse(res.data);
+
+      const res2 = await axios.post(
+        'http://localhost:3000/api/user/get/messages',
+        {
+          user_id: receiver_id,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      const combinedMessages = [...res1.data, ...res2.data];
+
+      const sortedMessages = combinedMessages.sort((a, b) => 
+        new Date(a.created_at).getTime() - new Date(b.created_at).getTime()
+      );
+
+      setResponse(sortedMessages);
     } catch (error) {
       console.error('Error getting messages:', error);
     }
   };
 
+  useEffect(() => {
+    const storedUser = localStorage.getItem("user");
+    if (storedUser) {
+      setUser(JSON.parse(storedUser));
+      handleGetMessages();
+    }
+  }, []);
+
+  if (!user) {
+    return <p>Loading...</p>; 
+  }
+
   return (
     <>
       <Navbar />
       <div className="messaging-container">
-        <form className="message-form" onSubmit={handleSendMessage}>
+        <button className="get-messages-button" onClick={handleGetMessages}>
+          Actualizar Conversación
+        </button>
+        <div className="messages-container">
+          {response.length > 0 ? (
+            response.map((msg) => (
+              <div
+                key={msg.message_id}
+                className={
+                  msg.sender_id === user.user_id 
+                    ? 'message-bubble sent' 
+                    : 'message-bubble received'
+                }
+              >
+                <p className="message-content">{msg.message}</p>
+                <span className="timestamp">
+                  {new Date(msg.created_at).toLocaleString()}
+                </span>
+              </div>
+            ))
+          ) : (
+            <p className="no-messages">No hay mensajes.</p>
+          )}
+        </div>
+                <form className="message-form" onSubmit={handleSendMessage}>
           <div className="input-group">
             <label htmlFor="message" className="message-label">
               Mensaje:
@@ -82,37 +148,17 @@ const UserProfile: React.FC = () => {
             Enviar Mensaje
           </button>
         </form>
-        <button className="get-messages-button" onClick={() => handleGetMessages(1)}>
-          Obtener Mensajes de Usuario 1
-        </button>
-        <button className="get-messages-button" onClick={() => handleGetMessages(2)}>
-          Obtener Mensajes de Usuario 2
-        </button>
-        <div className="messages-container">
-          {response ? (
-            Array.isArray(response) && response.length > 0 ? (
-              response.map((msg) => (
-                <div
-                  key={msg.message_id}
-                  className={msg.sender_id === 1 ? 'message-bubble sent' : 'message-bubble received'}
-                >
-                  <p className="message-content">{msg.message}</p>
-                  <span className="timestamp">
-                    {new Date(msg.created_at).toLocaleString()}
-                  </span>
-                </div>
-              ))
-            ) : (
-              <p className="no-messages">{(response as { message: string }).message}</p>
-            )
-          ) : (
-            <p className="no-messages">Cargando mensajes...</p>
-          )}
-        </div>
       </div>
     </>
   );
 };
 
 export default UserProfile;
+
+
+
+
+
+
+
 
