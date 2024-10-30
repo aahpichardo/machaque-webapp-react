@@ -1,0 +1,76 @@
+.messaging-container {
+    font-family: Arial, sans-serif;
+    max-width: 400px;
+    margin: 20px auto;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    background-color: #f9f9f9;
+  }
+  
+  .message-form {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  
+  .message-label {
+    font-weight: bold;
+    color: #333;
+  }
+  
+  .message-input {
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 16px;
+    color: #333;
+    transition: border-color 0.2s;
+  }
+  
+  .message-input:focus {
+    border-color: #0077cc;
+    outline: none;
+  }
+  
+  .send-button {
+    padding: 10px;
+    border: none;
+    border-radius: 4px;
+    font-size: 16px;
+    color: white;
+    background-color: #0077cc;
+    cursor: pointer;
+    transition: background-color 0.2s;
+  }
+  
+  .send-button:hover {
+    background-color: #005fa3;
+  }
+  
+  .get-messages-button {
+    padding: 10px;
+    border: none;
+    border-radius: 4px;
+    font-size: 16px;
+    color: white;
+    background-color: #555;
+    cursor: pointer;
+    margin-top: 8px;
+    transition: background-color 0.2s;
+  }
+  
+  .get-messages-button:hover {
+    background-color: #333;
+  }
+  
+  .response-box {
+    margin-top: 20px;
+    padding: 10px;
+    background-color: #f1f1f1;
+    border-radius: 4px;
+    font-size: 14px;
+    color: #444;
+    overflow-x: auto;
+  }
+  

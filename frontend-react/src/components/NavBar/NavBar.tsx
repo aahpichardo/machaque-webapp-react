@@ -23,7 +23,7 @@ const Navbar: React.FC = () => {
       </div>
       <ul className="navbar-links">
         <li><Link to="/home">Inicio</Link></li>
-        <li><Link to="/mensajes">Perfil</Link></li>
+        <li><Link to="/mensajes">Mensajes</Link></li>
       </ul>
       <div className="search-container">
         <input type="text" className="search-input" placeholder="Buscar..." />

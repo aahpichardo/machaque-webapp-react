@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import './UserProfile.css'; // Asegúrate de tener el archivo CSS para estilos
+import Navbar from '../../components/NavBar/NavBar'
 
 const UserProfile: React.FC = () => {
   const [message, setMessage] = useState('');
@@ -50,24 +51,32 @@ const UserProfile: React.FC = () => {
   };
 
   return (
-    <div>
-      <form onSubmit={handleSendMessage}>
-        <div>
-          <label htmlFor="message">Mensaje:</label>
+    <>
+    <Navbar/>
+    <div className="messaging-container">
+      <form className="message-form" onSubmit={handleSendMessage}>
+        <div className="input-group">
+          <label htmlFor="message" className="message-label">Mensaje:</label>
           <input
             type="text"
             id="message"
             value={message}
             onChange={(e) => setMessage(e.target.value)}
             required
+            className="message-input"
           />
         </div>
-        <button type="submit">Enviar Mensaje</button>
+        <button type="submit" className="send-button">Enviar Mensaje</button>
       </form>
-      <button onClick={() => handleGetMessages(1)}>Obtener Mensajes de Usuario 1</button>
-      <button onClick={() => handleGetMessages(2)}>Obtener Mensajes de Usuario 2</button>
-      {response && <pre>{JSON.stringify(response, null, 2)}</pre>}
+      <button className="get-messages-button" onClick={() => handleGetMessages(1)}>
+        Obtener Mensajes de Usuario 1
+      </button>
+      <button className="get-messages-button" onClick={() => handleGetMessages(2)}>
+        Obtener Mensajes de Usuario 2
+      </button>
+      {response && <pre className="response-box">{JSON.stringify(response, null, 2)}</pre>}
     </div>
+    </>
   );
 };
 
