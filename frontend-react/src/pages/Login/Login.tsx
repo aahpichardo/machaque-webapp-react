@@ -62,18 +62,18 @@ const Login = () => {
   const closeModal = () => setModalOpen(false);
 
   return (
-    <Box display="flex" justifyContent="center" alignItems="center" sx={{ height: '100vh' }}>
-      <Card sx={{ width: 500, padding: 4, boxShadow: 4 }}>
+    <Box display="flex" justifyContent="center" alignItems="center" sx={{ minHeight: '100vh', padding: '20px' }}>
+      <Card sx={{ width: '100%', maxWidth: 400, padding: 3, boxShadow: 4 }}>
         <CardContent>
           {/* Espacio para el logo */}
           <Box textAlign="center" mb={3}>
-            <img src={LogoApp} alt="Logo" style={{ width: '100px', height: 'auto', borderRadius: '100%' }} /> {/* Cambia la ruta del logo */}
+            <img src={LogoApp} alt="Logo" style={{ width: '80px', height: 'auto', borderRadius: '100%' }} /> {/* Cambia la ruta del logo */}
           </Box>
-          <Typography variant="h4" align="center" gutterBottom>
+          <Typography variant="h5" align="center" gutterBottom>
             Iniciar sesión
           </Typography>
           <form onSubmit={handleSubmit}>
-            <Box mb={3}>
+            <Box mb={2}>
               <TextField
                 label="Correo"
                 type="email"
@@ -85,7 +85,7 @@ const Login = () => {
                 variant="outlined"
               />
             </Box>
-            <Box mb={3}>
+            <Box mb={2}>
               <TextField
                 label="Contraseña"
                 type="password"
@@ -97,7 +97,7 @@ const Login = () => {
                 variant="outlined"
               />
             </Box>
-            <Box textAlign="center" mb={3}>
+            <Box textAlign="center" mb={2}>
               <Link component={RouterLink} to="/password-recovery" color="primary" underline="hover">
                 ¿Olvidaste tu contraseña?
               </Link>
@@ -107,8 +107,8 @@ const Login = () => {
               variant="contained"
               fullWidth
               sx={{
-                padding: '12px',
-                fontSize: 16,
+                padding: '10px',
+                fontSize: 14,
                 fontWeight: 'normal', // Cambiar a 'normal' para evitar mayúsculas
                 backgroundColor: '#2294F2', // Color de fondo
                 '&:hover': {

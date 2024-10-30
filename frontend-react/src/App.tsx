@@ -11,6 +11,7 @@ import PrivateRoute from './components/PrivateRouter'
 import { useAuth } from './contexts/AuthContext'
 import Unauthorized from './components/Unauthorized/Unauthorized'
 import Informative from './pages/Informative/Informative'
+import Messages from './pages/Messages';
 
 const App = () => {
   const { isAuthenticated } = useAuth();
@@ -34,6 +35,17 @@ const App = () => {
             </PrivateRoute>
           } 
         />
+
+        <Route 
+          path="/messages" 
+          element={
+            <PrivateRoute isAuthenticated={isAuthenticated}>
+              <Messages />
+            </PrivateRoute>
+          }
+        />
+
+
         <Route 
           path="/home" 
           element={
