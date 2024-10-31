@@ -1,73 +1,113 @@
 import React from 'react';
+import { Typography, Button, Container, Box, Card, CardMedia, CardContent, CardActions, List, ListItem, ListItemText } from '@mui/material';
 import Navbar from '../../components/NavBar/NavBar'; // Asegúrate de que la ruta sea correcta
 import './Home.css'; // Si tienes estilos específicos para el componente Home
+import SponsorCard from '../../components/SponsorCard';
+import restaurant1 from '../../assets/restaurante-logo1.jpg';
+
+interface Restaurants {
+  name: string;
+  image: string;
+  description: string;
+}
 
 const Home: React.FC = () => {
+  // Aquí puedes definir un estado para los restaurantes patrocinados
+  const restaurants: Restaurants[] = [
+    {
+      name: 'Pollos hermanos',
+      image: restaurant1,
+      description: 'Pollos fritos y más'
+    }
+  ]
+
   return (
     <>
-    <Navbar/>
-    <div className="dashboard">
-      <div className="dashboard-header">
-        <div className="user-info">
-          <h2>¡Bienvenido Usuario!</h2>
-          <p>Entusiasta de la Comida</p>
-        </div>
-        <button className="add-restaurant-button">Añadir nuevo restaurante</button>
-      </div>
-      <div className="container">
-        <div className="left-section">
-          <div className="featured-restaurants">
-            <h3>Patrocinadores</h3>
-            <div className="restaurant-grid">
-              {/* Mapa aquí tus tarjetas de restaurantes */}
-              <div className="restaurant-card">
-                <img src="restaurant-image-url" alt="logo-de-restaurante" className="restaurant-image" />
-                <h4>Pollo Loco</h4>
-                <p>Platillos Finos • $$$</p>
-                <div className="restaurant-actions">
-                  <button>Me gusta</button>
-                  <button>Comentar</button>
-                  <button>Compartir</button>
-                </div>
-              </div>
-              {/* Repetir para más restaurantes */}
-            </div>
-          </div>
-          <div className="recent-uploads">
-            <h3>Actualizaciones Recientes</h3>
-            <div className="upload-grid">
-              {/* Mapa aquí tus tarjetas de subidas recientes */}
-              <div className="upload-card">
-                <img src="upload-image-url" alt="imagen-de-actualizacion" className="upload-image" />
-                <h4>Easy Chicken</h4>
-                <p>Comida Casual • $$</p>
-                <div className="upload-stats">
-                  <span>24 Me gusta</span>
-                  <span>8 Comentarios</span>
-                </div>
-              </div>
-              {/* Repetir para más subidas recientes */}
-            </div>
-          </div>
-        </div>
-        <div className="trending-restaurants">
-          <h3>Restaurantes en Tendencia</h3>
-          {/* Lista de restaurantes en tendencia */}
-          <ul>
-            <li>La Bella Italia • Italiana • $$$</li>
-            <li>El Asador Argentino • Parrilla • $$</li>
-            <li>Sushi Zen • Japonesa • $$$</li>
-            <li>La Casa de las Tapas • Española • $$</li>
-            <li>Le Petit Bistro • Francesa • $$$</li>
-            <li>Green Garden • Vegetariana • $$</li>
-            <li>Spicy Curry House • India • $$</li>
-            <li>Ocean's Delight • Mariscos • $$$</li>
-            <li>BBQ Heaven • Barbacoa • $$</li>
-            <li>La Pizzeria • Italiana • $$</li>
-          </ul>
-        </div>
-      </div>
-    </div>
+      <Navbar />
+      <Container>
+        <Box className="dashboard" sx={{ mt: 3 }}>
+          <Box className="dashboard-header" sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 3 }}>
+            <Box className="user-info">
+              <Typography variant="h4">¡Bienvenido Usuario!</Typography>
+              <Typography variant="subtitle1">Entusiasta de la Comida</Typography>
+            </Box>
+            <Button variant="contained" color="primary" className="add-restaurant-button">
+              Añadir nuevo restaurante
+            </Button>
+          </Box>
+          <Box className="container" sx={{ display: 'flex', gap: 3 }}>
+            <Box className="left-section" sx={{ flex: 2 }}>
+              <Box className="featured-restaurants" sx={{ mb: 3 }}>
+                <Typography variant="h5">Patrocinadores</Typography>
+                <Box className="restaurant-grid" sx={{ display: 'flex', flexWrap: 'wrap', gap: 3 }}>
+                  {/* Mapa aquí tus tarjetas de restaurantes */}
+
+                  {/* Repetir para más restaurantes */}
+                </Box>
+              </Box>
+              <Box className="recent-uploads">
+                <Typography variant="h5">Actualizaciones Recientes</Typography>
+                <Box className="upload-grid" sx={{ display: 'flex', flexWrap: 'wrap', gap: 3 }}>
+                  {/* Mapa aquí tus tarjetas de subidas recientes */}
+                  <Card className="upload-card" sx={{ width: '100%', maxWidth: 345 }}>
+                    <CardMedia
+                      component="img"
+                      alt="imagen-de-actualizacion"
+                      height="140"
+                      image="upload-image-url"
+                      title="Easy Chicken"
+                    />
+                    <CardContent>
+                      <Typography variant="h6">Easy Chicken</Typography>
+                      <Typography variant="body2" color="textSecondary">Comida Casual • $$</Typography>
+                    </CardContent>
+                    <CardActions>
+                      <Typography variant="body2" color="textSecondary">24 Me gusta</Typography>
+                      <Typography variant="body2" color="textSecondary">8 Comentarios</Typography>
+                    </CardActions>
+                  </Card>
+                  {/* Repetir para más subidas recientes */}
+                </Box>
+              </Box>
+            </Box>
+            <Box className="trending-restaurants" sx={{ flex: 1 }}>
+              <Typography variant="h5">Restaurantes en Tendencia</Typography>
+              <List>
+                <ListItem>
+                  <ListItemText primary="La Bella Italia • Italiana • $$$" />
+                </ListItem>
+                <ListItem>
+                  <ListItemText primary="El Asador Argentino • Parrilla • $$" />
+                </ListItem>
+                <ListItem>
+                  <ListItemText primary="Sushi Zen • Japonesa • $$$" />
+                </ListItem>
+                <ListItem>
+                  <ListItemText primary="La Casa de las Tapas • Española • $$" />
+                </ListItem>
+                <ListItem>
+                  <ListItemText primary="Le Petit Bistro • Francesa • $$$" />
+                </ListItem>
+                <ListItem>
+                  <ListItemText primary="Green Garden • Vegetariana • $$" />
+                </ListItem>
+                <ListItem>
+                  <ListItemText primary="Spicy Curry House • India • $$" />
+                </ListItem>
+                <ListItem>
+                  <ListItemText primary="Ocean's Delight • Mariscos • $$$" />
+                </ListItem>
+                <ListItem>
+                  <ListItemText primary="BBQ Heaven • Barbacoa • $$" />
+                </ListItem>
+                <ListItem>
+                  <ListItemText primary="La Pizzeria • Italiana • $$" />
+                </ListItem>
+              </List>
+            </Box>
+          </Box>
+        </Box>
+      </Container>
     </>
   );
 };
