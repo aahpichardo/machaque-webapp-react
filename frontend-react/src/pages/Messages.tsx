@@ -1,8 +1,11 @@
 import React from 'react';
+import Navbar from '../components/NavBar/NavBar'
 
 const Messages: React.FC = () => {
   return (
-    <div>aqui van los mensajes</div>
+    <>
+      <Navbar/>
+    </>
   );
 };
 
