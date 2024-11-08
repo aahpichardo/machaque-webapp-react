@@ -20,8 +20,8 @@ type Conversation = {
 const conversations: Conversation[] = [
   {
     id: 1,
-    name: 'Brandon',
-    lastMessage: 'Hola, ¿tiene reservaciones disponibles?',
+    name: 'Tortas toxicas',
+    lastMessage: 'Sí, tenemos varias opciones disponibles.',
     messages: [
       { id: 1, text: 'Hola, ¿tiene reservaciones disponibles?', sender: 'user', timestamp: '10:00 AM' },
       { id: 2, text: 'Sí, tenemos varias opciones disponibles.', sender: 'response', timestamp: '10:01 AM' },
@@ -29,8 +29,8 @@ const conversations: Conversation[] = [
   },
   {
     id: 2,
-    name: 'Yorch',
-    lastMessage: '¿Qué horario tiene?',
+    name: 'C19',
+    lastMessage: '¿Estamos abiertos de 9am a 9pm.',
     messages: [
       { id: 1, text: '¿Qué horario tiene?', sender: 'user', timestamp: '11:00 AM' },
       { id: 2, text: 'Estamos abiertos de 9am a 9pm.', sender: 'response', timestamp: '11:01 AM' },
@@ -38,7 +38,7 @@ const conversations: Conversation[] = [
   },
   {
     id: 3,
-    name: 'Taqueria No. 18',
+    name: 'Wilches',
     lastMessage: '¡Pase a pagar, por favor!',
     messages: [
       { id: 1, text: '¡Pase a pagar, por favor!', sender: 'user', timestamp: '12:00 PM' },
