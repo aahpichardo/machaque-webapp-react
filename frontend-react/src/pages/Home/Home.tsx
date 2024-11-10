@@ -26,7 +26,7 @@ const Home: React.FC = () => {
   return (
     <>
       <Navbar />
-      <Container>
+
         <Box className="dashboard" sx={{ mt: 3 }}>
           <Box className="dashboard-header" sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 3 }}>
             <Box className="user-info">
@@ -100,7 +100,7 @@ const Home: React.FC = () => {
             </Box>
           </Box>
         </Box>
-      </Container>
+
       <Footer />
     </>
   );
