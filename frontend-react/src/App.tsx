@@ -5,7 +5,6 @@ import NewPassword from './pages/NewPassword/NewPassword';
 import PasswordRecovery from './pages/PasswordRecovery/PasswordRecovery';
 import PasswordRecoveryToken from './pages/PasswordRecoveryToken/PasswordRecoveryToken';
 import Register from './pages/Register/Register';
-import UserProfile from './pages/UserProfile/UserProfile';
 import Home from './pages/Home/Home';
 import PrivateRoute from './components/PrivateRouter'
 import { useAuth } from './contexts/AuthContext'
@@ -24,17 +23,8 @@ const App = () => {
         <Route path="/password-recovery" element={<PasswordRecovery />} />
         <Route path="/password-recovery-token" element={<PasswordRecoveryToken />} />
         <Route path="/register" element={<Register />} />
-        <Route path="/user-profile" element={<UserProfile />} />
         {/*<Route path="/home" element={<Home />} />*/}
         {/* Protegiendo las rutas */}
-        <Route 
-          path="/user-profile" 
-          element={
-            <PrivateRoute isAuthenticated={isAuthenticated}>
-              <UserProfile />
-            </PrivateRoute>
-          } 
-        />
 
         <Route 
           path="/messages" 

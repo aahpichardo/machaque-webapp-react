@@ -4,7 +4,7 @@ import Logo from '../assets/logo.jpeg'; // Cambia esta ruta a tu logo
 
 const Footer = () => {
   return (
-    <Box sx={{ backgroundColor: '#E0E0E0', padding: 2 }}>
+    <Box sx={{ backgroundColor: '#f9d56e', padding: 2 }}>
       <Box display="flex" alignItems="center" justifyContent="space-between">
         {/* Logo y Nombre */}
         <Box display="flex" alignItems="center">

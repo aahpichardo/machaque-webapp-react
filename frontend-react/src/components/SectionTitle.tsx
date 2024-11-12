@@ -5,8 +5,7 @@ import PropTypes from 'prop-types';
 const SectionTitle = ({ title }) => {
   return (
     <Box sx={{ textAlign: 'center', margin: 4 }}>
-      {/* Separador */}
-      <Divider sx={{ marginBottom: 2, backgroundColor: '#FFA500', height: 2 }} />
+
 
       {/* Título Grande */}
       <Typography variant="h4" component="h2" sx={{ fontWeight: 'bold', color: '#333' }}>

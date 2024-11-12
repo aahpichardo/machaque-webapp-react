@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import Carousel from 'react-material-ui-carousel';
-import { Box, Typography, Card, CardContent, Divider, LinearProgress } from '@mui/material';
+import { Box, Typography, Card, CardContent, LinearProgress, IconButton } from '@mui/material';
+import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
+import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 
 const reviews = [
   {
@@ -39,61 +40,84 @@ const ReviewSection = () => {
     return () => clearTimeout(timer);
   }, [activeIndex, duration]);
 
+  const handlePrev = () => {
+    setActiveIndex((prevIndex) => (prevIndex === 0 ? reviews.length - 1 : prevIndex - 1));
+    setProgress(0); // Reiniciar progreso al cambiar de reseña
+  };
+
+  const handleNext = () => {
+    setActiveIndex((prevIndex) => (prevIndex === reviews.length - 1 ? 0 : prevIndex + 1));
+    setProgress(0); // Reiniciar progreso al cambiar de reseña
+  };
+
   return (
     <Box sx={{ textAlign: 'center', margin: 4 }}>
-      <Typography variant="h4" gutterBottom>
-        ¿Qué dicen nuestros usuarios?
-      </Typography>
-
-      <Divider sx={{ marginBottom: 2, backgroundColor: '#FFA500', height: 2 }} />
-
       <Box sx={{ maxWidth: { xs: '90%', sm: '600px' }, margin: '0 auto', position: 'relative' }}>
-        <Carousel
-          index={activeIndex}
-          onChange={(index) => setActiveIndex(index)}
-          interval={duration} // Puedes establecerlo en 0 para no usar el intervalo de carrusel
-          indicators={false} // Eliminar círculos
-          navButtonsAlwaysVisible // Asegurar que los botones de navegación sean visibles
+        <Card
+          sx={{
+            padding: 2,
+            margin: 2,
+            boxShadow: 3,
+            borderRadius: 2,
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'center',
+            height: '200px', // Tamaño fijo para las tarjetas
+            backgroundColor: '#f5f5f5',
+            position: 'relative',
+          }}
         >
-          {reviews.map((review, index) => (
-            <Card
-              key={index}
-              sx={{
-                padding: 2,
-                margin: 2,
-                boxShadow: 3,
-                borderRadius: 2,
-                display: 'flex',
-                flexDirection: 'column',
-                justifyContent: 'center',
-                height: '200px', // Tamaño fijo para las tarjetas
-              }}
-            >
-              <CardContent>
-                <Typography variant="body1" gutterBottom sx={{ fontStyle: 'italic' }}>
-                  "{review.text}"
-                </Typography>
-                <Typography variant="body2" color="text.secondary">
-                  - {review.author}
-                </Typography>
-              </CardContent>
-            </Card>
-          ))}
-        </Carousel>
-        
-        {/* Barra de progreso */}
-        <LinearProgress
+          <CardContent>
+            <Typography variant="body1" gutterBottom sx={{ fontStyle: 'italic' }}>
+              "{reviews[activeIndex].text}"
+            </Typography>
+            <Typography variant="body2" color="text.secondary">
+              - {reviews[activeIndex].author}
+            </Typography>
+          </CardContent>
+
+          {/* Barra de progreso */}
+          <LinearProgress
+            sx={{
+              position: 'absolute',
+              bottom: 16, // Posición ajustada para estar dentro de la tarjeta
+              left: '50%',
+              transform: 'translateX(-50%)',
+              width: '80%', // Tamaño ajustado
+              height: '8px',
+              borderRadius: '5px', // Bordes redondeados
+              backgroundColor: '#ccc', // Color gris para la barra
+            }}
+            variant="determinate"
+            value={progress}
+          />
+        </Card>
+
+        {/* Botones de navegación */}
+        <IconButton
+          onClick={handlePrev}
           sx={{
             position: 'absolute',
-            bottom: -5, // Posición ajustada para estar justo debajo de la tarjeta
-            left: 0,
-            right: 0,
-            height: '5px',
-            backgroundColor: '#ccc', // Color gris para la barra
+            top: '50%',
+            left: '10px',
+            transform: 'translateY(-50%)',
+            color: 'black',
           }}
-          variant="determinate"
-          value={progress}
-        />
+        >
+          <ArrowBackIosIcon />
+        </IconButton>
+        <IconButton
+          onClick={handleNext}
+          sx={{
+            position: 'absolute',
+            top: '50%',
+            right: '10px',
+            transform: 'translateY(-50%)',
+            color: 'black',
+          }}
+        >
+          <ArrowForwardIosIcon />
+        </IconButton>
       </Box>
     </Box>
   );

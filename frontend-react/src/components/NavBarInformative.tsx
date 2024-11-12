@@ -5,7 +5,7 @@ import Logo from '../assets/logo.jpeg'; // Cambia esta ruta a tu logo
 
 const NavBarInformative: React.FC = () => {
     return (
-        <AppBar position="static" sx={{ backgroundColor: '#2294F2', color: '#F9F9F9' }}>
+        <AppBar position="static" sx={{ backgroundColor: '#1877c2', color: '#F9F9F9' }}>
         <Toolbar>
           {/* Logo y Título */}
           <Box display="flex" alignItems="center" sx={{ flexGrow: 1 }}>
@@ -22,7 +22,7 @@ const NavBarInformative: React.FC = () => {
               to="/login"
               variant="contained"
               sx={{
-                backgroundColor: '#FFA500',
+                backgroundColor: '#ffa500',
                 color: '#fff',
                 marginRight: 2,
                 textTransform: 'none', // Para evitar que el texto esté en mayúsculas
