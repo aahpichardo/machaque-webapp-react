@@ -7,6 +7,7 @@ import SearchIcon from '@mui/icons-material/Search';
 import LogoutIcon from '@mui/icons-material/Logout';
 import MenuIcon from '@mui/icons-material/Menu';
 import logo from '../../assets/logo.jpeg';
+import SearchModal from '../../pages/SearchModal';
 
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
@@ -50,6 +51,7 @@ const Navbar: React.FC = () => {
   const navigate = useNavigate();
   const { logout } = useAuth();
   const [drawerOpen, setDrawerOpen] = useState(false);
+  const [isSearchModalOpen, setIsSearchModalOpen] = useState(false);
 
   const handleLogout = () => {
     console.log("Cerrando sesión...");
@@ -66,6 +68,14 @@ const Navbar: React.FC = () => {
     setDrawerOpen(open);
   };
 
+  const handleOpenSearchModal = () => {
+    setIsSearchModalOpen(true);
+  };
+
+  const handleCloseSearchModal = () => {
+    setIsSearchModalOpen(false);
+  };
+
   const drawerList = () => (
     <Box
       sx={{ width: 250 }}
@@ -77,7 +87,7 @@ const Navbar: React.FC = () => {
         <ListItem button component={Link} to="/home">
           <ListItemText primary="Inicio" />
         </ListItem>
-        <ListItem button component={Link} to="/user-profile">
+        <ListItem button component={Link} to="/notifications">
           <ListItemText primary="Notificaciones" />
         </ListItem>
         <ListItem button component={Link} to="/messages">
@@ -104,7 +114,7 @@ const Navbar: React.FC = () => {
         </Box>
         <Box sx={{ display: { xs: 'none', md: 'flex' }, flexGrow: 1 }}>
           <Button color="inherit" component={Link} to="/home" sx={{ textTransform: 'none' }}>Inicio</Button>
-          <Button color="inherit" component={Link} to="/user-profile" sx={{ textTransform: 'none' }}>Notificaciones</Button>
+          <Button color="inherit" component={Link} to="/notifications" sx={{ textTransform: 'none' }}>Notificaciones</Button>
           <Button color="inherit" component={Link} to="/messages" sx={{ textTransform: 'none' }}>Mensajes</Button>
           <Button color="inherit" component={Link} to="/user-profile" sx={{ textTransform: 'none' }}>Perfil</Button>
         </Box>
@@ -120,6 +130,7 @@ const Navbar: React.FC = () => {
           <StyledInputBase
             placeholder="Buscar..."
             inputProps={{ 'aria-label': 'search' }}
+            onClick={handleOpenSearchModal}
           />
         </Search>
         <IconButton color="inherit" onClick={handleLogout} sx={{ display: { xs: 'none', md: 'flex' } }}>
@@ -129,6 +140,7 @@ const Navbar: React.FC = () => {
       <Drawer anchor="left" open={drawerOpen} onClose={toggleDrawer(false)}>
         {drawerList()}
       </Drawer>
+      <SearchModal open={isSearchModalOpen} onClose={handleCloseSearchModal} />
     </AppBar>
   );
 };

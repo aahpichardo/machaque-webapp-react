@@ -17,7 +17,7 @@ const Footer: React.FC = () => {
       }}
     >
       <Typography variant="body2" sx={{ mb: 1, fontWeight: 'bold' }}>
-        © 2024 Yorchiza. Todos los derechos reservados.
+      © 2024 Machaque. Todos los derechos reservados.
       </Typography>
       
       <Box sx={{ display: 'flex', justifyContent: 'center', gap: 2 }}>
