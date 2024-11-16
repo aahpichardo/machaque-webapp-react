@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../../contexts/AuthContext';
 import { AppBar, Toolbar, IconButton, Typography, InputBase, Button, Box, Drawer, List, ListItem, ListItemText } from '@mui/material';
@@ -52,6 +52,19 @@ const Navbar: React.FC = () => {
   const { logout } = useAuth();
   const [drawerOpen, setDrawerOpen] = useState(false);
   const [isSearchModalOpen, setIsSearchModalOpen] = useState(false);
+  const [profileRoute, setProfileRoute] = useState('/profile'); // Ruta por defecto
+
+  useEffect(() => {
+    const loginData = localStorage.getItem('loginData');
+    if (loginData) {
+      const parsedData = JSON.parse(loginData);
+      if (parsedData.type === 'user') {
+        setProfileRoute('/user-profile');
+      } else if (parsedData.type === 'restaurant') {
+        setProfileRoute('/restaurant-profile');
+      }
+    }
+  }, []);
 
   const handleLogout = () => {
     console.log("Cerrando sesión...");
@@ -93,7 +106,7 @@ const Navbar: React.FC = () => {
         <ListItem button component={Link} to="/messages">
           <ListItemText primary="Mensajes" />
         </ListItem>
-        <ListItem button component={Link} to="/user-profile">
+        <ListItem button component={Link} to={profileRoute}>
           <ListItemText primary="Perfil" />
         </ListItem>
         <ListItem button onClick={handleLogout}>
@@ -116,7 +129,7 @@ const Navbar: React.FC = () => {
           <Button color="inherit" component={Link} to="/home" sx={{ textTransform: 'none' }}>Inicio</Button>
           <Button color="inherit" component={Link} to="/notifications" sx={{ textTransform: 'none' }}>Notificaciones</Button>
           <Button color="inherit" component={Link} to="/messages" sx={{ textTransform: 'none' }}>Mensajes</Button>
-          <Button color="inherit" component={Link} to="/user-profile" sx={{ textTransform: 'none' }}>Perfil</Button>
+          <Button color="inherit" component={Link} to={profileRoute} sx={{ textTransform: 'none' }}>Perfil</Button>
         </Box>
         <Box sx={{ display: { xs: 'flex', md: 'none' } }}>
           <IconButton color="inherit" onClick={toggleDrawer(true)}>
@@ -146,6 +159,7 @@ const Navbar: React.FC = () => {
 };
 
 export default Navbar;
+
 
 
 

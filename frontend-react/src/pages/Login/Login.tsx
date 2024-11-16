@@ -7,6 +7,8 @@ import './Login.css';
 import axios from 'axios';
 import { jwtDecode } from "jwt-decode";
 import LogoApp from '../../assets/logo.jpeg'
+import users from '../../users.json';
+
 
 interface LoginData {
   email: string;
@@ -31,28 +33,35 @@ const Login = () => {
     });
   };
 
-  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     console.log("Iniciando sesión...");
 
     try {
-      const response = await axios.post("http://localhost:3000/api/login", loginData);
-      const token = response.data.token;
+      // Buscar el usuario en el archivo JSON
+      const user = users.find((u) => u.email === loginData.email);
 
-      // Decodifica y guarda el token
-      const decoded = jwtDecode(token);
-      localStorage.setItem('token', token);
+      if (!user) {
+        setError("Usuario no encontrado. Verifique el email.");
+        return;
+      }
+
+      if (user.password !== loginData.password) {
+        setError("Contraseña incorrecta.");
+        return;
+      }
+
+      // Guarda el objeto del usuario en el local storage
+      localStorage.setItem('loginData', JSON.stringify(user));
+
+      console.log("Usuario autenticado:", user);
 
       // Lógica de inicio de sesión
-      login(); // Actualiza el estado de autenticación
+      login();
       navigate('/home');
     } catch (error: any) {
-      if (error.response && error.response.status === 401) {
-        alert("El correo o la contraseña son incorrectos."); // Alert para error 401
-      } else {
-        console.error("Error al iniciar sesión:", error);
-        setError("Error al iniciar sesión. Verifique sus credenciales.");
-      }
+      console.error("Error al iniciar sesión:", error);
+      setError("Error al iniciar sesión. Intente nuevamente.");
     }
   };
 

@@ -12,6 +12,8 @@ import Unauthorized from './components/Unauthorized/Unauthorized'
 import Informative from './pages/Informative/Informative'
 import Messages from './pages/Messages';
 import Notifications from './pages/Notifications';
+import UserProfile from './pages/UserProfile';
+import RestaurantProfile from './pages/RestaurantProfile';
 
 const App = () => {
   const { isAuthenticated } = useAuth();
@@ -26,6 +28,24 @@ const App = () => {
         <Route path="/register" element={<Register />} />
         {/*<Route path="/home" element={<Home />} />*/}
         {/* Protegiendo las rutas */}
+
+        <Route 
+          path="/user-profile" 
+          element={
+            <PrivateRoute isAuthenticated={isAuthenticated}>
+              <UserProfile />
+            </PrivateRoute>
+          }
+        />
+
+        <Route 
+          path="/restaurant-profile" 
+          element={
+            <PrivateRoute isAuthenticated={isAuthenticated}>
+              <RestaurantProfile />
+            </PrivateRoute>
+          }
+        />
 
         <Route 
           path="/messages" 
@@ -45,7 +65,6 @@ const App = () => {
           }
         />
 
-
         <Route 
           path="/home" 
           element={
@@ -57,6 +76,8 @@ const App = () => {
         {/* Agrega una ruta por defecto o un 404 aquí si es necesario */}
       </Routes>
     </Router>
+
+    
   );
 };
 
