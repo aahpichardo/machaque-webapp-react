@@ -9,6 +9,8 @@ import {
   Divider,
   Grid,
   IconButton,
+  Button,
+  TextField,
 } from '@mui/material';
 import { Facebook, Instagram, Twitter } from '@mui/icons-material';
 
@@ -130,10 +132,123 @@ const UserProfile: React.FC = () => {
             </Box>
           )}
           {tabValue === 1 && (
-            <Typography variant="body1">Aquí van los favoritos del usuario.</Typography>
+            <Box>
+              <Typography variant="h6" gutterBottom>
+                Favoritos
+              </Typography>
+              <Grid container spacing={3}>
+                {[ 
+                  { name: 'La Hamburguesada', email: 'hamburguesada@example.com', phone: '+52-614-847-8988' },
+                  { name: 'B-A Tacos y más', email: 'tacosymas@example.com', phone: '+52-614-847-8988' },
+                  { name: 'Tortas el Taz', email: 'tortaseltaz@example.com', phone: '+52-614-847-3091' },
+                  { name: 'Los 3 Dioses', email: 'tresdioses@example.com', phone: '+52-614-347-8988' },
+                  { name: 'Restaurante el Yiorch', email: 'yiorch@example.com', phone: '+52-614-337-3898' }
+                ].map((fav, index) => (
+                  <Grid item xs={12} sm={6} md={4} key={index}>
+                    <Box
+                      sx={{
+                        border: '1px solid #ddd',
+                        borderRadius: '8px',
+                        p: 2,
+                        textAlign: 'center',
+                        boxShadow: '0px 2px 4px rgba(0,0,0,0.1)',
+                        '&:hover': {
+                          transform: 'scale(1.05)',
+                          borderColor: '#FFEB3B',
+                          boxShadow: '0 4px 8px rgba(255, 235, 59, 0.5)',
+                        },
+                        transition: 'all 0.3s ease-in-out',
+                      }}
+                    >
+                      <Avatar
+                        alt={fav.name}
+                        sx={{
+                          width: 80,
+                          height: 80,
+                          mx: 'auto',
+                          mb: 2,
+                          bgcolor: '#f0f0f0',
+                        }}
+                      />
+                      <Typography variant="subtitle1" fontWeight="bold">
+                        {fav.name}
+                      </Typography>
+                      <Typography variant="body2" color="textSecondary">
+                        {fav.email}
+                      </Typography>
+                      <Typography variant="body2" color="textSecondary">
+                        {fav.phone}
+                      </Typography>
+                      {/* Botón para enviar mensaje */}
+                      <Button
+                        variant="contained"
+                        color="primary"
+                        size="small"
+                        sx={{
+                          mt: 2,
+                          backgroundColor: '#FFA500',
+                          '&:hover': {
+                            backgroundColor: '#CC7A00',
+                          },
+                        }}
+                      >
+                        Enviar mensaje
+                      </Button>
+                    </Box>
+                  </Grid>
+                ))}
+              </Grid>
+            </Box>
           )}
           {tabValue === 2 && (
-            <Typography variant="body1">Aquí van las reseñas del usuario.</Typography>
+            <Box>
+              <Typography variant="h6" gutterBottom>
+                Reseñas
+              </Typography>
+              <Grid container spacing={2}>
+                {[
+                  {
+                    date: '20/08/2024',
+                    place: 'La Hamburguesada',
+                    review: 'Los mejores tacos de la ciudad. ¡La salsa es asombrosa!',
+                    rating: 5,
+                  },
+                  {
+                    date: '19/08/2024',
+                    place: 'Restaurante el Yiorch',
+                    review: 'Buena comida, pero la espera puede ser larga y algunas veces pica.',
+                    rating: 4.2,
+                  },
+                ].map((review, index) => (
+                  <Grid item xs={12} sm={6} key={index}>
+                    <Box
+                      sx={{
+                        border: '1px solid #ddd',
+                        borderRadius: '8px',
+                        p: 2,
+                        textAlign: 'center',
+                        boxShadow: '0px 2px 4px rgba(0,0,0,0.1)',
+                      }}
+                    >
+                      <Typography variant="subtitle1" fontWeight="bold">
+                        {review.place}
+                      </Typography>
+                      <Typography variant="body2" color="textSecondary">
+                        {review.date}
+                      </Typography>
+                      <Typography variant="body1" mb={2}>
+                        {review.review}
+                      </Typography>
+                      <Box display="flex" justifyContent="center">
+                        <Typography variant="body2">
+                          {'⭐'.repeat(Math.floor(review.rating))} {review.rating}
+                        </Typography>
+                      </Box>
+                    </Box>
+                  </Grid>
+                ))}
+              </Grid>
+            </Box>
           )}
           {tabValue === 3 && (
             <Typography variant="body1">Aquí va la actividad reciente del usuario.</Typography>
