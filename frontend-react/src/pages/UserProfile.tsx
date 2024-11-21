@@ -10,7 +10,7 @@ import {
   Grid,
   IconButton,
   Button,
-  TextField,
+  Paper,
 } from '@mui/material';
 import { Facebook, Instagram, Twitter } from '@mui/icons-material';
 
@@ -48,10 +48,10 @@ const UserProfile: React.FC = () => {
               {loginData?.name || 'Nombre de usuario'}
             </Typography>
             <Typography variant="subtitle1" color="textSecondary">
-              @{loginData?.username || 'username'}
+              @{loginData?.username || 'alets123'}
             </Typography>
             <Typography variant="body2" color="textSecondary">
-              {loginData?.location || 'Ciudad, País'}
+              {loginData?.location || 'Chihuahua, México'}
             </Typography>
           </Box>
         </Box>
@@ -74,30 +74,56 @@ const UserProfile: React.FC = () => {
               </Typography>
               <Typography variant="body1" color="textSecondary" mb={3}>
                 {loginData?.bio ||
-                  'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam aliquet suscipit justo, nec lobortis sapien tincidunt ac.'}
+                  'Amante de comer en la calle y salir con mis amigues.'}
               </Typography>
               <Grid container spacing={2}>
                 <Grid item xs={12} sm={6}>
-                  <Typography variant="body2">
-                    <strong>Teléfono:</strong> {loginData?.phone || '+52-614-637-8497'}
-                  </Typography>
-                  <Typography variant="body2">
-                    <strong>Email:</strong> {loginData?.email || 'emily.johnson@email.com'}
-                  </Typography>
-                  <Typography variant="body2">
-                    <strong>Miembro desde:</strong> {loginData?.memberSince || 'January 2020'}
-                  </Typography>
+                  <Paper
+                    elevation={3}
+                    sx={{
+                      p: 2,
+                      transition: 'all 0.3s ease-in-out',
+                      '&:hover': {
+                        transform: 'scale(1.02)',
+                        borderColor: '#FFEB3B',
+                        boxShadow: '0 4px 8px rgba(255, 235, 59, 0.5)',
+                      },
+                    }}
+                  >
+                    <Typography variant="body2">
+                      <strong>Teléfono:</strong> {loginData?.phone || '+52-614-637-8497'}
+                    </Typography>
+                    <Typography variant="body2">
+                      <strong>Email:</strong> {loginData?.email || 'emily.johnson@email.com'}
+                    </Typography>
+                    <Typography variant="body2">
+                      <strong>Miembro desde:</strong> {loginData?.memberSince || 'January 2020'}
+                    </Typography>
+                  </Paper>
                 </Grid>
                 <Grid item xs={12} sm={6}>
-                  <Typography variant="body2">
-                    <strong>Comidas favoritas:</strong> {loginData?.favorites || 'Tacos, Sushi'}
-                  </Typography>
-                  <Typography variant="body2">
-                    <strong>Preferencias dietéticas:</strong> {loginData?.diet || 'Vegetariana'}
-                  </Typography>
-                  <Typography variant="body2">
-                    <strong>Insignias:</strong> {loginData?.badges || 'Top Reviewer'}
-                  </Typography>
+                  <Paper
+                    elevation={3}
+                    sx={{
+                      p: 2,
+                      transition: 'all 0.3s ease-in-out',
+                      '&:hover': {
+                        transform: 'scale(1.02)',
+                        borderColor: '#FFEB3B',
+                        boxShadow: '0 4px 8px rgba(255, 235, 59, 0.5)',
+                      },
+                    }}
+                  >
+                    <Typography variant="body2">
+                      <strong>Comidas favoritas:</strong> {loginData?.favorites || 'Tacos, Sushi'}
+                    </Typography>
+                    <Typography variant="body2">
+                      <strong>Preferencias dietéticas:</strong> {loginData?.diet || 'Variada'}
+                    </Typography>
+                    <Typography variant="body2">
+                      <strong>Insignias:</strong> {loginData?.badges || 'Top Reviewer'}
+                    </Typography>
+                  </Paper>
                 </Grid>
               </Grid>
               {/* Redes sociales */}
@@ -137,30 +163,29 @@ const UserProfile: React.FC = () => {
                 Favoritos
               </Typography>
               <Grid container spacing={3}>
-                {[ 
-                  { name: 'La Hamburguesada', email: 'hamburguesada@example.com', phone: '+52-614-847-8988' },
-                  { name: 'B-A Tacos y más', email: 'tacosymas@example.com', phone: '+52-614-847-8988' },
-                  { name: 'Tortas el Taz', email: 'tortaseltaz@example.com', phone: '+52-614-847-3091' },
-                  { name: 'Los 3 Dioses', email: 'tresdioses@example.com', phone: '+52-614-347-8988' },
-                  { name: 'Restaurante el Yiorch', email: 'yiorch@example.com', phone: '+52-614-337-3898' }
+                {[
+                  { name: 'La Hamburguesada', email: 'hamburguesada@example.com', phone: '+52-614-847-8988', image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRNOMO2Nc3rgzS0TS5Imyww74bTDbO8hPZAkg&s/80' },
+                  { name: 'B-A Tacos y más', email: 'tacosymas@example.com', phone: '+52-614-847-8988', image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRvMp3fzdS6Wvi14g_qsGumiRcC4CvZbbZuhA&s/80' },
+                  { name: 'Tortas el Taz', email: 'tortaseltaz@example.com', phone: '+52-614-847-3091', image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRXi3wBfXl2eqDHOTG8C_J5nbHuXhMK82wfyQ&s/80' },
+                  { name: 'Los 3 Dioses', email: 'tresdioses@example.com', phone: '+52-614-347-8988', image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRkLkvGbnD2ZB7J_S4ctc2KSx5VXChQKSGt3A&s/80' },
+                  { name: 'Restaurante el Yiorch', email: 'yiorch@example.com', phone: '+52-614-337-3898', image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTp5U5ZWzfhpSMAgOlhApIznoGEEy9tYNlSow&s/80' }
                 ].map((fav, index) => (
                   <Grid item xs={12} sm={6} md={4} key={index}>
-                    <Box
+                    <Paper
+                      elevation={3}
                       sx={{
-                        border: '1px solid #ddd',
-                        borderRadius: '8px',
                         p: 2,
                         textAlign: 'center',
-                        boxShadow: '0px 2px 4px rgba(0,0,0,0.1)',
+                        transition: 'all 0.3s ease-in-out',
                         '&:hover': {
-                          transform: 'scale(1.05)',
+                          transform: 'scale(1.02)',
                           borderColor: '#FFEB3B',
                           boxShadow: '0 4px 8px rgba(255, 235, 59, 0.5)',
                         },
-                        transition: 'all 0.3s ease-in-out',
                       }}
                     >
                       <Avatar
+                        src={fav.image}
                         alt={fav.name}
                         sx={{
                           width: 80,
@@ -194,7 +219,7 @@ const UserProfile: React.FC = () => {
                       >
                         Enviar mensaje
                       </Button>
-                    </Box>
+                    </Paper>
                   </Grid>
                 ))}
               </Grid>
@@ -221,13 +246,16 @@ const UserProfile: React.FC = () => {
                   },
                 ].map((review, index) => (
                   <Grid item xs={12} sm={6} key={index}>
-                    <Box
+                    <Paper
+                      elevation={3}
                       sx={{
-                        border: '1px solid #ddd',
-                        borderRadius: '8px',
                         p: 2,
                         textAlign: 'center',
-                        boxShadow: '0px 2px 4px rgba(0,0,0,0.1)',
+                        transition: 'all 0.3s ease-in-out',
+                        '&:hover': {
+                          transform: 'scale(1.02)',
+                          boxShadow: '0 4px 8px rgba(0, 0, 0, 0.2)',
+                        },
                       }}
                     >
                       <Typography variant="subtitle1" fontWeight="bold">
@@ -244,14 +272,52 @@ const UserProfile: React.FC = () => {
                           {'⭐'.repeat(Math.floor(review.rating))} {review.rating}
                         </Typography>
                       </Box>
-                    </Box>
+                    </Paper>
                   </Grid>
                 ))}
               </Grid>
             </Box>
           )}
           {tabValue === 3 && (
-            <Typography variant="body1">Aquí va la actividad reciente del usuario.</Typography>
+            <Box>
+              <Typography variant="h6" gutterBottom>
+                Actividad
+              </Typography>
+              <Box>
+                {[
+                  { date: '20/08/2024', place: 'La Hamburguesada', status: 'Asistencia confirmada' },
+                  { date: '19/08/2024', place: 'Restaurante el Yiorch', status: 'Asistencia confirmada' },
+                  { date: '19/08/2024', place: 'Villa - Tacos y más', status: 'Asistencia confirmada' },
+                ].map((activity, index) => (
+                  <Paper
+                    key={index}
+                    elevation={3}
+                    sx={{
+                      display: 'flex',
+                      justifyContent: 'space-between',
+                      alignItems: 'center',
+                      mb: 2,
+                      p: 2,
+                      transition: 'all 0.3s ease-in-out',
+                      '&:hover': {
+                        transform: 'scale(1.02)',
+                        boxShadow: '0 4px 8px rgba(0, 0, 0, 0.2)',
+                      },
+                    }}
+                  >
+                    <Typography variant="body1">
+                      <strong>{activity.date}</strong> - {activity.place}
+                    </Typography>
+                    <Typography
+                      variant="body2"
+                      color={activity.status === 'Asistencia confirmada' ? 'primary' : 'secondary'}
+                    >
+                      {activity.status}
+                    </Typography>
+                  </Paper>
+                ))}
+              </Box>
+            </Box>
           )}
         </Box>
       </Box>
