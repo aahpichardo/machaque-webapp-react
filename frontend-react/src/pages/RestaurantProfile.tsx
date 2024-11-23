@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import Navbar from '../components/NavBar/NavBar';
-import { Box, Typography, Button, Divider, IconButton, TextField } from '@mui/material';
+import { Box, Typography, Button, Divider, IconButton, Grid, Paper } from '@mui/material';
 import InstagramIcon from '@mui/icons-material/Instagram';
 import TwitterIcon from '@mui/icons-material/Twitter';
 import FacebookIcon from '@mui/icons-material/Facebook';
@@ -28,6 +28,33 @@ const RestaurantProfile: React.FC = () => {
       price: 8.99,
       description: 'Cualquier carne, lechuga, costra de queso.',
       promoPrice: null,
+    },
+  ];
+
+  const photos = [
+    {
+      src: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRpK-Tf9ZtIQ4slq3ZpWTnUhr9s94zPOiV25w&s/100',
+      description: 'Foto del platillo 1',
+    },
+    {
+      src: 'https://via.placeholder.com/100',
+      description: 'Foto del platillo 2',
+    },
+    {
+      src: 'https://via.placeholder.com/100',
+      description: 'Foto del platillo 3',
+    },
+    {
+      src: 'https://via.placeholder.com/100',
+      description: 'Foto del platillo 4',
+    },
+    {
+      src: 'https://via.placeholder.com/100',
+      description: 'Foto del platillo 5',
+    },
+    {
+      src: 'https://via.placeholder.com/100',
+      description: 'Foto del platillo 6',
     },
   ];
 
@@ -258,7 +285,38 @@ const RestaurantProfile: React.FC = () => {
             )}
             
             {activeTab === 'photos' && (
-              <Typography variant="h6">Aquí se mostrarán las fotografías del restaurante.</Typography>
+              <Box>
+                <Typography variant="h6" mb={2}>
+                  Fotografías
+                </Typography>
+                <Grid container spacing={2}>
+                  {photos.map((photo, index) => (
+                    <Grid item xs={12} sm={6} md={4} key={index}>
+                      <Paper
+                        elevation={3}
+                        sx={{
+                          p: 2,
+                          textAlign: 'center',
+                          transition: 'all 0.3s ease-in-out',
+                          '&:hover': {
+                            transform: 'scale(1.02)',
+                            boxShadow: '0 4px 8px rgba(0, 0, 0, 0.2)',
+                          },
+                        }}
+                      >
+                        <img
+                          src={photo.src}
+                          alt={`Foto ${index + 1}`}
+                          style={{ width: '95px', height: '95px', borderRadius: '8px' }}
+                        />
+                        <Typography variant="body2" color="textSecondary" mt={1}>
+                          {photo.description}
+                        </Typography>
+                      </Paper>
+                    </Grid>
+                  ))}
+                </Grid>
+              </Box>
             )}
             {activeTab === 'settings' && (
               <Typography variant="h6">Aquí se mostrarán los ajustes del restaurante.</Typography>
