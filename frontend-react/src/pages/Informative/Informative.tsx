@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import "./Informative.css"; // Asegúrate de tener el archivo CSS para estilos
 import Navbar from "../../components/NavBarInformative";
@@ -19,10 +19,16 @@ import InfoCard from "../../components/InfoCard";
 import { AccessAlarm, ThreeDRotation, LocalDining, AccountCircle, Group, Star } from "@mui/icons-material"; // Importa los iconos que desees
 import SectionTitle from "../../components/SectionTitle";
 import ReviewsSection from "../../components/ReviewsSection";
+import HelpModal from "../../components/HelpModal";
 
 const UserProfile: React.FC = () => {
   //imagenes para el header
   const items = [{ img: imagen1 }, { img: imagen2 }, { img: imagen3 }];
+
+  const [open, setOpen] = useState(false);
+
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
 
   return (
     <>
@@ -158,27 +164,13 @@ const UserProfile: React.FC = () => {
         }}
       >
         <Typography variant="h4" gutterBottom>
-          ¿Listo para descrubir la mejor comida en el estado?
+          ¿Necesitas ayuda o tuviste algún problema en la aplicación?
         </Typography>
         <Typography variant="h6" gutterBottom>
-          ¡Unete a nuestra gran comunidad!
+          Ponte en contacto con nosotros vía correo electrónico
         </Typography>
-        <Button
-          component={Link}
-          to="/login"
-          variant="contained"
-          sx={{
-            backgroundColor: "#FFA500",
-            color: "#fff",
-            "&:hover": {
-              backgroundColor: "#CC7A00",
-            },
-            mt: 2,
-            textTransform: "none", // Elimina la transformación a mayúsculas
-          }}
-        >
-          Registrarme ahora
-        </Button>
+
+        <HelpModal open={open} handleClose={handleClose} />
       </Box>
 
       <Footer />
