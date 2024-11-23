@@ -4,6 +4,7 @@ import { Box, Typography, Button, Divider, IconButton, Grid, Paper, TextField } 
 import InstagramIcon from '@mui/icons-material/Instagram';
 import TwitterIcon from '@mui/icons-material/Twitter';
 import FacebookIcon from '@mui/icons-material/Facebook';
+import EditIcon from '@mui/icons-material/Edit';
 
 const RestaurantProfile: React.FC = () => {
   const [loginData, setLoginData] = useState<any>(null);
@@ -153,65 +154,90 @@ const RestaurantProfile: React.FC = () => {
             {activeTab === 'info' && (
               <>
                 {/* Sección de Info */}
-                <Box mb={3}>
-                  <Typography variant="h6">Información</Typography>
-                  <Typography variant="body2" color="textSecondary" mb={1}>
-                    {loginData.description ||
-                      'Auténtica comida callejera mexicana sobre ruedas. Llevamos los sabores de México a tu barrio.'}
-                  </Typography>
-                  <Typography variant="body2" color="textSecondary">
-                    <strong>Dirección:</strong>{' '}
-                    {loginData.address || 'Calle #45 Col. Granjas Chihuahua Chih.'}
-                  </Typography>
-                  <Typography variant="body2" color="textSecondary">
-                    <strong>Teléfono:</strong> {loginData.phone || '+52 614-256-45-23'}
-                  </Typography>
-                  <Typography variant="body2" color="textSecondary">
-                    <strong>Email:</strong> {loginData.email || 'taco_fiesta@email.com'}
-                  </Typography>
-                  <Button
-                    variant="contained"
-                    sx={{
-                      mt: 2,
-                      backgroundColor: '#ffa500',
+                <Grid container spacing={2} mb={3}>
+                  <Grid item xs={12} md={6}>
+                    <Paper 
+                      elevation={3} 
+                      sx={{ p: 2,
+                        transition: 'all 0.3s ease-in-out',
                       '&:hover': {
-                        backgroundColor: '#cc7a00',
+                        transform: 'scale(1.02)',
+                        borderColor: '#FFEB3B',
+                        boxShadow: '0 4px 8px rgba(255, 235, 59, 0.5)',
                       },
-                    }}
-                  >
-                    Editar
-                  </Button>
-                </Box>
 
-                <Divider sx={{ my: 2 }} />
-
-                {/* Horario */}
-                <Box mb={3}>
-                  <Typography variant="h6">Horario</Typography>
-                  <Typography variant="body2" color="textSecondary">
-                    <strong>Lunes - Viernes:</strong> 11am - 9pm
-                  </Typography>
-                  <Typography variant="body2" color="textSecondary">
-                    <strong>Sábado - Domingo:</strong> 12pm - 10pm
-                  </Typography>
-                  <Button
-                    variant="contained"
-                    sx={{
-                      mt: 2,
-                      backgroundColor: '#ffa500',
+                      }}>
+                      
+                      <Typography variant="h6">Información</Typography>
+                      <Typography variant="body2" color="textSecondary" mb={1}>
+                        {loginData.description ||
+                          'Auténtica comida callejera mexicana sobre ruedas. Llevamos los sabores de México a tu barrio.'}
+                      </Typography>
+                      <Typography variant="body2" color="textSecondary">
+                        <strong>Dirección:</strong>{' '}
+                        {loginData.address || 'Calle #45 Col. Granjas Chihuahua Chih.'}
+                      </Typography>
+                      <Typography variant="body2" color="textSecondary">
+                        <strong>Teléfono:</strong> {loginData.phone || '+52 614-256-45-23'}
+                      </Typography>
+                      <Typography variant="body2" color="textSecondary">
+                        <strong>Email:</strong> {loginData.email || 'taco_fiesta@email.com'}
+                      </Typography>
+                      <Button
+                        variant="contained"
+                        sx={{
+                          mt: 2,
+                          backgroundColor: '#ffa500',
+                          '&:hover': {
+                            backgroundColor: '#cc7a00',
+                          },
+                          textTransform: 'capitalize',
+                        }}
+                      >
+                        Editar
+                      </Button>
+                    </Paper>
+                  </Grid>
+                  <Grid item xs={12} md={6}>
+                    <Paper elevation={3} 
+                      sx={{ p: 2,
+                        transition: 'all 0.3s ease-in-out',
                       '&:hover': {
-                        backgroundColor: '#cc7a00',
-                      },
-                    }}
-                  >
-                    Editar
-                  </Button>
-                </Box>
+                        transform: 'scale(1.02)',
+                        borderColor: '#FFEB3B',
+                        boxShadow: '0 4px 8px rgba(255, 235, 59, 0.5)',
+                      }, }}>
+                      <Typography variant="h6">Horario</Typography>
+                      <Typography variant="body2" color="textSecondary">
+                        Ven a visitarnos!
+                      </Typography>
+                      <Typography variant="body2" color="textSecondary">
+                        <strong>Lunes - Viernes:</strong> 11am - 9pm
+                      </Typography>
+                      <Typography variant="body2" color="textSecondary">
+                        <strong>Sábado - Domingo:</strong> 12pm - 10pm
+                      </Typography>
+                      <Button
+                        variant="contained"
+                        sx={{
+                          mt: 2,
+                          backgroundColor: '#ffa500',
+                          '&:hover': {
+                            backgroundColor: '#cc7a00',
+                          },
+                          textTransform: 'capitalize',
+                        }}
+                      >
+                        Editar
+                      </Button>
+                    </Paper>
+                  </Grid>
+                </Grid>
 
                 <Divider sx={{ my: 2 }} />
 
                 {/* Redes sociales */}
-                <Box>
+                <Box mb={3}>
                   <Typography variant="h6">Redes Sociales</Typography>
                   <Box display="flex" gap={2} mt={2}>
                     <IconButton sx={{ color: '#E1306C' }}> {/* Instagram (Rosa) */}
@@ -267,6 +293,7 @@ const RestaurantProfile: React.FC = () => {
                           '&:hover': {
                             backgroundColor: '#cc7a00',
                           },
+                          textTransform: 'capitalize',
                         }}
                       >
                         Editar
@@ -278,6 +305,7 @@ const RestaurantProfile: React.FC = () => {
                           '&:hover': {
                             backgroundColor: '#8B0000',
                           },
+                          textTransform: 'capitalize',
                         }}
                       >
                         Borrar
@@ -293,6 +321,7 @@ const RestaurantProfile: React.FC = () => {
                     '&:hover': {
                       backgroundColor: '#cc7a00',
                     },
+                    textTransform: 'capitalize',
                   }}
                 >
                   Agregar nuevo platillo
@@ -316,7 +345,8 @@ const RestaurantProfile: React.FC = () => {
                           transition: 'all 0.3s ease-in-out',
                           '&:hover': {
                             transform: 'scale(1.02)',
-                            boxShadow: '0 4px 8px rgba(0, 0, 0, 0.2)',
+                            borderColor: '#FFEB3B',
+                            boxShadow: '0 4px 8px rgba(255, 235, 59, 0.5)',
                           },
                         }}
                       >
@@ -374,19 +404,21 @@ const RestaurantProfile: React.FC = () => {
                           variant="contained"
                           sx={{
                             ml: 2,
-                            backgroundColor: '#ffa500',
+                            backgroundColor: '#2294f2',
                             '&:hover': {
-                              backgroundColor: '#cc7a00',
+                              backgroundColor: '#1877c2',
                             },
+                            textTransform: 'capitalize',
                           }}
+                          startIcon={<EditIcon />}
                         >
-                          Editar Info
+                          Editar info
                         </Button>
                       </Box>
 
                       <Box sx={{ mb: 2 }}>
                         <Typography variant="subtitle2" color="textSecondary" mb={1}>
-                          Nombre de Usuario
+                          Nombre de usuario
                         </Typography>
                         <TextField
                           variant="outlined"
@@ -421,17 +453,16 @@ const RestaurantProfile: React.FC = () => {
                           sx={{ mb: 2 }}
                         />
                       </Box>
-
-                      <Button
+                        <Button
                         variant="contained"
-                        color="primary"
                         fullWidth
                         sx={{
                           mt: 2,
-                          backgroundColor: '#1976d2',
+                          backgroundColor: '#ffa500',
                           '&:hover': {
-                            backgroundColor: '#1565c0',
+                            backgroundColor: '#cc7a00',
                           },
+                          textTransform: 'capitalize',
                         }}
                         onClick={handleSave}
                       >
@@ -480,7 +511,8 @@ const RestaurantProfile: React.FC = () => {
                 transition: 'all 0.3s ease-in-out',
                 '&:hover': {
                   transform: 'scale(1.02)',
-                  boxShadow: '0 4px 8px rgba(0, 0, 0, 0.2)',
+                  borderColor: '#FFEB3B',
+                  boxShadow: '0 4px 8px rgba(255, 235, 59, 0.5)',
                 },
               }}
             >
@@ -507,6 +539,7 @@ const RestaurantProfile: React.FC = () => {
                     '&:hover': {
                       backgroundColor: '#cc7a00',
                     },
+                    textTransform: 'capitalize',
                   }}
                   size="small"
                 >

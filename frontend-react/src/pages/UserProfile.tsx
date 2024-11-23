@@ -13,7 +13,7 @@ import {
   Paper,
   TextField,
 } from '@mui/material';
-import { Facebook, Instagram, Twitter } from '@mui/icons-material';
+import { Facebook, Instagram, Twitter, Edit as EditIcon } from '@mui/icons-material';
 
 const UserProfile: React.FC = () => {
   const [loginData, setLoginData] = useState<any>(null);
@@ -53,15 +53,15 @@ const UserProfile: React.FC = () => {
       <Navbar />
       <Box p={3}>
         {/* Encabezado del perfil */}
-        <Box display="flex" alignItems="center" mb={3}>
+        <Box display="flex" alignItems="center" mb={3} flexDirection={{ xs: 'column', sm: 'row' }}>
           {/* Foto de perfil */}
           <Avatar
             src={loginData?.pfp || ''}
             alt="User Profile"
-            sx={{ width: 100, height: 100, mr: 2 }}
+            sx={{ width: 100, height: 100, mr: { xs: 0, sm: 2 }, mb: { xs: 2, sm: 0 } }}
           />
           {/* Información básica */}
-          <Box>
+          <Box textAlign={{ xs: 'center', sm: 'left' }}>
             <Typography variant="h5">
               {loginData?.name || 'Nombre de usuario'}
             </Typography>
@@ -150,7 +150,7 @@ const UserProfile: React.FC = () => {
                 <Typography variant="h6" gutterBottom>
                   Redes Sociales
                 </Typography>
-                <Box display="flex" gap={2}>
+                <Box display="flex" gap={2} justifyContent={{ xs: 'center', sm: 'flex-start' }}>
                   <IconButton
                     href="https://facebook.com/emilyjohnson"
                     target="_blank"
@@ -234,6 +234,7 @@ const UserProfile: React.FC = () => {
                           '&:hover': {
                             backgroundColor: '#CC7A00',
                           },
+                          textTransform: 'capitalize',
                         }}
                       >
                         Enviar mensaje
@@ -273,7 +274,8 @@ const UserProfile: React.FC = () => {
                         transition: 'all 0.3s ease-in-out',
                         '&:hover': {
                           transform: 'scale(1.02)',
-                          boxShadow: '0 4px 8px rgba(0, 0, 0, 0.2)',
+                          borderColor: '#FFEB3B',
+                          boxShadow: '0 4px 8px rgba(255, 235, 59, 0.5)',
                         },
                       }}
                     >
@@ -304,9 +306,9 @@ const UserProfile: React.FC = () => {
               </Typography>
               <Box>
                 {[
-                  { date: '20/08/2024', place: 'La Hamburguesada', status: 'Asistencia confirmada' },
-                  { date: '19/08/2024', place: 'Restaurante el Yiorch', status: 'Asistencia confirmada' },
-                  { date: '19/08/2024', place: 'Villa - Tacos y más', status: 'Asistencia confirmada' },
+                  { date: '20/05/2024', place: 'La Hamburguesada: Visita a sucursal nueva', status: 'Asistencia confirmada' },
+                  { date: '19/08/2024', place: 'Restaurante el Yiorch: Invitación de cena corporativa', status: 'Asistencia confirmada' },
+                  { date: '15/10/2024', place: 'Villa - Tacos y más: Ver partido Chivas vs America.', status: 'Asistencia confirmada' },
                 ].map((activity, index) => (
                   <Paper
                     key={index}
@@ -320,7 +322,8 @@ const UserProfile: React.FC = () => {
                       transition: 'all 0.3s ease-in-out',
                       '&:hover': {
                         transform: 'scale(1.02)',
-                        boxShadow: '0 4px 8px rgba(0, 0, 0, 0.2)',
+                        borderColor: '#FFEB3B',
+                        boxShadow: '0 4px 8px rgba(255, 235, 59, 0.5)',
                       },
                     }}
                   >
@@ -378,19 +381,21 @@ const UserProfile: React.FC = () => {
                         variant="contained"
                         sx={{
                           ml: 2,
-                          backgroundColor: '#ffa500',
+                          backgroundColor: '#2294f2',
                           '&:hover': {
-                            backgroundColor: '#cc7a00',
+                            backgroundColor: '#1877c2',
                           },
+                          textTransform: 'capitalize',
                         }}
+                        startIcon={<EditIcon />}
                       >
-                        Editar Info
+                        Cambiar foto
                       </Button>
                     </Box>
 
                     <Box sx={{ mb: 2 }}>
                       <Typography variant="subtitle2" color="textSecondary" mb={1}>
-                        Nombre de Usuario
+                        Nombre de usuario
                       </Typography>
                       <TextField
                         variant="outlined"
@@ -440,14 +445,14 @@ const UserProfile: React.FC = () => {
 
                     <Button
                       variant="contained"
-                      color="primary"
                       fullWidth
                       sx={{
                         mt: 2,
-                        backgroundColor: '#1976d2',
+                        backgroundColor: '#ffa500',
                         '&:hover': {
-                          backgroundColor: '#1565c0',
+                          backgroundColor: '#cc7a00',
                         },
+                        textTransform: 'capitalize',
                       }}
                       onClick={handleSave}
                     >
