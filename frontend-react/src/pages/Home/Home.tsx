@@ -35,7 +35,7 @@ const Home: React.FC = () => {
           <Box className="user-info">
             {/* Mensaje dinámico de bienvenida */}
             <Typography variant="h4">¡Bienvenido {userName}!</Typography>
-            <Typography variant="subtitle1">Entusiasta de la Comida</Typography>
+            <Typography variant="body1">Entusiasta de la Comida</Typography>
           </Box>
           <Button variant="contained" color="primary" className="add-restaurant-button">
             Añadir nuevo restaurante

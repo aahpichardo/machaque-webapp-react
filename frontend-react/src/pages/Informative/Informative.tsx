@@ -70,7 +70,7 @@ const UserProfile: React.FC = () => {
             Únete a la comunidad de amantes de la comida más grande del estado
             de Chihuahua!
           </Typography>
-          <Typography variant="h6" gutterBottom>
+          <Typography variant="body1" gutterBottom>
             Encuentra, valora y disfruta de la mejor comida de restaurantes
             locales en Chihuahua
           </Typography>
