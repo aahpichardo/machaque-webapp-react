@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import Navbar from '../components/NavBar/NavBar';
-import { Box, Typography, Button, Divider, IconButton, Grid, Paper } from '@mui/material';
+import { Box, Typography, Button, Divider, IconButton, Grid, Paper, TextField } from '@mui/material';
 import InstagramIcon from '@mui/icons-material/Instagram';
 import TwitterIcon from '@mui/icons-material/Twitter';
 import FacebookIcon from '@mui/icons-material/Facebook';
@@ -8,13 +8,30 @@ import FacebookIcon from '@mui/icons-material/Facebook';
 const RestaurantProfile: React.FC = () => {
   const [loginData, setLoginData] = useState<any>(null);
   const [activeTab, setActiveTab] = useState('info'); // Para manejar la pestaña activa
+  const [editableData, setEditableData] = useState<any>({}); // Para manejar los datos editables
 
   useEffect(() => {
     const storedLoginData = localStorage.getItem('loginData');
     if (storedLoginData) {
-      setLoginData(JSON.parse(storedLoginData));
+      const parsedData = JSON.parse(storedLoginData);
+      setLoginData(parsedData);
+      setEditableData(parsedData); // Inicializar los datos editables
     }
   }, []);
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setEditableData((prevData: any) => ({
+      ...prevData,
+      [name]: value,
+    }));
+  };
+
+  const handleSave = () => {
+    // Guardar los datos editados (puedes agregar lógica para guardar en el servidor o localStorage)
+    setLoginData(editableData);
+    localStorage.setItem('loginData', JSON.stringify(editableData));
+  };
 
   const menuItems = [
     {
@@ -33,28 +50,28 @@ const RestaurantProfile: React.FC = () => {
 
   const photos = [
     {
-      src: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRpK-Tf9ZtIQ4slq3ZpWTnUhr9s94zPOiV25w&s/100',
-      description: 'Foto del platillo 1',
+      src: 'https://5pfw99y4.cdn.imgeng.in/place/3150/logo/Club-De-Pollos-Pablo-Livas-Guadalupe-Con-Sabores-Locales-By-Reservandonos..png?imgeng=/w_360/f_webp/cmpr_20/width=60/height=60/quality=30/150',
+      description: 'Foto de alets123',
     },
     {
-      src: 'https://via.placeholder.com/100',
-      description: 'Foto del platillo 2',
+      src: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRmkSSzBdldY9PL7TKJ2qjy1w-WzQBwuHbr1w&s/150',
+      description: 'Foto de dancam53x',
     },
     {
-      src: 'https://via.placeholder.com/100',
-      description: 'Foto del platillo 3',
+      src: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSZV-XSJOGnKbGGBDxZW66D926An1qAdubgHA&s/150',
+      description: 'Foto de JuakPacketTracer',
     },
     {
-      src: 'https://via.placeholder.com/100',
-      description: 'Foto del platillo 4',
+      src: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTRDmZSVRNvxb7WynA_NHjBrnxELDspd3bZnA&s/150',
+      description: 'Foto de WilcheZZZZ',
     },
     {
-      src: 'https://via.placeholder.com/100',
-      description: 'Foto del platillo 5',
+      src: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQm7TT5YUEzwBEI9HNONf6qjYZADlbUWdIY_tCbUf2_fPwAOGixCnmyyAQeM3fLtkNMfRE&usqp=CAU/150',
+      description: 'Foto de RubenMonge',
     },
     {
-      src: 'https://via.placeholder.com/100',
-      description: 'Foto del platillo 6',
+      src: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTQhexqaEcTGv3ZVKrVYYzQ3rvZVJR5Ks93PhVBsQszVwnlgNgC0XWZnxuRepsDqjWVAdk&usqp=CAU/150',
+      description: 'Foto de HassanKabande',
     },
   ];
 
@@ -153,15 +170,12 @@ const RestaurantProfile: React.FC = () => {
                     <strong>Email:</strong> {loginData.email || 'taco_fiesta@email.com'}
                   </Typography>
                   <Button
-                    variant="outlined"
+                    variant="contained"
                     sx={{
                       mt: 2,
-                      color: '#ffa500',
-                      borderColor: '#ffa500',
+                      backgroundColor: '#ffa500',
                       '&:hover': {
                         backgroundColor: '#cc7a00',
-                        borderColor: '#cc7a00',
-                        color: 'white',
                       },
                     }}
                   >
@@ -181,15 +195,12 @@ const RestaurantProfile: React.FC = () => {
                     <strong>Sábado - Domingo:</strong> 12pm - 10pm
                   </Typography>
                   <Button
-                    variant="outlined"
+                    variant="contained"
                     sx={{
                       mt: 2,
-                      color: '#ffa500',
-                      borderColor: '#ffa500',
+                      backgroundColor: '#ffa500',
                       '&:hover': {
                         backgroundColor: '#cc7a00',
-                        borderColor: '#cc7a00',
-                        color: 'white',
                       },
                     }}
                   >
@@ -261,8 +272,13 @@ const RestaurantProfile: React.FC = () => {
                         Editar
                       </Button>
                       <Button
-                        variant="outlined"
-                        color="error"
+                        variant="contained"
+                        sx={{
+                          backgroundColor: '#FF0000',
+                          '&:hover': {
+                            backgroundColor: '#8B0000',
+                          },
+                        }}
                       >
                         Borrar
                       </Button>
@@ -307,7 +323,7 @@ const RestaurantProfile: React.FC = () => {
                         <img
                           src={photo.src}
                           alt={`Foto ${index + 1}`}
-                          style={{ width: '95px', height: '95px', borderRadius: '8px' }}
+                          style={{ width: '200px', height: '200px', borderRadius: '8px' }}
                         />
                         <Typography variant="body2" color="textSecondary" mt={1}>
                           {photo.description}
@@ -319,7 +335,112 @@ const RestaurantProfile: React.FC = () => {
               </Box>
             )}
             {activeTab === 'settings' && (
-              <Typography variant="h6">Aquí se mostrarán los ajustes del restaurante.</Typography>
+              <Box display="flex" justifyContent="center">
+                <Box>
+                  <Typography variant="h6" mb={3}>
+                    Ajustes de Usuario
+                  </Typography>
+                  
+                  <Paper elevation={3} sx={{ p: 3, maxWidth: 600 }}>
+                    <Box sx={{ mb: 3 }}>
+                      <Box display="flex" alignItems="center" mb={3}>
+                        {loginData?.pfp ? (
+                          <img
+                            src={loginData.pfp}
+                            alt="Profile"
+                            style={{
+                              width: '100px',
+                              height: '100px',
+                              borderRadius: '4px',
+                              marginRight: '16px',
+                            }}
+                          />
+                        ) : (
+                          <Box
+                            sx={{
+                              width: '100px',
+                              height: '100px',
+                              backgroundColor: '#f0f0f0',
+                              display: 'flex',
+                              alignItems: 'center',
+                              justifyContent: 'center',
+                              border: '1px solid #ddd',
+                            }}
+                          >
+                            <Typography variant="h3" color="textSecondary">X</Typography>
+                          </Box>
+                        )}
+                        <Button
+                          variant="contained"
+                          sx={{
+                            ml: 2,
+                            backgroundColor: '#ffa500',
+                            '&:hover': {
+                              backgroundColor: '#cc7a00',
+                            },
+                          }}
+                        >
+                          Editar Info
+                        </Button>
+                      </Box>
+
+                      <Box sx={{ mb: 2 }}>
+                        <Typography variant="subtitle2" color="textSecondary" mb={1}>
+                          Nombre de Usuario
+                        </Typography>
+                        <TextField
+                          variant="outlined"
+                          fullWidth
+                          name="name"
+                          value={editableData.name || ''}
+                          onChange={handleInputChange}
+                          sx={{ mb: 2 }}
+                        />
+
+                        <Typography variant="subtitle2" color="textSecondary" mb={1}>
+                          Email
+                        </Typography>
+                        <TextField
+                          variant="outlined"
+                          fullWidth
+                          name="email"
+                          value={editableData.email || ''}
+                          onChange={handleInputChange}
+                          sx={{ mb: 2 }}
+                        />
+
+                        <Typography variant="subtitle2" color="textSecondary" mb={1}>
+                          Teléfono
+                        </Typography>
+                        <TextField
+                          variant="outlined"
+                          fullWidth
+                          name="phone"
+                          value={editableData.phone || ''}
+                          onChange={handleInputChange}
+                          sx={{ mb: 2 }}
+                        />
+                      </Box>
+
+                      <Button
+                        variant="contained"
+                        color="primary"
+                        fullWidth
+                        sx={{
+                          mt: 2,
+                          backgroundColor: '#1976d2',
+                          '&:hover': {
+                            backgroundColor: '#1565c0',
+                          },
+                        }}
+                        onClick={handleSave}
+                      >
+                        Guardar
+                      </Button>
+                    </Box>
+                  </Paper>
+                </Box>
+              </Box>
             )}
           </>
         ) : (
@@ -379,19 +500,15 @@ const RestaurantProfile: React.FC = () => {
                   ⭐ {review.rating}
                 </Typography>
                 <Button
-                  variant="outlined"
-                  color="primary"
-                  size="small"
+                  variant="contained"
                   sx={{
                     mt: 1,
-                    color: '#ffa500',
-                    borderColor: '#ffa500',
+                    backgroundColor: '#ffa500',
                     '&:hover': {
                       backgroundColor: '#cc7a00',
-                      borderColor: '#cc7a00',
-                      color: 'white',
                     },
                   }}
+                  size="small"
                 >
                   Compartir/Confirmar
                 </Button>

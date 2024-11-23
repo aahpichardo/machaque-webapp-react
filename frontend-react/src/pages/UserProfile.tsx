@@ -11,23 +11,41 @@ import {
   IconButton,
   Button,
   Paper,
+  TextField,
 } from '@mui/material';
 import { Facebook, Instagram, Twitter } from '@mui/icons-material';
 
 const UserProfile: React.FC = () => {
   const [loginData, setLoginData] = useState<any>(null);
   const [tabValue, setTabValue] = useState(0);
+  const [editableData, setEditableData] = useState<any>({}); // Para manejar los datos editables
 
   useEffect(() => {
     // Obtener loginData del localStorage
     const storedLoginData = localStorage.getItem('loginData');
     if (storedLoginData) {
-      setLoginData(JSON.parse(storedLoginData));
+      const parsedData = JSON.parse(storedLoginData);
+      setLoginData(parsedData);
+      setEditableData(parsedData); // Inicializar los datos editables
     }
   }, []);
 
   const handleTabChange = (event: React.SyntheticEvent, newValue: number) => {
     setTabValue(newValue);
+  };
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setEditableData((prevData: any) => ({
+      ...prevData,
+      [name]: value,
+    }));
+  };
+
+  const handleSave = () => {
+    // Guardar los datos editados (puedes agregar lógica para guardar en el servidor o localStorage)
+    setLoginData(editableData);
+    localStorage.setItem('loginData', JSON.stringify(editableData));
   };
 
   return (
@@ -56,12 +74,13 @@ const UserProfile: React.FC = () => {
           </Box>
         </Box>
 
-        {/* Tabs para Info, Favoritos, Reseñas, Actividad */}
+        {/* Tabs para Info, Favoritos, Reseñas, Actividad, Ajustes */}
         <Tabs value={tabValue} onChange={handleTabChange} centered>
           <Tab label="Info" />
           <Tab label="Favoritos" />
           <Tab label="Reseñas" />
           <Tab label="Actividad" />
+          <Tab label="Ajustes" />
         </Tabs>
         <Divider sx={{ my: 2 }} />
 
@@ -316,6 +335,126 @@ const UserProfile: React.FC = () => {
                     </Typography>
                   </Paper>
                 ))}
+              </Box>
+            </Box>
+          )}
+          {tabValue === 4 && (
+            <Box display="flex" justifyContent="center">
+              <Box>
+                <Typography variant="h6" mb={3}>
+                  Ajustes de Usuario
+                </Typography>
+                
+                <Paper elevation={3} sx={{ p: 3, maxWidth: 600 }}>
+                  <Box sx={{ mb: 3 }}>
+                    <Box display="flex" alignItems="center" mb={3}>
+                      {loginData?.pfp ? (
+                        <img
+                          src={loginData.pfp}
+                          alt="Profile"
+                          style={{
+                            width: '100px',
+                            height: '100px',
+                            borderRadius: '4px',
+                            marginRight: '16px',
+                          }}
+                        />
+                      ) : (
+                        <Box
+                          sx={{
+                            width: '100px',
+                            height: '100px',
+                            backgroundColor: '#f0f0f0',
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            border: '1px solid #ddd',
+                          }}
+                        >
+                          <Typography variant="h3" color="textSecondary">X</Typography>
+                        </Box>
+                      )}
+                      <Button
+                        variant="contained"
+                        sx={{
+                          ml: 2,
+                          backgroundColor: '#ffa500',
+                          '&:hover': {
+                            backgroundColor: '#cc7a00',
+                          },
+                        }}
+                      >
+                        Editar Info
+                      </Button>
+                    </Box>
+
+                    <Box sx={{ mb: 2 }}>
+                      <Typography variant="subtitle2" color="textSecondary" mb={1}>
+                        Nombre de Usuario
+                      </Typography>
+                      <TextField
+                        variant="outlined"
+                        fullWidth
+                        name="name"
+                        value={editableData.name || ''}
+                        onChange={handleInputChange}
+                        sx={{ mb: 2 }}
+                      />
+
+                      <Typography variant="subtitle2" color="textSecondary" mb={1}>
+                        Email
+                      </Typography>
+                      <TextField
+                        variant="outlined"
+                        fullWidth
+                        name="email"
+                        value={editableData.email || ''}
+                        onChange={handleInputChange}
+                        sx={{ mb: 2 }}
+                      />
+
+                      <Typography variant="subtitle2" color="textSecondary" mb={1}>
+                        Teléfono
+                      </Typography>
+                      <TextField
+                        variant="outlined"
+                        fullWidth
+                        name="phone"
+                        value={editableData.phone || ''}
+                        onChange={handleInputChange}
+                        sx={{ mb: 2 }}
+                      />
+
+                      <Typography variant="subtitle2" color="textSecondary" mb={1}>
+                        Negocios favoritos
+                      </Typography>
+                      <TextField
+                        variant="outlined"
+                        fullWidth
+                        name="favorites"
+                        value={editableData.favorites || ''}
+                        onChange={handleInputChange}
+                        sx={{ mb: 3 }}
+                      />
+                    </Box>
+
+                    <Button
+                      variant="contained"
+                      color="primary"
+                      fullWidth
+                      sx={{
+                        mt: 2,
+                        backgroundColor: '#1976d2',
+                        '&:hover': {
+                          backgroundColor: '#1565c0',
+                        },
+                      }}
+                      onClick={handleSave}
+                    >
+                      Guardar
+                    </Button>
+                  </Box>
+                </Paper>
               </Box>
             </Box>
           )}
