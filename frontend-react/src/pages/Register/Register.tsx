@@ -16,6 +16,7 @@ import {
   FormControl,
   FormLabel,
 } from '@mui/material';
+import Swal from 'sweetalert2';
 
 const Register: React.FC = () => {
   const [isModalOpenPrivacy, setModalOpenPrivacy] = useState(false);
@@ -70,20 +71,53 @@ const Register: React.FC = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
+    // Validar campos vacíos
+    for (const [key, value] of Object.entries(userData)) {
+      if (key !== 'restaurant_name' && !value) {
+        Swal.fire({
+          title: 'Error',
+          text: `El campo ${key.replace('_', ' ')} es obligatorio.`,
+          icon: 'error',
+          confirmButtonText: 'Aceptar',
+          confirmButtonColor: '#2294F2' // Color personalizado para el botón de confirmación
+        });
+        return;
+      }
+    }
+
+    // Validar contraseña
     if (!validatePassword(userData.password)) {
-      alert("La contraseña debe tener al menos 8 caracteres, incluir un número, una letra mayúscula y un carácter especial.");
+      Swal.fire({
+        title: 'Error',
+        text: 'La contraseña debe tener al menos 8 caracteres, incluir un número, una letra mayúscula y un carácter especial.',
+        icon: 'error',
+        confirmButtonText: 'Aceptar',
+        confirmButtonColor: '#2294F2' // Color personalizado para el botón de confirmación
+      });
       return;
     }
 
     try {
       const response = await axios.post("http://localhost:3000/api/user/new", userData);
       if (response.status === 200) {
-        alert('Usuario creado exitosamente');
+        Swal.fire({
+          title: 'Éxito',
+          text: 'Usuario creado exitosamente',
+          icon: 'success',
+          confirmButtonText: 'Aceptar',
+          confirmButtonColor: '#2294F2' // Color personalizado para el botón de confirmación
+        });
         navigate('/login');
       }
     } catch (error) {
       console.error("Error al crear el usuario:", error);
-      alert("Ocurrió un error. Por favor, intente de nuevo.");
+      Swal.fire({
+        title: 'Error',
+        text: 'Ocurrió un error. Por favor, intente de nuevo.',
+        icon: 'error',
+        confirmButtonText: 'Aceptar',
+        confirmButtonColor: '#2294F2' // Color personalizado para el botón de confirmación
+      });
     }
   };
 

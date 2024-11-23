@@ -8,6 +8,7 @@ import LogoutIcon from '@mui/icons-material/Logout';
 import MenuIcon from '@mui/icons-material/Menu';
 import logo from '../../assets/logo.jpeg';
 import SearchModal from '../../pages/SearchModal';
+import Swal from 'sweetalert2';
 
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
@@ -67,11 +68,28 @@ const Navbar: React.FC = () => {
   }, []);
 
   const handleLogout = () => {
-    console.log("Cerrando sesión...");
-    logout();
-    localStorage.removeItem('token');
-    navigate('/login');
-    alert("Sesión cerrada exitosamente");
+    Swal.fire({
+      title: '¿Estás seguro de que quieres cerrar sesión?',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Sí, cerrar sesión',
+      cancelButtonText: 'Cancelar'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        logout();
+        localStorage.removeItem('token');
+        navigate('/login');
+        Swal.fire({
+          title: '¡Cerrado!',
+          text: 'Tu sesión ha sido cerrada.',
+          icon: 'success',
+          confirmButtonText: 'Aceptar',
+          confirmButtonColor: '#2294F2' // Color personalizado para el botón de confirmación
+        });
+      }
+    });
   };
 
   const toggleDrawer = (open: boolean) => (event: React.KeyboardEvent | React.MouseEvent) => {
@@ -159,6 +177,7 @@ const Navbar: React.FC = () => {
 };
 
 export default Navbar;
+
 
 
 

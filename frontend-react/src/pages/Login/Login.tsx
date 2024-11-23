@@ -5,10 +5,9 @@ import { useAuth } from '../../contexts/AuthContext'; // Asegúrate de importar 
 import Modal from '../../components/ModalAvisos/ModalAvisos'; // Asegúrate de importar el modal
 import './Login.css';
 import axios from 'axios';
-import { jwtDecode } from "jwt-decode";
-import LogoApp from '../../assets/logo.jpeg'
+import Swal from 'sweetalert2';
+import LogoApp from '../../assets/logo.jpeg';
 import users from '../../users.json';
-
 
 interface LoginData {
   email: string;
@@ -42,12 +41,24 @@ const Login = () => {
       const user = users.find((u) => u.email === loginData.email);
 
       if (!user) {
-        setError("Usuario no encontrado. Verifique el email.");
+        Swal.fire({
+          title: 'Error',
+          text: 'Usuario no encontrado. Verifique el email.',
+          icon: 'error',
+          confirmButtonText: 'Aceptar',
+          confirmButtonColor: '#2294F2' // Color personalizado para el botón de confirmación
+        });
         return;
       }
-
+      
       if (user.password !== loginData.password) {
-        setError("Contraseña incorrecta.");
+        Swal.fire({
+          title: 'Error',
+          text: 'Contraseña incorrecta.',
+          icon: 'error',
+          confirmButtonText: 'Aceptar',
+          confirmButtonColor: '#2294F2' // Color personalizado para el botón de confirmación
+        });
         return;
       }
 
@@ -61,7 +72,12 @@ const Login = () => {
       navigate('/home');
     } catch (error: any) {
       console.error("Error al iniciar sesión:", error);
-      setError("Error al iniciar sesión. Intente nuevamente.");
+      Swal.fire({
+        title: 'Error',
+        text: 'Error al iniciar sesión. Intente nuevamente.',
+        icon: 'error',
+        confirmButtonText: 'Aceptar'
+      });
     }
   };
 
