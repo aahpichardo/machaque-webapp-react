@@ -5,6 +5,7 @@ import Footer from '../../components/Footer/Footer';
 import PostCard from '../../components/PostCard';
 import './Home.css';
 
+
 const restaurants: string[] = [
   "La Bella Italia • Italiana • $$$",
   "El Asador Argentino • Parrilla • $$",
