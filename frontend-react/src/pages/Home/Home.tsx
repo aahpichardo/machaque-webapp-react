@@ -1,10 +1,17 @@
-import React from 'react';
-import { Typography, Button, Box, List, ListItem, ListItemText } from '@mui/material';
-import Navbar from '../../components/NavBar/NavBar'; // Asegúrate de que la ruta sea correcta
-import Footer from '../../components/Footer/Footer';
-import PostCard from '../../components/PostCard';
-import './Home.css';
-
+import React from "react";
+import {
+  Typography,
+  Button,
+  Box,
+  List,
+  ListItem,
+  ListItemText,
+} from "@mui/material";
+import Navbar from "../../components/NavBar/NavBar"; // Asegúrate de que la ruta sea correcta
+import Footer from "../../components/Footer/Footer";
+import PostCard from "../../components/PostCard";
+import "./Home.css";
+import ModalNewPost from "../../components/ModalNewPost";
 
 const restaurants: string[] = [
   "La Bella Italia • Italiana • $$$",
@@ -21,8 +28,8 @@ const restaurants: string[] = [
 
 const Home: React.FC = () => {
   // Extraemos el nombre del usuario almacenado en localStorage
-  const userData = JSON.parse(localStorage.getItem('loginData') || '{}');
-  const userName = userData.name || 'Usuario';
+  const userData = JSON.parse(localStorage.getItem("loginData") || "{}");
+  const userName = userData.name || "Usuario";
 
   return (
     <>
@@ -31,24 +38,33 @@ const Home: React.FC = () => {
       <Box className="dashboard" sx={{ mt: 3 }}>
         <Box
           className="dashboard-header"
-          sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 3 }}
+          sx={{
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+            mb: 3,
+          }}
         >
           <Box className="user-info">
             {/* Mensaje dinámico de bienvenida */}
             <Typography variant="h4">¡Bienvenido {userName}!</Typography>
             <Typography variant="body1">Entusiasta de la Comida</Typography>
           </Box>
-          <Button variant="contained" color="primary" className="add-restaurant-button">
-            Añadir nuevo restaurante
-          </Button>
+          <ModalNewPost />
         </Box>
-        <Box className="container" sx={{ display: 'flex', gap: 3 }}>
+        <Box className="container" sx={{ display: "flex", gap: 3 }}>
           <Box className="left-section" sx={{ flex: 2 }}>
             <Box className="featured-restaurants" sx={{ mb: 3 }}>
               <Typography variant="h5">Patrocinadores</Typography>
               <Box
                 className="restaurant-grid"
-                sx={{ display: 'flex', flexWrap: 'wrap', gap: 3, justifyContent: 'center', p: 2 }}
+                sx={{
+                  display: "flex",
+                  flexWrap: "wrap",
+                  gap: 3,
+                  justifyContent: "center",
+                  p: 2,
+                }}
               >
                 <Box sx={{ width: 300, mb: 2 }}>
                   <PostCard
@@ -70,7 +86,13 @@ const Home: React.FC = () => {
               <Typography variant="h5">Actualizaciones Recientes</Typography>
               <Box
                 className="upload-grid"
-                sx={{ display: 'flex', flexWrap: 'wrap', gap: 3, justifyContent: 'center', p: 2 }}
+                sx={{
+                  display: "flex",
+                  flexWrap: "wrap",
+                  gap: 3,
+                  justifyContent: "center",
+                  p: 2,
+                }}
               >
                 <Box sx={{ width: 300, mb: 2 }}>
                   <PostCard
@@ -108,5 +130,3 @@ const Home: React.FC = () => {
 };
 
 export default Home;
-
-
