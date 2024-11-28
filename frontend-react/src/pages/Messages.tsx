@@ -155,7 +155,7 @@ const Messages: React.FC = () => {
                       value={message}
                       onChange={(e) => setMessage(e.target.value)}
                     />
-                    <Button variant="contained" color="primary" onClick={handleSendMessage}>
+                    <Button variant="contained" color="primary" onClick={handleSendMessage} sx={{ textTransform: "none" }}>
                       Enviar
                     </Button>
                   </Box>

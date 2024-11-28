@@ -76,11 +76,11 @@ const UserProfile: React.FC = () => {
 
         {/* Tabs para Info, Favoritos, Reseñas, Actividad, Ajustes */}
         <Tabs value={tabValue} onChange={handleTabChange} centered>
-          <Tab label="Info" />
-          <Tab label="Favoritos" />
-          <Tab label="Reseñas" />
-          <Tab label="Actividad" />
-          <Tab label="Ajustes" />
+          <Tab sx={{ textTransform: "none" }} label="Info" />
+          <Tab sx={{ textTransform: "none" }} label="Favoritos" />
+          <Tab sx={{ textTransform: "none" }} label="Reseñas" />
+          <Tab sx={{ textTransform: "none" }} label="Actividad" />
+          <Tab sx={{ textTransform: "none" }} label="Ajustes" />
         </Tabs>
         <Divider sx={{ my: 2 }} />
 
