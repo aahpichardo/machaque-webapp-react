@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../../contexts/AuthContext';
-import { AppBar, Toolbar, IconButton, Typography, InputBase, Button, Box, Drawer, List, ListItem, ListItemText } from '@mui/material';
+import { AppBar, Toolbar, IconButton, Typography, InputBase, Button, Box, Drawer, List, ListItemText } from '@mui/material';
 import { styled, alpha } from '@mui/material/styles';
 import SearchIcon from '@mui/icons-material/Search';
 import LogoutIcon from '@mui/icons-material/Logout';
@@ -9,6 +9,7 @@ import MenuIcon from '@mui/icons-material/Menu';
 import logo from '../../assets/logo.jpeg';
 import SearchModal from '../../pages/SearchModal';
 import Swal from 'sweetalert2';
+import ListItemButton from '@mui/material/ListItemButton';
 
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
@@ -108,28 +109,23 @@ const Navbar: React.FC = () => {
   };
 
   const drawerList = () => (
-    <Box
-      sx={{ width: 250 }}
-      role="presentation"
-      onClick={toggleDrawer(false)}
-      onKeyDown={toggleDrawer(false)}
-    >
+      <Box>
       <List>
-        <ListItem button component={Link} to="/home">
+        <ListItemButton component={Link} to="/home">
           <ListItemText primary="Inicio" />
-        </ListItem>
-        <ListItem button component={Link} to="/notifications">
+        </ListItemButton>
+        <ListItemButton component={Link} to="/notifications">
           <ListItemText primary="Notificaciones" />
-        </ListItem>
-        <ListItem button component={Link} to="/messages">
+        </ListItemButton>
+        <ListItemButton component={Link} to="/messages">
           <ListItemText primary="Mensajes" />
-        </ListItem>
-        <ListItem button component={Link} to={profileRoute}>
+        </ListItemButton>
+        <ListItemButton component={Link} to={profileRoute}>
           <ListItemText primary="Perfil" />
-        </ListItem>
-        <ListItem button onClick={handleLogout}>
+        </ListItemButton>
+        <ListItemButton onClick={handleLogout}>
           <ListItemText primary="Cerrar sesión" />
-        </ListItem>
+        </ListItemButton>
       </List>
     </Box>
   );

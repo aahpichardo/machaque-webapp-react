@@ -1,4 +1,4 @@
-import React from 'react';
+
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Login from './pages/Login/Login';
 import NewPassword from './pages/NewPassword/NewPassword';
@@ -8,7 +8,6 @@ import Register from './pages/Register/Register';
 import Home from './pages/Home/Home';
 import PrivateRoute from './components/PrivateRouter'
 import { useAuth } from './contexts/AuthContext'
-import Unauthorized from './components/Unauthorized/Unauthorized'
 import Informative from './pages/Informative/Informative'
 import Messages from './pages/Messages';
 import Notifications from './pages/Notifications';
