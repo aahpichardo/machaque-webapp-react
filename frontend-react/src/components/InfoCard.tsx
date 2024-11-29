@@ -1,8 +1,14 @@
-import React from 'react';
 import { Card, CardContent, Typography } from '@mui/material';
-import PropTypes from 'prop-types';
+import { SvgIconComponent } from '@mui/icons-material';
 
-const InfoCard = ({ icon: Icon, title, description, iconColor = '#FFA500' }) => {
+interface InfoCardProps {
+  icon: SvgIconComponent;
+  title: string;
+  description: string;
+  iconColor?: string;
+}
+
+const InfoCard: React.FC<InfoCardProps> = ({ icon: Icon, title, description, iconColor = '#FFA500' }) => {
   return (
     <Card
       sx={{
@@ -30,14 +36,6 @@ const InfoCard = ({ icon: Icon, title, description, iconColor = '#FFA500' }) => 
       </CardContent>
     </Card>
   );
-};
-
-// PropTypes para validar las props del componente
-InfoCard.propTypes = {
-  icon: PropTypes.elementType.isRequired, // Icono como un componente
-  title: PropTypes.string.isRequired,       // Título como cadena
-  description: PropTypes.string.isRequired, // Descripción como cadena
-  iconColor: PropTypes.string,               // Color del icono como cadena
 };
 
 export default InfoCard;

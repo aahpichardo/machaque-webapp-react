@@ -6,11 +6,8 @@ import Footer from "../../components/Footer";
 import Carousel from "react-material-ui-carousel";
 import {
   Box,
-  Card,
   Typography,
   Button,
-  Divider,
-  CardContent,
 } from "@mui/material";
 import imagen1 from "../../assets/img1.jpg";
 import imagen2 from "../../assets/img2.jpg";
@@ -21,13 +18,13 @@ import SectionTitle from "../../components/SectionTitle";
 import ReviewsSection from "../../components/ReviewsSection";
 import HelpModal from "../../components/HelpModal";
 
-const UserProfile: React.FC = () => {
+function Informative(){
   //imagenes para el header
   const items = [{ img: imagen1 }, { img: imagen2 }, { img: imagen3 }];
 
   const [open, setOpen] = useState(false);
 
-  const handleOpen = () => setOpen(true);
+  //const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
   return (
@@ -178,4 +175,4 @@ const UserProfile: React.FC = () => {
   );
 };
 
-export default UserProfile;
+export default Informative;

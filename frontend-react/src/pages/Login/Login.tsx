@@ -1,10 +1,9 @@
-import React, { useState, ChangeEvent, FormEvent } from 'react';
+import { useState, ChangeEvent, FormEvent } from 'react';
 import { Box, Button, Card, CardContent, TextField, Typography, Link } from '@mui/material';
 import { Link as RouterLink, useNavigate } from 'react-router-dom';
 import { useAuth } from '../../contexts/AuthContext'; // Asegúrate de importar el hook
 import Modal from '../../components/ModalAvisos/ModalAvisos'; // Asegúrate de importar el modal
 import './Login.css';
-import axios from 'axios';
 import Swal from 'sweetalert2';
 import LogoApp from '../../assets/logo.jpeg';
 import users from '../../users.json';
@@ -22,7 +21,6 @@ const Login = () => {
 
   const { login } = useAuth(); // Usar el hook de autenticación
   const navigate = useNavigate(); // Hook para redirigir
-  const [error, setError] = useState<string | null>(null); // Para manejar errores si es necesario
 
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { id, value } = e.target;
