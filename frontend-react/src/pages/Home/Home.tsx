@@ -1,76 +1,132 @@
-import React from 'react';
-import Navbar from '../../components/NavBar/NavBar'; // Asegúrate de que la ruta sea correcta
-import './Home.css'; // Si tienes estilos específicos para el componente Home
+import React from "react";
+import {
+  Typography,
+  Button,
+  Box,
+  List,
+  ListItem,
+  ListItemText,
+} from "@mui/material";
+import Navbar from "../../components/NavBar/NavBar"; // Asegúrate de que la ruta sea correcta
+import Footer from "../../components/Footer/Footer";
+import PostCard from "../../components/PostCard";
+import "./Home.css";
+import ModalNewPost from "../../components/ModalNewPost";
+
+const restaurants: string[] = [
+  "La Bella Italia • Italiana • $$$",
+  "El Asador Argentino • Parrilla • $$",
+  "Sushi Zen • Japonesa • $$$",
+  "La Casa de las Tapas • Española • $$",
+  "Le Petit Bistro • Francesa • $$$",
+  "Green Garden • Vegetariana • $$",
+  "Spicy Curry House • India • $$",
+  "Ocean's Delight • Mariscos • $$$",
+  "BBQ Heaven • Barbacoa • $$",
+  "La Pizzeria • Italiana • $$",
+];
 
 const Home: React.FC = () => {
+  // Extraemos el nombre del usuario almacenado en localStorage
+  const userData = JSON.parse(localStorage.getItem("loginData") || "{}");
+  const userName = userData.name || "Usuario";
+
   return (
     <>
-    <Navbar/>
-    <div className="dashboard">
-      <div className="dashboard-header">
-        <div className="user-info">
-          <h2>¡Bienvenido Usuario!</h2>
-          <p>Entusiasta de la Comida</p>
-        </div>
-        <button className="add-restaurant-button">Añadir nuevo restaurante</button>
-      </div>
-      <div className="container">
-        <div className="left-section">
-          <div className="featured-restaurants">
-            <h3>Patrocinadores</h3>
-            <div className="restaurant-grid">
-              {/* Mapa aquí tus tarjetas de restaurantes */}
-              <div className="restaurant-card">
-                <img src="restaurant-image-url" alt="logo-de-restaurante" className="restaurant-image" />
-                <h4>Pollo Loco</h4>
-                <p>Platillos Finos • $$$</p>
-                <div className="restaurant-actions">
-                  <button>Me gusta</button>
-                  <button>Comentar</button>
-                  <button>Compartir</button>
-                </div>
-              </div>
-              {/* Repetir para más restaurantes */}
-            </div>
-          </div>
-          <div className="recent-uploads">
-            <h3>Actualizaciones Recientes</h3>
-            <div className="upload-grid">
-              {/* Mapa aquí tus tarjetas de subidas recientes */}
-              <div className="upload-card">
-                <img src="upload-image-url" alt="imagen-de-actualizacion" className="upload-image" />
-                <h4>Easy Chicken</h4>
-                <p>Comida Casual • $$</p>
-                <div className="upload-stats">
-                  <span>24 Me gusta</span>
-                  <span>8 Comentarios</span>
-                </div>
-              </div>
-              {/* Repetir para más subidas recientes */}
-            </div>
-          </div>
-        </div>
-        <div className="trending-restaurants">
-          <h3>Restaurantes en Tendencia</h3>
-          {/* Lista de restaurantes en tendencia */}
-          <ul>
-            <li>La Bella Italia • Italiana • $$$</li>
-            <li>El Asador Argentino • Parrilla • $$</li>
-            <li>Sushi Zen • Japonesa • $$$</li>
-            <li>La Casa de las Tapas • Española • $$</li>
-            <li>Le Petit Bistro • Francesa • $$$</li>
-            <li>Green Garden • Vegetariana • $$</li>
-            <li>Spicy Curry House • India • $$</li>
-            <li>Ocean's Delight • Mariscos • $$$</li>
-            <li>BBQ Heaven • Barbacoa • $$</li>
-            <li>La Pizzeria • Italiana • $$</li>
-          </ul>
-        </div>
-      </div>
-    </div>
+      <Navbar />
+
+      <Box className="dashboard" sx={{ mt: 3 }}>
+        <Box
+          className="dashboard-header"
+          sx={{
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+            mb: 3,
+          }}
+        >
+          <Box className="user-info">
+            {/* Mensaje dinámico de bienvenida */}
+            <Typography variant="h4">¡Bienvenido {userName}!</Typography>
+            <Typography variant="body1">Entusiasta de la Comida</Typography>
+          </Box>
+          <ModalNewPost />
+        </Box>
+        <Box className="container" sx={{ display: "flex", gap: 3 }}>
+          <Box className="left-section" sx={{ flex: 2 }}>
+            <Box className="featured-restaurants" sx={{ mb: 3 }}>
+              <Typography variant="h5">Patrocinadores</Typography>
+              <Box
+                className="restaurant-grid"
+                sx={{
+                  display: "flex",
+                  flexWrap: "wrap",
+                  gap: 3,
+                  justifyContent: "center",
+                  p: 2,
+                }}
+              >
+                <Box sx={{ width: 300, mb: 2 }}>
+                  <PostCard
+                    imageUrl="https://wallpapercave.com/wp/wp8477593.jpg"
+                    title="Pollos Hermanos"
+                    foodType="Comida Casual • $$"
+                  />
+                </Box>
+                <Box sx={{ width: 300, mb: 2 }}>
+                  <PostCard
+                    imageUrl="https://www.offsite.com.cy/sites/default/files/inline-images/8bff651a-7ff2-11ea-a8c7-0a58647e8dae_kfc_group.jpg"
+                    title="Kentoky"
+                    foodType="Comida Casual • $$"
+                  />
+                </Box>
+              </Box>
+            </Box>
+            <Box className="recent-uploads">
+              <Typography variant="h5">Actualizaciones Recientes</Typography>
+              <Box
+                className="upload-grid"
+                sx={{
+                  display: "flex",
+                  flexWrap: "wrap",
+                  gap: 3,
+                  justifyContent: "center",
+                  p: 2,
+                }}
+              >
+                <Box sx={{ width: 300, mb: 2 }}>
+                  <PostCard
+                    imageUrl="https://mochomos.mx/img/galeria/restaurante/mxl1.jpg"
+                    title="Mochomos"
+                    foodType="Comida Fifi • $$$"
+                  />
+                </Box>
+                <Box sx={{ width: 300, mb: 2 }}>
+                  <PostCard
+                    imageUrl="https://www.urbantj.com/wp-content/uploads/2022/07/Tacos-Aaron-5.jpg"
+                    title="Tacos Kon Aaron"
+                    foodType="Comida Callejera • $"
+                  />
+                </Box>
+              </Box>
+            </Box>
+          </Box>
+          <Box className="trending-restaurants" sx={{ flex: 1 }}>
+            <Typography variant="h5">Restaurantes en Tendencia</Typography>
+            <List>
+              {restaurants.map((restaurant, index) => (
+                <ListItem key={index}>
+                  <ListItemText primary={restaurant} />
+                </ListItem>
+              ))}
+            </List>
+          </Box>
+        </Box>
+      </Box>
+
+      <Footer />
     </>
   );
 };
 
 export default Home;
-

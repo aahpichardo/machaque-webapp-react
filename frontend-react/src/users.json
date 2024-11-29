@@ -1,0 +1,16 @@
+[
+    {
+        "name": "Jesus Alejandro",
+        "pfp": "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fi.ytimg.com%2Fvi%2FZrnBx6drY8U%2Fmaxresdefault.jpg&f=1&nofb=1&ipt=892a14248eb1a88919496b44b4113d8e2e14221b65ce16a0d867d5a7c6f63b26&ipo=images",
+        "email": "usuario@gmail.com",
+        "password": "123456",
+        "type": "user"
+    },
+    {
+        "name": "Easy Chicken",
+        "pfp": "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fimg.buzzfeed.com%2Fbuzzfeed-static%2Fstatic%2F2017-10%2F24%2F12%2Fasset%2Fbuzzfeed-prod-fastlane-03%2Fsub-buzz-22123-1508861903-2.png&f=1&nofb=1&ipt=21c0f56a1c8953fb66ead3163f6622457b550099e894b2e6293dabb7239c3f32&ipo=images",
+        "email": "restaurante@gmail.com",
+        "password": "123456",
+        "type": "restaurant"
+    }
+]

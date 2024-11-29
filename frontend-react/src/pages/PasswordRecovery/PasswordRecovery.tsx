@@ -1,61 +1,115 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios'; // Importamos axios
-import './PasswordRecovery.css'; // Asegúrate de tener el archivo CSS para estilos
+import axios from 'axios';
+import {
+  Box,
+  Button,
+  Container,
+  TextField,
+  Typography,
+  Alert,
+  Paper
+} from '@mui/material';
+import { styled } from '@mui/system';
 
-const EmailRecovery: React.FC = () => {
+const StyledContainer = styled(Container)({
+  display: 'flex',
+  flexDirection: 'column',
+  alignItems: 'center',
+  justifyContent: 'center',
+  minHeight: '100vh',
+});
+
+const FormWrapper = styled(Paper)({
+  backgroundColor: '#ffffff',
+  borderRadius: '15px',
+  boxShadow: '0 4px 20px rgba(0, 0, 0, 0.1)',
+  padding: '40px',
+  width: '90%',
+  maxWidth: '400px',
+  textAlign: 'center',
+});
+
+const Title = styled(Typography)({
+  fontFamily: '"Inter", Helvetica',
+  fontWeight: 600,
+  color: '#000000',
+  fontSize: '24px',
+  marginBottom: '20px',
+});
+
+const SubmitButton = styled(Button)({
+  backgroundColor: '#2294F2',
+  color: '#ffffff',
+  borderRadius: '5px',
+  padding: '10px 20px',
+  fontSize: '18px',
+  textTransform: 'none',
+  '&:hover': {
+    backgroundColor: '#1877C2',
+  },
+});
+
+const PasswordRecovery: React.FC = () => {
   const [email, setEmail] = useState('');
-  const navigate = useNavigate(); // Hook para redirigir
+  const [error, setError] = useState<string | null>(null);
+  const navigate = useNavigate();
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    
+
     try {
-      // Hacer la petición POST con axios
       const response = await axios.post('http://localhost:3000/api/user/recover', { email });
-      
       if (response.status === 200) {
-        const { code } = response.data; // Extraer el código de la respuesta
+        const { code } = response.data;
         alert(`Correcto, el código enviado es: ${code}`);
-
-        // Guardar el email en localStorage
         localStorage.setItem('recoveryEmail', email);
-
-        // Redirigir a la siguiente página
         navigate('/password-recovery-token');
       }
     } catch (error) {
       console.error("Hubo un error al enviar la solicitud", error);
-      alert("Hubo un error al intentar enviar el correo. Por favor, inténtalo de nuevo.");
+      setError("Hubo un error al intentar enviar el correo. Por favor, inténtalo de nuevo.");
     }
   };
 
   return (
-    <div className="email-recovery-container">
-      <div className="form-wrapper">
-        <h2 className="form-title">Recuperar Correo</h2>
+    <StyledContainer maxWidth="xs">
+      <FormWrapper>
+        <Title variant="h4">Recuperar Correo</Title>
         <form onSubmit={handleSubmit}>
-          <div className="input-group">
-            <label htmlFor="email" className="input-label">Ingresa tu Correo Electrónico</label>
-            <input 
-              type="email" 
-              id="email" 
-              value={email} 
-              onChange={(e) => setEmail(e.target.value)} 
-              required 
-              className="input-field"
+          <Box mb={2}>
+            <TextField
+              fullWidth
+              label="Ingresa tu Correo Electrónico"
+              variant="outlined"
+              type="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              required
+              InputProps={{
+                style: { fontSize: '16px', borderRadius: '5px' },
+              }}
+              InputLabelProps={{
+                style: { fontFamily: '"Inter", Helvetica', color: '#333333' },
+              }}
             />
-          </div>
-          <div className="button-wrapper">
-            <button type="submit" className="submit-button">Enviar</button>
-          </div>
+          </Box>
+          {error && (
+            <Box mb={2}>
+              <Alert severity="error">{error}</Alert>
+            </Box>
+          )}
+          <SubmitButton type="submit" fullWidth>
+            Enviar
+          </SubmitButton>
         </form>
-      </div>
-    </div>
+      </FormWrapper>
+    </StyledContainer>
   );
 };
 
-export default EmailRecovery;
+export default PasswordRecovery;
+
 
 
 

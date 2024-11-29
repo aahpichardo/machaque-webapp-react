@@ -6,7 +6,7 @@ const AuthContext = createContext<{ isAuthenticated: boolean; login: () => void;
 
 // Proveedor del contexto
 export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
+  const [isAuthenticated, setIsAuthenticated] = useState<boolean>(true);
 
   // Verifica si hay un token en local storage al cargar la aplicación
   useEffect(() => {
