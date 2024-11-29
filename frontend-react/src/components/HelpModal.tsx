@@ -41,11 +41,11 @@ const HelpModal: React.FC = () => {
               top: "50%",
               left: "50%",
               transform: "translate(-50%, -50%)",
-              width: 400,
+              width: { xs: '90%', sm: 400 }, // Ajuste de ancho responsivo
               bgcolor: "background.paper",
               borderRadius: 4,
               boxShadow: 24,
-              p: 4,
+              p: { xs: 2, sm: 4 }, // Ajuste de padding responsivo
             }}
           >
             <Box display="flex" justifyContent="space-between" alignItems="center">
@@ -60,7 +60,7 @@ const HelpModal: React.FC = () => {
                 fullWidth
                 margin="normal"
                 id="name"
-                label="Nombre "
+                label="Nombre"
                 variant="outlined"
               />
               <TextField
@@ -68,7 +68,7 @@ const HelpModal: React.FC = () => {
                 fullWidth
                 margin="normal"
                 id="email"
-                label="Correo Electrónico "
+                label="Correo Electrónico"
                 variant="outlined"
                 type="email"
               />
@@ -77,7 +77,7 @@ const HelpModal: React.FC = () => {
                 fullWidth
                 margin="normal"
                 id="message"
-                label="Mensaje "
+                label="Mensaje"
                 variant="outlined"
                 multiline
                 rows={4}

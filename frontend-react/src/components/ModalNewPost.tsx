@@ -23,10 +23,12 @@ const ModalNewPost: React.FC = () => {
           "&:hover": {
             backgroundColor: "#CC7A00",
           },
+          width: { xs: "100%", sm: "auto" },  // Asegura que el botón ocupe todo el ancho en móviles
         }}
       >
         Añadir nueva publicación
       </Button>
+  
       <Modal
         open={open}
         onClose={handleClose}
@@ -44,7 +46,7 @@ const ModalNewPost: React.FC = () => {
               top: "50%",
               left: "50%",
               transform: "translate(-50%, -50%)",
-              width: 400,
+              width: { xs: "90%", sm: 400 },  // Ancho del modal cambia dependiendo del tamaño de la pantalla
               bgcolor: "background.paper",
               borderRadius: 4,
               boxShadow: 24,
@@ -105,7 +107,7 @@ const ModalNewPost: React.FC = () => {
         </Fade>
       </Modal>
     </div>
-  );
+  );  
 };
 
 export default ModalNewPost;

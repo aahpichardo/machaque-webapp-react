@@ -32,63 +32,64 @@ function Informative(){
       <Navbar />
 
       {/*Header*/}
-      <Box sx={{ position: "relative", height: "70vh", overflow: "hidden" }}>
-        <Carousel>
-          {items.map((item, index) => (
-            <Box
-              key={index}
-              component="img"
-              src={item.img}
-              alt={`Image ${index + 1}`}
-              sx={{
-                height: "100%",
-                width: "100%",
-                objectFit: "cover",
-              }}
-            />
-          ))}
-        </Carousel>
+      <Box sx={{ position: "relative", height: { xs: "50vh", sm: "60vh", md: "70vh" }, overflow: "hidden" }}>
+      <Carousel>
+        {items.map((item, index) => (
+          <Box
+            key={index}
+            component="img"
+            src={item.img}
+            alt={`Image ${index + 1}`}
+            sx={{
+              height: "100%",
+              width: "100%",
+              objectFit: "cover",
+            }}
+          />
+        ))}
+      </Carousel>
 
-        <Box
+      <Box
+        sx={{
+          position: "absolute",
+          top: "50%",
+          left: "50%",
+          transform: "translate(-50%, -50%)",
+          textAlign: "center",
+          color: "#FFFFFF",
+          bgcolor: "rgba(77, 77, 77, 0.6)", // Fondo semitransparente para mejorar la legibilidad
+          padding: { xs: 2, sm: 3 },
+          zIndex: 1, // Asegura que esté por encima de las imágenes
+          backdropFilter: "blur(5px)", // Desenfoque de fondo
+          width: { xs: "90%", sm: "80%", md: "60%" },
+        }}
+      >
+        <Typography variant="h4" gutterBottom sx={{ fontSize: { xs: "1.25rem", sm: "1.75rem", md: "2.5rem" } }}>
+          Únete a la comunidad de amantes de la comida más grande del estado de Chihuahua!
+        </Typography>
+        <Typography variant="body1" gutterBottom sx={{ fontSize: { xs: "0.875rem", sm: "1rem", md: "1.25rem" } }}>
+          Encuentra, valora y disfruta de la mejor comida de restaurantes locales en Chihuahua
+        </Typography>
+        <Button
+          component={Link}
+          to="/login"
+          variant="contained"
           sx={{
-            position: "absolute",
-            top: "50%",
-            left: "50%",
-            transform: "translate(-50%, -50%)",
-            textAlign: "center",
-            color: "#FFFFFF",
-            bgcolor: "rgba(77, 77,77, 0.3)", // Fondo semitransparente para mejorar la legibilidad
-            padding: 3,
-            zIndex: 1, // Asegura que esté por encima de las imágenes
-            backdropFilter: "blur(5px)", // Desenfoque de fondo
+            backgroundColor: "#FFA500",
+            color: "#fff",
+            "&:hover": {
+              backgroundColor: "#CC7A00",
+            },
+            mt: 2,
+            textTransform: "none", // Elimina la transformación a mayúsculas
+            fontSize: { xs: "0.75rem", sm: "0.875rem", md: "1rem" },
+            padding: { xs: "6px 12px", sm: "8px 16px", md: "10px 20px" },
           }}
         >
-          <Typography variant="h4" gutterBottom>
-            Únete a la comunidad de amantes de la comida más grande del estado
-            de Chihuahua!
-          </Typography>
-          <Typography variant="body1" gutterBottom>
-            Encuentra, valora y disfruta de la mejor comida de restaurantes
-            locales en Chihuahua
-          </Typography>
-          <Button
-            component={Link}
-            to="/login"
-            variant="contained"
-            sx={{
-              backgroundColor: "#FFA500",
-              color: "#fff",
-              "&:hover": {
-                backgroundColor: "#CC7A00",
-              },
-              mt: 2,
-              textTransform: "none", // Elimina la transformación a mayúsculas
-            }}
-          >
-            Quiero ser parte
-          </Button>
-        </Box>
+          Quiero ser parte
+        </Button>
       </Box>
+    </Box>
 
       {/*contenido */}
 

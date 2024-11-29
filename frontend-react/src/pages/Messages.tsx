@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import Navbar from '../components/NavBar/NavBar';
-import { Box, List, ListItemText, Typography, Divider, ListItemButton, TextField, Button, Paper } from '@mui/material';
+import { Box, List, ListItemText, Typography, Divider, ListItemButton, TextField, Button, Paper, useMediaQuery, useTheme, IconButton, Drawer } from '@mui/material';
+import MenuIcon from '@mui/icons-material/Menu';
 
 type Message = {
   id: number;
@@ -16,7 +17,6 @@ type Conversation = {
   messages: Message[];
 };
 
-// Ejemplo de datos de conversación
 const conversations: Conversation[] = [
   {
     id: 1,
@@ -50,13 +50,17 @@ const conversations: Conversation[] = [
 const Messages: React.FC = () => {
   const [selectedConversation, setSelectedConversation] = useState<Conversation | null>(null);
   const [message, setMessage] = useState<string>('');
+  const [drawerOpen, setDrawerOpen] = useState<boolean>(false);
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
 
-  // Función para seleccionar una conversación de la lista
   const handleSelectConversation = (conversation: Conversation) => {
     setSelectedConversation(conversation);
+    if (isMobile) {
+      setDrawerOpen(false);
+    }
   };
 
-  // Función para manejar el envío de mensajes
   const handleSendMessage = () => {
     if (selectedConversation && message.trim()) {
       const newMessage: Message = {
@@ -78,35 +82,71 @@ const Messages: React.FC = () => {
       <Navbar />
       <Box display="flex" justifyContent="center" p={2} bgcolor="grey.200" height="calc(100vh - 64px)">
         <Paper elevation={3} sx={{ width: '100%', maxWidth: '1200px', height: '90%', display: 'flex', flexDirection: 'column' }}>
-          <Box display="flex" height="100%">
-            {/* Sección de lista de conversaciones */}
-            <Box
-              width="30%"
-              bgcolor="grey.100"
-              p={2}
-              borderRight="1px solid rgba(0, 0, 0, 0.1)"
-              sx={{ overflowY: 'auto' }}
+          <Box display="flex" height="100%" flexDirection={isMobile ? 'column' : 'row'}>
+            {isMobile && (
+              <IconButton onClick={() => setDrawerOpen(true)} sx={{ alignSelf: 'flex-start', m: 2 }}>
+                <MenuIcon />
+              </IconButton>
+            )}
+            <Drawer
+              anchor="left"
+              open={drawerOpen}
+              onClose={() => setDrawerOpen(false)}
+              sx={{ display: { xs: 'block', sm: 'none' } }}
             >
-              <Typography variant="h6" gutterBottom>
-                Conversaciones
-              </Typography>
-              <List>
-                {conversations.map((conversation) => (
-                  <ListItemButton
-                    key={conversation.id}
-                    onClick={() => handleSelectConversation(conversation)}
-                    selected={selectedConversation?.id === conversation.id}
-                  >
-                    <ListItemText
-                      primary={conversation.name}
-                      secondary={conversation.lastMessage}
-                    />
-                  </ListItemButton>
-                ))}
-              </List>
-            </Box>
+              <Box
+                width={250}
+                bgcolor="grey.100"
+                p={2}
+                sx={{ overflowY: 'auto' }}
+              >
+                <Typography variant="h6" gutterBottom>
+                  Conversaciones
+                </Typography>
+                <List>
+                  {conversations.map((conversation) => (
+                    <ListItemButton
+                      key={conversation.id}
+                      onClick={() => handleSelectConversation(conversation)}
+                      selected={selectedConversation?.id === conversation.id}
+                    >
+                      <ListItemText
+                        primary={conversation.name}
+                        secondary={conversation.lastMessage}
+                      />
+                    </ListItemButton>
+                  ))}
+                </List>
+              </Box>
+            </Drawer>
+            {!isMobile && (
+              <Box
+                width="30%"
+                bgcolor="grey.100"
+                p={2}
+                borderRight="1px solid rgba(0, 0, 0, 0.1)"
+                sx={{ overflowY: 'auto' }}
+              >
+                <Typography variant="h6" gutterBottom>
+                  Conversaciones
+                </Typography>
+                <List>
+                  {conversations.map((conversation) => (
+                    <ListItemButton
+                      key={conversation.id}
+                      onClick={() => handleSelectConversation(conversation)}
+                      selected={selectedConversation?.id === conversation.id}
+                    >
+                      <ListItemText
+                        primary={conversation.name}
+                        secondary={conversation.lastMessage}
+                      />
+                    </ListItemButton>
+                  ))}
+                </List>
+              </Box>
+            )}
 
-            {/* Sección de conversación abierta */}
             <Box display="flex" flexDirection="column" flex={1} sx={{ position: 'relative' }}>
               {selectedConversation ? (
                 <>

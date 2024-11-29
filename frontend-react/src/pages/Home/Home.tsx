@@ -6,7 +6,7 @@ import {
   ListItem,
   ListItemText,
 } from "@mui/material";
-import Navbar from "../../components/NavBar/NavBar"; // Asegúrate de que la ruta sea correcta
+import Navbar from "../../components/NavBar/NavBar";
 import Footer from "../../components/Footer/Footer";
 import PostCard from "../../components/PostCard";
 import "./Home.css";
@@ -26,7 +26,6 @@ const restaurants: string[] = [
 ];
 
 const Home: React.FC = () => {
-  // Extraemos el nombre del usuario almacenado en localStorage
   const userData = JSON.parse(localStorage.getItem("loginData") || "{}");
   const userName = userData.name || "Usuario";
 
@@ -34,7 +33,7 @@ const Home: React.FC = () => {
     <>
       <Navbar />
 
-      <Box className="dashboard" sx={{ mt: 3 }}>
+      <Box className="dashboard" sx={{ mt: 3, px: 2 }}>
         <Box
           className="dashboard-header"
           sx={{
@@ -42,16 +41,27 @@ const Home: React.FC = () => {
             justifyContent: "space-between",
             alignItems: "center",
             mb: 3,
+            flexWrap: "wrap", // Ajusta las columnas en pantallas pequeñas
+            gap: 2,
           }}
         >
           <Box className="user-info">
-            {/* Mensaje dinámico de bienvenida */}
-            <Typography variant="h4">¡Bienvenido {userName}!</Typography>
+            <Typography variant="h4" sx={{ fontSize: { xs: "1.5rem", md: "2rem" } }}>
+              ¡Bienvenido {userName}!
+            </Typography>
             <Typography variant="body1">Entusiasta de la Comida</Typography>
           </Box>
           <ModalNewPost />
         </Box>
-        <Box className="container" sx={{ display: "flex", gap: 3 }}>
+
+        <Box
+          className="container"
+          sx={{
+            display: "flex",
+            flexDirection: { xs: "column", md: "row" },
+            gap: 3,
+          }}
+        >
           <Box className="left-section" sx={{ flex: 2 }}>
             <Box className="featured-restaurants" sx={{ mb: 3 }}>
               <Typography variant="h5">Patrocinadores</Typography>
@@ -65,14 +75,14 @@ const Home: React.FC = () => {
                   p: 2,
                 }}
               >
-                <Box sx={{ width: 300, mb: 2 }}>
+                <Box sx={{ width: { xs: "100%", sm: 300 }, mb: 2 }}>
                   <PostCard
                     imageUrl="https://wallpapercave.com/wp/wp8477593.jpg"
                     title="Pollos Hermanos"
                     foodType="Comida Casual • $$"
                   />
                 </Box>
-                <Box sx={{ width: 300, mb: 2 }}>
+                <Box sx={{ width: { xs: "100%", sm: 300 }, mb: 2 }}>
                   <PostCard
                     imageUrl="https://www.offsite.com.cy/sites/default/files/inline-images/8bff651a-7ff2-11ea-a8c7-0a58647e8dae_kfc_group.jpg"
                     title="Kentoky"
@@ -81,6 +91,7 @@ const Home: React.FC = () => {
                 </Box>
               </Box>
             </Box>
+
             <Box className="recent-uploads">
               <Typography variant="h5">Actualizaciones Recientes</Typography>
               <Box
@@ -93,14 +104,14 @@ const Home: React.FC = () => {
                   p: 2,
                 }}
               >
-                <Box sx={{ width: 300, mb: 2 }}>
+                <Box sx={{ width: { xs: "100%", sm: 300 }, mb: 2 }}>
                   <PostCard
                     imageUrl="https://mochomos.mx/img/galeria/restaurante/mxl1.jpg"
                     title="Mochomos"
                     foodType="Comida Fifi • $$$"
                   />
                 </Box>
-                <Box sx={{ width: 300, mb: 2 }}>
+                <Box sx={{ width: { xs: "100%", sm: 300 }, mb: 2 }}>
                   <PostCard
                     imageUrl="https://www.urbantj.com/wp-content/uploads/2022/07/Tacos-Aaron-5.jpg"
                     title="Tacos Kon Aaron"
@@ -110,7 +121,15 @@ const Home: React.FC = () => {
               </Box>
             </Box>
           </Box>
-          <Box className="trending-restaurants" sx={{ flex: 1 }}>
+
+          <Box
+            className="trending-restaurants"
+            sx={{
+              flex: 1,
+              maxWidth: { xs: "100%", md: "300px" }, // Ancho máximo para móviles
+              margin: { xs: "0 auto", md: "0" }, // Centrar en móviles
+            }}
+          >
             <Typography variant="h5">Restaurantes en Tendencia</Typography>
             <List>
               {restaurants.map((restaurant, index) => (
@@ -129,3 +148,4 @@ const Home: React.FC = () => {
 };
 
 export default Home;
+

@@ -75,7 +75,13 @@ const UserProfile: React.FC = () => {
         </Box>
 
         {/* Tabs para Info, Favoritos, Reseñas, Actividad, Ajustes */}
-        <Tabs value={tabValue} onChange={handleTabChange} centered>
+        <Tabs
+          value={tabValue}
+          onChange={handleTabChange}
+          centered
+          variant="scrollable"
+          scrollButtons="auto"
+        >
           <Tab sx={{ textTransform: "none" }} label="Info" />
           <Tab sx={{ textTransform: "none" }} label="Favoritos" />
           <Tab sx={{ textTransform: "none" }} label="Reseñas" />
